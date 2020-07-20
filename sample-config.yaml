@@ -1,0 +1,7 @@
+---
+services:
+  - EKS
+  - CloudFront
+regions:
+  - us-west-1
+  - us-west-2
