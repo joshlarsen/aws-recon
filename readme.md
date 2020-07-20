@@ -26,7 +26,7 @@ Ruby 2.5.x or 2.6.x (developed and tested with 2.6.5)
 
 Clone this repository, then install the required gems using `bundle`:
 
-```text
+```
 $ git clone git@github.com:darkbitio/aws-recon.git
 $ cd aws-recon
 $ bundle

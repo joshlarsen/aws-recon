@@ -216,7 +216,6 @@ class EC2 < Mapper
           resources.push(struct.to_h)
         end
       end
-
     end
 
     resources
