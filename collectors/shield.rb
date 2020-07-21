@@ -58,7 +58,7 @@ class Shield < Mapper
 
   private
 
-  # these aren't really errors
+  # not an error
   def suppressed_errors
     %w[
       ResourceNotFoundException

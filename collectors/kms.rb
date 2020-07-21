@@ -60,7 +60,7 @@ class KMS < Mapper
 
   private
 
-  # may or may not be an error - EKS isn't available in all regions
+  # not an error
   def suppressed_errors
     %w[
       AccessDeniedException

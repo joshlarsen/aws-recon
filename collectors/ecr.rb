@@ -30,7 +30,7 @@ class ECR < Mapper
 
   private
 
-  # these aren't really errors
+  # not an error
   def suppressed_errors
     %w[
       RepositoryPolicyNotFoundException

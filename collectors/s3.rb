@@ -63,7 +63,7 @@ class S3 < Mapper
 
   private
 
-  # these aren't really errors
+  # not an error
   def suppressed_errors
     %w[
       ServerSideEncryptionConfigurationNotFoundError
