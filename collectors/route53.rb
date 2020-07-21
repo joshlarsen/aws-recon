@@ -15,16 +15,21 @@ class Route53 < Mapper
         struct = OpenStruct.new(zone.to_h)
         struct.type = 'zone'
         struct.arn = zone.id
-        struct.record_sets = []
 
-        # list_resource_record_sets
-        @client.list_resource_record_sets({ hosted_zone_id: zone.id }).each_with_index do |response, page|
-          log(response.context.operation_name, zone.name.downcase, page)
+        resources.push(struct.to_h)
+      end
+    end
 
-          response.resource_record_sets.each do |record_set|
-            struct.record_sets.push(record_set.to_h)
-          end
-        end
+    #
+    # list_query_logging_configs
+    #
+    @client.list_query_logging_configs.each_with_index do |response, page|
+      log(response.context.operation_name, page)
+
+      response.query_logging_configs.each do |config|
+        struct = OpenStruct.new(config.to_h)
+        struct.type = 'logging_config'
+        struct.arn = "arn:aws:#{@service}:#{@region}::logging_config/#{config.id}"
 
         resources.push(struct.to_h)
       end
