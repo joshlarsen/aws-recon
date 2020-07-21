@@ -19,7 +19,7 @@ class Mapper
     @service = service
     @region = region
     @options = options
-    @thread = Parallel.worker_number
+    @thread = Parallel.worker_number || 0
 
     # build the client interface
     module_name = "Aws::#{service}::Client"
