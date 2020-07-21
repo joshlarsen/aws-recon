@@ -6,14 +6,14 @@ The [creators](https://darkbit.io) of this tool have a recurring need to be able
 
 There are a handful of tools (e.g. [AWS Config](https://aws.amazon.com/config), [CloudMapper](https://github.com/duo-labs/cloudmapper), [CloudSploit](https://github.com/cloudsploit/scans), [Prowler](https://github.com/toniblyx/prowler)) that do some form of resource collection to support other functions. But we found we needed broader coverage and more details at a per-service level. We also needed a consistent and structured format that allowed for integration with our other systems and tooling.
 
-Enter AWS Recon, multi-threaded AWS inventory collection tool written in plain Ruby. Though most AWS tooling tends to be dominated by Python, the [Ruby SDK](https://aws.amazon.com/sdk-for-ruby/) is quite mature and capable. The maintainers the Ruby SDK have done a fantastic job making it easy to handle automatic retries, paging of large responses, and threading huge numbers of requests.
+Enter AWS Recon, multi-threaded AWS inventory collection tool written in plain Ruby. Though most AWS tooling tends to be dominated by Python, the [Ruby SDK](https://aws.amazon.com/sdk-for-ruby/) is quite mature and capable. The maintainers of the Ruby SDK have done a fantastic job making it easy to handle automatic retries, paging of large responses, and threading huge numbers of requests.
 
 ## Project Goals
 
 - More complete resource coverage than available tools (especially for ECS & EKS)
 - More granular resource detail, including nested related resources in the output
 - Flexible output (console, JSON lines, plain JSON, file, standard out)
-- Efficient (rate limitting, automatic retries and result paging)
+- Efficient (multi-threaded, rate limited, automatic retries, and automatic result paging)
 - Easy to maintain and extend
 
 ## Setup
