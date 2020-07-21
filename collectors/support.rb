@@ -23,6 +23,21 @@ class Support < Mapper
         resources.push(struct.to_h)
       end
     end
+
     resources
+  rescue Aws::Support::Errors::ServiceError => e
+    log_error(e.code)
+    raise e unless suppressed_errors.include?(e.code)
+
+    [] # no Support subscription
+  end
+
+  private
+
+  # not an error
+  def suppressed_errors
+    %w[
+      SubscriptionRequiredException
+    ]
   end
 end
