@@ -64,7 +64,7 @@ begin
   #
   # global services
   #
-  Parallel.map(aws_services.map { |x| OpenStruct.new(x) }.filter { |s| s.global }.each, in_threads: @options.threads) do |service|
+  aws_services.map { |x| OpenStruct.new(x) }.filter { |s| s.global }.each do |service|
     # user included this service in the args
     next unless services.include?(service.name)
 
