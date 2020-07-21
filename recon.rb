@@ -30,7 +30,9 @@ end
 # formatter
 @formatter = Formatter.new
 
-puts "\nStarting collection...\n" unless @options.stream_output
+unless @options.stream_output
+  puts "\nStarting collection with #{@options.threads} threads...\n"
+end
 
 #
 # collector wrapper
@@ -62,7 +64,7 @@ begin
   #
   # global services
   #
-  Parallel.map(aws_services.map { |x| OpenStruct.new(x) }.filter { |s| s.global }.each, in_threads: @options.disable_multi_threading ? 0 : 4) do |service|
+  Parallel.map(aws_services.map { |x| OpenStruct.new(x) }.filter { |s| s.global }.each, in_threads: @options.threads) do |service|
     # user included this service in the args
     next unless services.include?(service.name)
 
@@ -75,16 +77,16 @@ begin
   #
   # regional services
   #
-  Parallel.map(aws_services.map { |x| OpenStruct.new(x) }.filter { |s| !s.global }.each, in_threads: @options.disable_multi_threading ? 0 : 8) do |service|
-    # user included this service in the args
-    next unless services.include?(service.name) || services.include?(service.alias) # rubocop:disable Layout/LineLength
-
-    Parallel.map(regions.filter { |x| x != 'global' }.each, in_threads: @options.disable_multi_threading ? 0 : 8) do |region|
+  regions.filter { |x| x != 'global' }.each do |region|
+    Parallel.map(aws_services.map { |x| OpenStruct.new(x) }.filter { |s| !s.global }.each, in_threads: @options.threads) do |service|
       # some services aren't available in some regions
       skip_region = service&.excluded_regions&.include?(region)
 
       # user included this region in the args
       next unless regions.include?(region) && !skip_region
+
+      # user included this service in the args
+      next unless services.include?(service.name) || services.include?(service.alias) # rubocop:disable Layout/LineLength
 
       collect(service, region)
     end

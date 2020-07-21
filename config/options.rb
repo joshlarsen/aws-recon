@@ -1,11 +1,17 @@
 class Parser
+  DEFAULT_CONFIG_FILE = nil
+  DEFAULT_FILE = 'output.json'.freeze
+  DEFAULT_FORMAT = 'aws'.freeze
+  DEFAULT_THREADS = 8
+  MAX_THREADS = 128
+
   Options = Struct.new(
     :regions,
     :services,
     :config_file,
     :output_file,
     :output_format,
-    :disable_multi_threading,
+    :threads,
     :skip_slow,
     :stream_output,
     :verbose,
@@ -27,10 +33,10 @@ class Parser
     args = Options.new(
       aws_regions,
       aws_services.map { |service| service[:name] },
-      nil,
-      'output.json',
-      'aws',
-      false,
+      DEFAULT_CONFIG_FILE,
+      DEFAULT_FILE,
+      DEFAULT_FORMAT,
+      DEFAULT_THREADS,
       false,
       false,
       false,
@@ -87,9 +93,11 @@ class Parser
         end
       end
 
-      # disable multi-threading
-      opts.on('-1', '--disable-multi-threading', 'Disable multi-threading (default: false)') do
-        args.disable_multi_threading = true
+      # threads
+      opts.on('-t', '--threads[=THREADS]', "Specify max threads (default: #{Parser::DEFAULT_THREADS}, max: 128)") do |threads|
+        if (0..Parser::MAX_THREADS).include?(threads.to_i)
+          args.threads = threads.to_i
+        end
       end
 
       # skip slow operations
@@ -98,7 +106,7 @@ class Parser
       end
 
       # stream output (forces JSON lines, doesn't output handled warnings or errors )
-      opts.on('-t', '--stream-output', 'Stream JSON lines to stdout (default: false)') do
+      opts.on('-j', '--stream-output', 'Stream JSON lines to stdout (default: false)') do
         args.output_file = nil
         args.verbose = false
         args.debug = false
