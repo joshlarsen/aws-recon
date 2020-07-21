@@ -95,12 +95,20 @@ arn:aws:sts::1234567890:assumed-role/role/9876543210 is not authorized to perfor
 
 The exact API operation that triggered the exception is indicated on the last line of the stack trace. If you can't resolve the necessary access, you should exclude those services with `-x` or `--not-services` so the collection can continue.
 
+### Threads
+
+AWS Recon uses multiple threads to try to overcome some of the I/O challenges of performing many API calls to endpoints all over the world.
+
+For global services like IAM, Shield, and Support, requests are not multi-threaded. The S3 module is multi-threaded since each bucket requires several additional calls to collect complete metadata.
+
+For regional services, a thread (up to the thread limit) is spawned for each service in a region. By default, up to 8 threads will be used. If your account has resources spread across many regions, you may see a speed improvement by increasing threads with `-tX`, where `X` is the number of threads.
+
 ### Options
 
 Most users will want limit collection to relevant services and regions. Running without any options will attempt to collect all resources from all 16 regular regions.
 
 ```
-./recon.rb -h
+$ ./recon.rb -h
 
 AWS Recon - AWS Inventory Collector
 
@@ -112,17 +120,18 @@ Usage: ./recon.rb [options]
     -c, --config[=CONFIG]            Specify config file for services & regions (e.g. config.yaml)
     -o, --output[=OUTPUT]            Specify output file (default: output.json)
     -f, --format[=FORMAT]            Specify output format (default: aws)
-    -1, --disable-multi-threading    Disable multi-threading (default: false)
+    -t, --threads[=THREADS]          Specify max threads (default: 8, max: 128)
     -z, --skip-slow                  Skip slow operations (default: false)
-    -t, --stream-output              Stream JSON lines to stdout (default: false)
+    -j, --stream-output              Stream JSON lines to stdout (default: false)
     -v, --verbose                    Output client progress and current operation
     -d, --debug                      Output debug with wire trace info
     -h, --help                       Print this help information
+
 ```
 
 #### Output
 
-Output is always some form of JSON - either JSON lines or plain JSON. The output is either written to a file (the default), or written to stdout (with `-t`).
+Output is always some form of JSON - either JSON lines or plain JSON. The output is either written to a file (the default), or written to stdout (with `-j`).
 
 
 ## Supported Services & Resources
