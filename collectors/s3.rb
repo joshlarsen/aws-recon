@@ -2,6 +2,9 @@ class S3 < Mapper
   #
   # Returns an array of resources.
   #
+  # Since S3 is a global service, the bucket operation calls
+  # can be parallelized.
+  #
   def collect
     resources = []
 
@@ -11,18 +14,22 @@ class S3 < Mapper
     @client.list_buckets.each_with_index do |response, page|
       log(response.context.operation_name, page)
 
-      response.buckets.each do |bucket|
+      Parallel.map(response.buckets.each, in_threads: @options.threads) do |bucket|
+        # use shared client instance
+        client = @client
+        @thread = Parallel.worker_number
         log(response.context.operation_name, bucket.name)
 
         struct = OpenStruct.new(bucket)
         struct.type = 'bucket'
         struct.arn = "arn:aws:s3:::#{bucket.name}"
 
-        # check bucket region constraint, update client if necessary
+        # check bucket region constraint
         location = @client.get_bucket_location({ bucket: bucket.name }).location_constraint
 
+        # reset client if needed
         unless location.empty?
-          @client = Aws::S3::Client.new({ region: location })
+          client = Aws::S3::Client.new({ region: location })
         end
 
         operations = [
@@ -39,7 +46,7 @@ class S3 < Mapper
         operations.each do |operation|
           op = OpenStruct.new(operation)
 
-          resp = @client.send(op.func, { bucket: bucket.name })
+          resp = client.send(op.func, { bucket: bucket.name })
 
           struct[op.key] = if op.key == 'policy'
                              resp.policy.string
@@ -50,9 +57,6 @@ class S3 < Mapper
         rescue Aws::S3::Errors::ServiceError => e
           raise e unless suppressed_errors.include?(e.code)
         end
-
-        # new client with "no region" if it was updated for location_constraint
-        @client = Aws::S3::Client.new unless location.empty?
 
         resources.push(struct.to_h)
       end
