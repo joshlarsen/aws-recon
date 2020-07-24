@@ -181,7 +181,7 @@ AWS Recon aims to collect all resources and metadata that are relevant in determ
 - [x] RDS
 - [x] Redshift
 - [x] Route53
-- [ ] Route53Domains
+- [x] Route53Domains
 - [x] S3
 - [x] SageMaker
 - [x] SES

@@ -58,6 +58,9 @@
   alias: apigatewayv2
 - name: Route53
   alias: route53
+- name: Route53Domains
+  global: true
+  alias: route53domains
 - name: SQS
   alias: sqs
 - name: ACM
