@@ -12,12 +12,14 @@ class CloudTrail < Mapper
 
       response.trail_list.each do |trail|
         # list_tags needs to call into home_region
-        if @region != trail.home_region
-          @client = Aws::CloudTrail::Client.new({ region: trail.home_region })
-        end
+        client = if @region != trail.home_region
+                   Aws::CloudTrail::Client.new({ region: trail.home_region })
+                 else
+                   @client
+                 end
 
         struct = OpenStruct.new(trail.to_h)
-        struct.tags = @client.list_tags({ resource_id_list: [trail.trail_arn] }).resource_tag_list.first.tags_list
+        struct.tags = client.list_tags({ resource_id_list: [trail.trail_arn] }).resource_tag_list.first.tags_list
         struct.type = 'cloud_trail'
         struct.arn = trail.trail_arn
 
