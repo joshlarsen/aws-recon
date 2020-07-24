@@ -16,7 +16,7 @@ class Redshift < Mapper
       response.clusters.each do |cluster|
         struct = OpenStruct.new(cluster.to_h)
         struct.type = 'cluster'
-        struc.arn = cluster.cluster_identifier
+        struct.arn = cluster.cluster_identifier
 
         resources.push(struct.to_h)
       end
