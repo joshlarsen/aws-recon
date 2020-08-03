@@ -2,7 +2,6 @@ class DirectoryService < Mapper
   #
   # Returns an array of resources.
   #
-  # TODO: test live
   # TODO: confirm paging behavior
   #
   def collect
