@@ -70,6 +70,7 @@ class S3 < Mapper
   # not an error
   def suppressed_errors
     %w[
+      AccessDenied
       ServerSideEncryptionConfigurationNotFoundError
       NoSuchBucketPolicy
       NoSuchTagSet
