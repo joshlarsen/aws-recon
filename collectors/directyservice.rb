@@ -17,7 +17,7 @@ class DirectoryService < Mapper
       response.directory_descriptions.each do |directory|
         struct = OpenStruct.new(directory.to_h)
         struct.type = 'directory'
-        struct.arn = "arn:aws:#{service}:#{@region}::directory/#{directory.directory_id}"
+        struct.arn = "arn:aws:#{@service}:#{@region}::directory/#{directory.directory_id}"
 
         resources.push(struct.to_h)
       end
