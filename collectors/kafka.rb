@@ -16,7 +16,7 @@ class Kafka < Mapper
       response.cluster_info_list.each do |cluster|
         struct = OpenStruct.new(cluster.to_h)
         struct.type = 'cluster'
-        struct.arn = cluster_arn
+        struct.arn = cluster.cluster_arn
 
         resources.push(struct.to_h)
       end
