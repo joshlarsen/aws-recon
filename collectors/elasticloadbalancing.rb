@@ -14,7 +14,7 @@ class ElasticLoadBalancing < Mapper
       response.load_balancer_descriptions.each do |elb|
         struct = OpenStruct.new(elb.to_h)
         struct.type = 'load_balancer'
-        struct.arn = elb.canonical_hosted_zone_name
+        struct.arn = elb.dns_name
 
         # describe_load_balancer_policies
         struct.policies = @client
