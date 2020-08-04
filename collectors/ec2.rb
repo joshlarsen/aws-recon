@@ -68,6 +68,21 @@ class EC2 < Mapper
       end
 
       #
+      # describe_security_groups
+      #
+      @client.describe_security_groups.each_with_index do |response, page|
+        log(response.context.operation_name, page)
+
+        response.security_groups.each do |security_group|
+          struct = OpenStruct.new(security_group.to_h)
+          struct.type = 'security_group'
+          struct.arn = security_group.group_id # no true ARN
+
+          resources.push(struct.to_h)
+        end
+      end
+
+      #
       # describe_subnets
       #
       @client.describe_subnets.each_with_index do |response, page|
