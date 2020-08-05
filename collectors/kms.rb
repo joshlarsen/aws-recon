@@ -22,9 +22,15 @@ class KMS < Mapper
 
         # get_key_rotation_status
         log(response.context.operation_name, 'get_key_rotation_status')
-        struct.rotation_enabled = @client
-                                  .get_key_rotation_status({ key_id: key.key_id })
-                                  .key_rotation_enabled
+        # The default master key rotation status can't be queried
+        begin
+          struct.rotation_enabled = @client
+                                    .get_key_rotation_status({ key_id: key.key_id })
+                                    .key_rotation_enabled
+        rescue Aws::KMS::Errors::ServiceError => e
+          log_error(e.code)
+          raise e unless suppressed_errors.include?(e.code)
+        end
 
         # list_grants
         @client.list_grants({ key_id: key.key_id }).each_with_index do |response, page|
@@ -47,10 +53,6 @@ class KMS < Mapper
                          .list_aliases({ key_id: key.key_id })
                          .aliases.map(&:to_h)
 
-      rescue Aws::KMS::Errors::ServiceError => e
-        log_error(e.code)
-        raise e unless suppressed_errors.include?(e.code)
-      ensure
         resources.push(struct.to_h)
       end
     end
