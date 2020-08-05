@@ -1,4 +1,7 @@
 ---
+- name: Organizations
+  global: true
+  alias: organizations
 - name: ConfigService
   alias: config
 - name: CodeBuild

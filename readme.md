@@ -177,7 +177,7 @@ AWS Recon aims to collect all resources and metadata that are relevant in determ
 - [x] Kinesis
 - [x] Lambda
 - [x] Lightsail
-- [ ] Organizations
+- [x] Organizations
 - [x] RDS
 - [x] Redshift
 - [x] Route53
