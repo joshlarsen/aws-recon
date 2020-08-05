@@ -84,6 +84,21 @@ class EC2 < Mapper
       end
 
       #
+      # describe_network_interfaces
+      #
+      @client.describe_network_interfaces.each_with_index do |response, page|
+        log(response.context.operation_name, page)
+
+        response.network_interfaces.each do |network_interface|
+          struct = OpenStruct.new(network_interface.to_h)
+          struct.type = 'network_interface'
+          struct.arn = network_interface.network_interface_id # no true ARN
+
+          resources.push(struct.to_h)
+        end
+      end
+
+      #
       # describe_subnets
       #
       @client.describe_subnets.each_with_index do |response, page|
