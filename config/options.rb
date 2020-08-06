@@ -1,6 +1,7 @@
 class Parser
   DEFAULT_CONFIG_FILE = nil
   DEFAULT_OUTPUT_FILE = 'output.json'.freeze
+  SERVICES_CONFIG_FILE = './config/services.yaml'.freeze
   DEFAULT_FORMAT = 'aws'.freeze
   DEFAULT_THREADS = 8
   MAX_THREADS = 128
@@ -28,7 +29,7 @@ class Parser
       exit
     end
 
-    aws_services = YAML.load(File.read('./config/services.yaml'), symbolize_names: true)
+    aws_services = YAML.load(File.read(SERVICES_CONFIG_FILE), symbolize_names: true)
 
     args = Options.new(
       aws_regions,
