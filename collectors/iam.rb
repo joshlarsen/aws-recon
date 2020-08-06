@@ -17,8 +17,8 @@ class IAM < Mapper
       response.user_detail_list.each do |user|
         struct = OpenStruct.new(user.to_h)
         struct.type = 'user'
-        struct.mfa_devices = @client.list_mfa_devices({ user_name: user.user_name }).mfa_devices.to_h
-        struct.ssh_keys = @client.list_ssh_public_keys({ user_name: user.user_name }).ssh_public_keys.to_h
+        struct.mfa_devices = @client.list_mfa_devices({ user_name: user.user_name }).mfa_devices.map(&:to_h)
+        struct.ssh_keys = @client.list_ssh_public_keys({ user_name: user.user_name }).ssh_public_keys.map(&:to_h)
 
         resources.push(struct.to_h)
       end
@@ -102,6 +102,35 @@ class IAM < Mapper
       end
     end
 
+    #
+    # get_credential_report
+    #
+    begin
+      @client.get_credential_report.each do |response|
+        log(response.context.operation_name)
+
+        struct = OpenStruct.new
+        struct.type = 'credential_report'
+        struct.content = CSV.parse(response.content, headers: :first_row).map(&:to_h)
+        struct.report_format = response.report_format
+        struct.generated_time = response.generated_time
+
+        resources.push(struct.to_h)
+      end
+    rescue Aws::IAM::Errors::ServiceError => e
+      log_error(e.code)
+      raise e unless suppressed_errors.include?(e.code)
+    end
+
     resources
+  end
+
+  private
+
+  # not an error
+  def suppressed_errors
+    %w[
+      ReportNotPresent
+    ]
   end
 end
