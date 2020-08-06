@@ -22,6 +22,21 @@ class SSM < Mapper
       end
     end
 
+    #
+    # describe_parameters
+    #
+    @client.describe_parameters.each_with_index do |response, page|
+      log(response.context.operation_name, page)
+
+      response.parameters.each do |parameter|
+        struct = OpenStruct.new(parameter.to_h)
+        struct.type = 'parameter'
+        struct.arn = "arn:aws:#{@service}:#{@region}::parameter/#{parameter.name}"
+
+        resources.push(struct.to_h)
+      end
+    end
+
     resources
   end
 end
