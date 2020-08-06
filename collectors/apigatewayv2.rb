@@ -16,6 +16,9 @@ class ApiGatewayV2 < Mapper
         struct.type = 'api'
         struct.arn = api.api_id
 
+        # get_authorizers
+        struct.authorizers = @client.get_authorizers({ api_id: api.api_id }).items.map(&:to_h)
+
         # get_stages
         struct.stages = @client.get_stages({ api_id: api.api_id }).items.map(&:to_h)
 
