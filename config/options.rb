@@ -1,6 +1,6 @@
 class Parser
   DEFAULT_CONFIG_FILE = nil
-  DEFAULT_FILE = 'output.json'.freeze
+  DEFAULT_OUTPUT_FILE = 'output.json'.freeze
   DEFAULT_FORMAT = 'aws'.freeze
   DEFAULT_THREADS = 8
   MAX_THREADS = 128
@@ -34,7 +34,7 @@ class Parser
       aws_regions,
       aws_services.map { |service| service[:name] },
       DEFAULT_CONFIG_FILE,
-      DEFAULT_FILE,
+      DEFAULT_OUTPUT_FILE,
       DEFAULT_FORMAT,
       DEFAULT_THREADS,
       false,
