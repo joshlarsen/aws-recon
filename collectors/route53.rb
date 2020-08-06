@@ -15,21 +15,9 @@ class Route53 < Mapper
         struct = OpenStruct.new(zone.to_h)
         struct.type = 'zone'
         struct.arn = zone.id
-
-        resources.push(struct.to_h)
-      end
-    end
-
-    #
-    # list_query_logging_configs
-    #
-    @client.list_query_logging_configs.each_with_index do |response, page|
-      log(response.context.operation_name, page)
-
-      response.query_logging_configs.each do |config|
-        struct = OpenStruct.new(config.to_h)
-        struct.type = 'logging_config'
-        struct.arn = "arn:aws:#{@service}:#{@region}::logging_config/#{config.id}"
+        struct.logging_config = @client
+                                .list_query_logging_configs({ hosted_zone_id: zone.id })
+                                .query_logging_configs.first.to_h
 
         resources.push(struct.to_h)
       end
