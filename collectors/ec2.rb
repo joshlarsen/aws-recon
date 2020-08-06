@@ -63,6 +63,9 @@ class EC2 < Mapper
           struct = OpenStruct.new(vpc.to_h)
           struct.type = 'vpc'
           struct.arn = vpc.vpc_id # no true ARN
+          struct.flow_logs = @client
+                             .describe_flow_logs({ filter: [{ name: 'resource-id', values: [vpc.vpc_id] }] })
+                             .flow_logs.first.to_h
 
           resources.push(struct.to_h)
         end
