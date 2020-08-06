@@ -30,6 +30,7 @@ class SSM < Mapper
 
       response.parameters.each do |parameter|
         struct = OpenStruct.new(parameter.to_h)
+        struct.string_type = parameter.type
         struct.type = 'parameter'
         struct.arn = "arn:aws:#{@service}:#{@region}::parameter/#{parameter.name}"
 
