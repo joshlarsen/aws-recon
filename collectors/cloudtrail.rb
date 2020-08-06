@@ -21,7 +21,7 @@ class CloudTrail < Mapper
         struct = OpenStruct.new(trail.to_h)
         struct.tags = client.list_tags({ resource_id_list: [trail.trail_arn] }).resource_tag_list.first.tags_list
         struct.type = 'cloud_trail'
-        struct.status = @client.get_trail_status({ name: trail.name }).to_h
+        struct.status = client.get_trail_status({ name: trail.name }).to_h
         struct.arn = trail.trail_arn
 
         resources.push(struct.to_h)
