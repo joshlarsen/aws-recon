@@ -17,8 +17,8 @@ class IAM < Mapper
       response.user_detail_list.each do |user|
         struct = OpenStruct.new(user.to_h)
         struct.type = 'user'
-        struct.mfa_devices = @client.list_mfa_devices({ user_name: user.user_name }).mfa_devices
-        struct.ssh_keys = @client.list_ssh_public_keys({ user_name: user.user_name }).ssh_public_keys
+        struct.mfa_devices = @client.list_mfa_devices({ user_name: user.user_name }).mfa_devices.to_h
+        struct.ssh_keys = @client.list_ssh_public_keys({ user_name: user.user_name }).ssh_public_keys.to_h
 
         resources.push(struct.to_h)
       end
