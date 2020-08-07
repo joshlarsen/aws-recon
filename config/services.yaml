@@ -120,6 +120,8 @@
   alias: sagemaker
 - name: ServiceQuotas
   alias: servicequotas
+- name: Transfer
+  alias: transfer
 - name: DirectConnect
   alias: dc
 - name: DirectoryService
