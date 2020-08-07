@@ -95,7 +95,7 @@ class Parser
       end
 
       # threads
-      opts.on('-t', '--threads[=THREADS]', "Specify max threads (default: #{Parser::DEFAULT_THREADS}, max: 128)") do |threads|
+      opts.on('-t', '--threads [THREADS]', "Specify max threads (default: #{Parser::DEFAULT_THREADS}, max: 128)") do |threads|
         if (0..Parser::MAX_THREADS).include?(threads.to_i)
           args.threads = threads.to_i
         end
