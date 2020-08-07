@@ -118,6 +118,8 @@
     - us-west-1
 - name: SageMaker
   alias: sagemaker
+- name: ServiceQuotas
+  alias: servicequotas
 - name: DirectConnect
   alias: dc
 - name: DirectoryService
