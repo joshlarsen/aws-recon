@@ -84,6 +84,16 @@ t3.eu-west-2.SageMaker.list_notebook_instances
 Finished in 46 seconds. Saving resources to output.json.
 ```
 
+#### Example command line options
+
+```
+$ AWS_PROFILE=<profile> ./recon.rb -s S3,EC2 -r global,us-east-1,us-east-2
+```
+
+```
+$ AWS_PROFILE=<profile> ./recon.rb --services S3,EC2 --regions global,us-east-1,us-east-2
+```
+
 #### Errors
 
 An exception will be raised on `AccessDeniedException` errors. This typically means your user/role doesn't have the necessary permissions to get/list/describe for that service. These exceptions are raised so troubleshooting access issues is easier.
@@ -113,14 +123,14 @@ $ ./recon.rb -h
 AWS Recon - AWS Inventory Collector
 
 Usage: ./recon.rb [options]
-    -r, --regions[=REGIONS]          Regions to scan, separated by comma (default: all)
-    -n, --not-regions[=REGIONS]      Regions to skip, separated by comma (default: none)
-    -s, --services[=SERVICES]        Services to scan, separated by comma (default: all)
-    -x, --not-services[=SERVICES]    Services to skip, separated by comma (default: none)
-    -c, --config[=CONFIG]            Specify config file for services & regions (e.g. config.yaml)
-    -o, --output[=OUTPUT]            Specify output file (default: output.json)
-    -f, --format[=FORMAT]            Specify output format (default: aws)
-    -t, --threads[=THREADS]          Specify max threads (default: 8, max: 128)
+    -r, --regions [REGIONS]          Regions to scan, separated by comma (default: all)
+    -n, --not-regions [REGIONS]      Regions to skip, separated by comma (default: none)
+    -s, --services [SERVICES]        Services to scan, separated by comma (default: all)
+    -x, --not-services [SERVICES]    Services to skip, separated by comma (default: none)
+    -c, --config [CONFIG]            Specify config file for services & regions (e.g. config.yaml)
+    -o, --output [OUTPUT]            Specify output file (default: output.json)
+    -f, --format [FORMAT]            Specify output format (default: aws)
+    -t, --threads [THREADS]          Specify max threads (default: 8, max: 128)
     -z, --skip-slow                  Skip slow operations (default: false)
     -j, --stream-output              Stream JSON lines to stdout (default: false)
     -v, --verbose                    Output client progress and current operation

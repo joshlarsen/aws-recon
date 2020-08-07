@@ -48,21 +48,21 @@ class Parser
       opts.banner = "\n\x1b[32mAWS Recon\x1b[0m - AWS Inventory Collector\n\nUsage: #{$0} [options]"
 
       # regions
-      opts.on('-r', '--regions[=REGIONS]', 'Regions to scan, separated by comma (default: all)') do |regions|
+      opts.on('-r', '--regions [REGIONS]', 'Regions to scan, separated by comma (default: all)') do |regions|
         next if regions.downcase == 'all'
 
         args.regions = args.regions.filter { |region| regions.split(',').include?(region) }
       end
 
       # regions to skip
-      opts.on('-n', '--not-regions[=REGIONS]', 'Regions to skip, separated by comma (default: none)') do |regions|
+      opts.on('-n', '--not-regions [REGIONS]', 'Regions to skip, separated by comma (default: none)') do |regions|
         next if regions.downcase == 'all'
 
         args.regions = args.regions.filter { |region| !regions.split(',').include?(region) }
       end
 
       # services
-      opts.on('-s', '--services[=SERVICES]', 'Services to scan, separated by comma (default: all)') do |services|
+      opts.on('-s', '--services [SERVICES]', 'Services to scan, separated by comma (default: all)') do |services|
         next if services.downcase == 'all'
 
         svcs = services.split(',')
@@ -70,7 +70,7 @@ class Parser
       end
 
       # services to skip
-      opts.on('-x', '--not-services[=SERVICES]', 'Services to skip, separated by comma (default: none)') do |services|
+      opts.on('-x', '--not-services [SERVICES]', 'Services to skip, separated by comma (default: none)') do |services|
         next if services.downcase == 'all'
 
         svcs = services.split(',')
@@ -78,17 +78,17 @@ class Parser
       end
 
       # config file
-      opts.on('-c', '--config[=CONFIG]', 'Specify config file for services & regions (e.g. config.yaml)') do |config|
+      opts.on('-c', '--config [CONFIG]', 'Specify config file for services & regions (e.g. config.yaml)') do |config|
         args.config_file = config
       end
 
       # output file
-      opts.on('-o', '--output[=OUTPUT]', 'Specify output file (default: output.json)') do |output|
+      opts.on('-o', '--output [OUTPUT]', 'Specify output file (default: output.json)') do |output|
         args.output_file = output
       end
 
       # output format
-      opts.on('-f', '--format[=FORMAT]', 'Specify output format (default: aws)') do |file|
+      opts.on('-f', '--format [FORMAT]', 'Specify output format (default: aws)') do |file|
         if %w[aws custom].include?(file.downcase)
           args.output_format = file.downcase
         end

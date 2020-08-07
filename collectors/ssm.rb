@@ -2,8 +2,6 @@ class SSM < Mapper
   #
   # Returns an array of resources.
   #
-  # TODO: test live
-  #
   def collect
     resources = []
 
