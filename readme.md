@@ -195,11 +195,11 @@ AWS Recon aims to collect all resources and metadata that are relevant in determ
 - [x] S3
 - [x] SageMaker
 - [x] SES
-- [ ] ServiceQuotas
+- [x] ServiceQuotas
 - [x] Shield
 - [x] SNS
 - [x] SQS
-- [ ] Transfer
+- [x] Transfer
 - [x] VPC
 - [ ] WAF
 - [x] WAFv2
