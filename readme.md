@@ -111,7 +111,7 @@ AWS Recon uses multiple threads to try to overcome some of the I/O challenges of
 
 For global services like IAM, Shield, and Support, requests are not multi-threaded. The S3 module is multi-threaded since each bucket requires several additional calls to collect complete metadata.
 
-For regional services, a thread (up to the thread limit) is spawned for each service in a region. By default, up to 8 threads will be used. If your account has resources spread across many regions, you may see a speed improvement by increasing threads with `-tX`, where `X` is the number of threads.
+For regional services, a thread (up to the thread limit) is spawned for each service in a region. By default, up to 8 threads will be used. If your account has resources spread across many regions, you may see a speed improvement by increasing threads with `-t X`, where `X` is the number of threads.
 
 ### Options
 
