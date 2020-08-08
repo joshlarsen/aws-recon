@@ -39,6 +39,9 @@ class Mapper
     # regional service
     client_options.merge!({ region: region }) unless region == 'global'
 
+    # organizations only uses us-east-1 in non cn/gov regions
+    client_options.merge!({ region: 'us-east-1' }) if service.downcase == 'organizations' # rubocop:disable Layout/LineLength
+
     # debug with wire trace
     client_options.merge!({ http_wire_trace: true }) if @options.debug
 
