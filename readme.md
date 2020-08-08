@@ -115,7 +115,7 @@ For regional services, a thread (up to the thread limit) is spawned for each ser
 
 ### Options
 
-Most users will want limit collection to relevant services and regions. Running without any options will attempt to collect all resources from all 16 regular regions.
+Most users will want to limit collection to relevant services and regions. Running without any options will attempt to collect all resources from all 16 regular regions.
 
 ```
 $ ./recon.rb -h
