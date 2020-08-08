@@ -60,6 +60,9 @@ def collect(service, region)
   @resources.concat(collection) if @options.output_file
 end
 
+#
+# main wrapper
+#
 begin
   #
   # global services
