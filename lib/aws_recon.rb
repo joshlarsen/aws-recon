@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# $LOAD_PATH.unshift(File.expand_path(File.join('aws_recon'), __FILE__))
-
 module AwsRecon
 end
 
