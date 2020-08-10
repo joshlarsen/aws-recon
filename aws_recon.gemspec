@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'aws_recon'
   spec.version       = AwsRecon::VERSION
   spec.authors       = ['Josh Larsen']
-
+  spec.required_ruby_version = '>= 2.5.0'
   spec.summary       = 'A multi-threaded AWS inventory collection tool.'
   spec.description   = spec.summary
   spec.homepage      = 'https://github.com/darkbitio/aws-recon'

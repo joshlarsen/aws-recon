@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
+# $LOAD_PATH.unshift(File.expand_path(File.join('aws_recon'), __FILE__))
+
 module AwsRecon
 end
-
-# $LOAD_PATH.unshift(File.expand_path(__FILE__))
-puts $LOAD_PATH
 
 require 'parallel'
 require 'ostruct'
