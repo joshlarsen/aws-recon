@@ -2,7 +2,7 @@
 
 class Parser
   DEFAULT_CONFIG_FILE = nil
-  DEFAULT_OUTPUT_FILE = File.join(File.dirname(__FILE__), '../output.json').freeze
+  DEFAULT_OUTPUT_FILE = File.expand_path(File.join(Dir.pwd, 'output.json')).freeze
   SERVICES_CONFIG_FILE = File.join(File.dirname(__FILE__), 'services.yaml').freeze
   DEFAULT_FORMAT = 'aws'
   DEFAULT_THREADS = 8
@@ -86,7 +86,7 @@ class Parser
 
       # output file
       opts.on('-o', '--output [OUTPUT]', 'Specify output file (default: output.json)') do |output|
-        args.output_file = output
+        args.output_file = File.expand_path(File.join(Dir.pwd, output))
       end
 
       # output format
