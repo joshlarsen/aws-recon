@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class Parser
   DEFAULT_CONFIG_FILE = nil
-  DEFAULT_OUTPUT_FILE = 'output.json'.freeze
-  SERVICES_CONFIG_FILE = './config/services.yaml'.freeze
-  DEFAULT_FORMAT = 'aws'.freeze
+  DEFAULT_OUTPUT_FILE = File.join(File.dirname(__FILE__), '../output.json').freeze
+  SERVICES_CONFIG_FILE = File.join(File.dirname(__FILE__), 'services.yaml').freeze
+  DEFAULT_FORMAT = 'aws'
   DEFAULT_THREADS = 8
   MAX_THREADS = 128
 
