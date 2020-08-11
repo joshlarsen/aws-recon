@@ -232,18 +232,22 @@ Clone this repository, then install the required gems using `bundle`:
 ```
 $ git clone git@github.com:darkbitio/aws-recon.git
 $ cd aws-recon
-$ bundle
-...
-Using aws-sdk-core 3.103.0
-...
-Bundle complete! 5 Gemfile dependencies, 259 gems now installed.
-Use `bundle info [gemname]` to see where a bundled gem is installed.
 ```
+
+Create a sticky gemset if using RVM:
+
+```
+$ rvm use 2.6.5@aws_recon_dev --create --ruby-version
+```
+
+Run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ### TODO
 
 - [ ] Optionally suppress AWS API errors instead of re-raising them
-- [ ] Package as a gem
+- [x] Package as a gem
 - [ ] Test coverage with AWS SDK stubbed resources
 
 
