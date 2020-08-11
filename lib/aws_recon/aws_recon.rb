@@ -88,7 +88,7 @@ module AwsRecon
       @regions.filter { |x| x != 'global' }.each do |region|
         Parallel.map(@aws_services.map { |x| OpenStruct.new(x) }.filter { |s| !s.global }.each, in_threads: @options.threads) do |service|
           # some services aren't available in some regions
-          skip_region = @service&.excluded_regions&.include?(region)
+          skip_region = service&.excluded_regions&.include?(region)
 
           # user included this region in the args
           next unless @regions.include?(region) && !skip_region

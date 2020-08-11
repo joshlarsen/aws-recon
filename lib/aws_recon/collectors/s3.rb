@@ -15,8 +15,6 @@ class S3 < Mapper
       log(response.context.operation_name, page)
 
       Parallel.map(response.buckets.each, in_threads: @options.threads) do |bucket|
-        # use shared client instance
-        client = @client
         @thread = Parallel.worker_number
         log(response.context.operation_name, bucket.name)
 
@@ -27,10 +25,14 @@ class S3 < Mapper
         # check bucket region constraint
         location = @client.get_bucket_location({ bucket: bucket.name }).location_constraint
 
-        # reset client if needed
-        unless location.empty?
-          client = Aws::S3::Client.new({ region: location })
-        end
+        # if you use a region other than the us-east-1 endpoint
+        # to create a bucket, you must set the location_constraint
+        # bucket parameter to the same region. (https://docs.aws.amazon.com/general/latest/gr/s3.html)
+        client = if location.empty?
+                   @client
+                 else
+                   Aws::S3::Client.new({ region: location })
+                 end
 
         operations = [
           { func: 'get_bucket_acl', key: 'acl', field: nil },

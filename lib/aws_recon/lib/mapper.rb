@@ -15,6 +15,13 @@
 # to add 5 seconds delay on each retry for a total max of 55 seconds.
 #
 class Mapper
+  # Services that use us-east-1 endpoint only:
+  #   Organizations
+  #   Route53Domains
+  #   Shield
+  #   S3 (unless the bucket was created in another region)
+  SINGLE_REGION_SERVICES = %w[route53domains s3 shield support organizations].freeze
+
   def initialize(service, region, options)
     @service = service
     @region = region
@@ -39,8 +46,8 @@ class Mapper
     # regional service
     client_options.merge!({ region: region }) unless region == 'global'
 
-    # organizations only uses us-east-1 in non cn/gov regions
-    client_options.merge!({ region: 'us-east-1' }) if service.downcase == 'organizations' # rubocop:disable Layout/LineLength
+    # single region services
+    client_options.merge!({ region: 'us-east-1' }) if SINGLE_REGION_SERVICES.include?(service.downcase) # rubocop:disable Layout/LineLength
 
     # debug with wire trace
     client_options.merge!({ http_wire_trace: true }) if @options.debug

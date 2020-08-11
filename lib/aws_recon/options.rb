@@ -47,7 +47,7 @@ class Parser
     )
 
     opt_parser = OptionParser.new do |opts|
-      opts.banner = "\n\x1b[32mAWS Recon\x1b[0m - AWS Inventory Collector\n\nUsage: aws_recon [options]"
+      opts.banner = "\n\x1b[32mAWS Recon\x1b[0m - AWS Inventory Collector (#{AwsRecon::VERSION})\n\nUsage: aws_recon [options]"
 
       # regions
       opts.on('-r', '--regions [REGIONS]', 'Regions to scan, separated by comma (default: all)') do |regions|

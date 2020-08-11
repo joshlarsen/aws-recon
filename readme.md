@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/aws_recon.svg)](https://badge.fury.io/rb/aws_recon)
+
 # AWS Recon
 
 A multi-threaded AWS inventory collection tool.
@@ -24,17 +26,30 @@ Ruby 2.5.x or 2.6.x (developed and tested with 2.6.5)
 
 ### Installation
 
-Clone this repository, then install the required gems using `bundle`:
+Install the gem:
 
 ```
-$ git clone git@github.com:darkbitio/aws-recon.git
-$ cd aws-recon
-$ bundle
+$ gem install aws_recon
+Fetching aws_recon-0.2.2.gem
+Fetching aws-sdk-resources-3.76.0.gem
+Fetching aws-sdk-3.0.1.gem
+Fetching parallel-1.19.2.gem
 ...
-Using aws-sdk-core 3.103.0
+Successfully installed aws-sdk-3.0.1
+Successfully installed parallel-1.19.2
+Successfully installed aws_recon-0.2.2
+```
+
+Or add it to your Gemfile using `bundle`:
+
+```
+$ bundle add aws_recon
+Fetching gem metadata from https://rubygems.org/
+Resolving dependencies...
 ...
-Bundle complete! 5 Gemfile dependencies, 259 gems now installed.
-Use `bundle info [gemname]` to see where a bundled gem is installed.
+Using aws-sdk 3.0.1
+Using parallel 1.19.2
+Using aws_recon 0.2.2
 ```
 
 ## Usage
@@ -42,13 +57,13 @@ Use `bundle info [gemname]` to see where a bundled gem is installed.
 AWS Recon will leverage any AWS credentials currently available to the environment it runs in. If you are collecting from multiple accounts, you may want to leverage something like [aws-vault](https://github.com/99designs/aws-vault) to manage different credentials. 
 
 ```
-$ aws-vault exec profile -- ./recon.rb
+$ aws-vault exec profile -- aws_recon
 ```
 
 Plain environment variables will work fine too.
 
 ```
-$ AWS_PROFILE=<profile> ./recon.rb
+$ AWS_PROFILE=<profile> aws_recon
 ```
 
 You may want to use the `-v` or `--verbose` flag initially to see status and activity while collection is running. 
@@ -62,7 +77,7 @@ In verbose mode, the console output will show:
 The `t` prefix indicates which thread a particular request is running under. Region, service, and operation indicate which request operation is currently in progress and where.
 
 ```
-$ ./recon.rb -v
+$ aws_recon -v
 
 t0.global.EC2.describe_account_attributes
 t2.global.S3.list_buckets
@@ -87,11 +102,11 @@ Finished in 46 seconds. Saving resources to output.json.
 #### Example command line options
 
 ```
-$ AWS_PROFILE=<profile> ./recon.rb -s S3,EC2 -r global,us-east-1,us-east-2
+$ AWS_PROFILE=<profile> aws_recon -s S3,EC2 -r global,us-east-1,us-east-2
 ```
 
 ```
-$ AWS_PROFILE=<profile> ./recon.rb --services S3,EC2 --regions global,us-east-1,us-east-2
+$ AWS_PROFILE=<profile> aws_recon --services S3,EC2 --regions global,us-east-1,us-east-2
 ```
 
 #### Errors
@@ -118,11 +133,11 @@ For regional services, a thread (up to the thread limit) is spawned for each ser
 Most users will want to limit collection to relevant services and regions. Running without any options will attempt to collect all resources from all 16 regular regions.
 
 ```
-$ ./recon.rb -h
+$ aws_recon -h
 
 AWS Recon - AWS Inventory Collector
 
-Usage: ./recon.rb [options]
+Usage: aws_recon [options]
     -r, --regions [REGIONS]          Regions to scan, separated by comma (default: all)
     -n, --not-regions [REGIONS]      Regions to skip, separated by comma (default: none)
     -s, --services [SERVICES]        Services to scan, separated by comma (default: all)
@@ -209,6 +224,21 @@ AWS Recon aims to collect all resources and metadata that are relevant in determ
 ### Additional Coverage
 
 One of the primary motivations for AWS Recon was to build a tool that is easy to maintain and extend. If you feel like coverage could be improved for a particular service, we would welcome PRs to that effect. Anyone with a moderate familiarity with Ruby will be able to mimic the pattern used by the existing collectors to query a specific service and add the results to the resource collection.
+
+### Development
+
+Clone this repository, then install the required gems using `bundle`:
+
+```
+$ git clone git@github.com:darkbitio/aws-recon.git
+$ cd aws-recon
+$ bundle
+...
+Using aws-sdk-core 3.103.0
+...
+Bundle complete! 5 Gemfile dependencies, 259 gems now installed.
+Use `bundle info [gemname]` to see where a bundled gem is installed.
+```
 
 ### TODO
 
