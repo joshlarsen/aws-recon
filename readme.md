@@ -227,7 +227,7 @@ One of the primary motivations for AWS Recon was to build a tool that is easy to
 
 ### Development
 
-Clone this repository, then install the required gems using `bundle`:
+Clone this repository:
 
 ```
 $ git clone git@github.com:darkbitio/aws-recon.git
