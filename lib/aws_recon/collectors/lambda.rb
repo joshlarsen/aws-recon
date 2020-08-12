@@ -1,6 +1,5 @@
 class Lambda < Mapper
   def collect
-    service = self.class.to_s.downcase
     resources = []
 
     #
