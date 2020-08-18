@@ -48,6 +48,23 @@ class EC2 < Mapper
             struct.arn = instance.instance_id # no true ARN
             struct.reservation_id = reservation.reservation_id
 
+            # collect instance user_data
+            if @options.collect_user_data
+              user_data_raw = @client.describe_instance_attribute({
+                                                                    attribute: 'userData',
+                                                                    instance_id: instance.instance_id
+                                                                  }).user_data.to_h[:value]
+
+              # don't save non-string user_data
+              if user_data_raw
+                user_data = Base64.decode64(user_data_raw)
+
+                if user_data.force_encoding('UTF-8').ascii_only?
+                  struct.user_data = user_data
+                end
+              end
+            end
+
             resources.push(struct.to_h)
           end
         end

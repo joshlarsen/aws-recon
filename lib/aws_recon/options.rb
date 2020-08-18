@@ -15,6 +15,7 @@ class Parser
     :output_file,
     :output_format,
     :threads,
+    :collect_user_data,
     :skip_slow,
     :stream_output,
     :verbose,
@@ -40,6 +41,7 @@ class Parser
       DEFAULT_OUTPUT_FILE,
       DEFAULT_FORMAT,
       DEFAULT_THREADS,
+      false,
       false,
       false,
       false,
@@ -101,6 +103,11 @@ class Parser
         if (0..Parser::MAX_THREADS).include?(threads.to_i)
           args.threads = threads.to_i
         end
+      end
+
+      # collect EC2 instance user data
+      opts.on('-u', '--user-data', 'Collect EC2 instance user data (default: false)') do
+        args.collect_user_data = true
       end
 
       # skip slow operations
