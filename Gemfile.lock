@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    aws_recon (0.2.4)
+    aws_recon (0.2.5)
       aws-sdk (~> 3.0)
       parallel (~> 1.19)
 
