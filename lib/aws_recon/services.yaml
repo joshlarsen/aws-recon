@@ -33,6 +33,8 @@
   alias: elbv2
   excluded_regions:
     - ap-southeast-1
+- name: ElastiCache
+  alias: elasticache
 - name: IAM
   global: true
   alias: iam
