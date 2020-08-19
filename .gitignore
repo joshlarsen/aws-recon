@@ -1,5 +1,6 @@
 .DS_Store
 *.json
+Gemfile.lock
 .rvmrc
 .ruby-gemset
 .ruby-version
