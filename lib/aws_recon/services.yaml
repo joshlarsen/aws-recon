@@ -21,8 +21,6 @@
   alias: ec2
 - name: EKS
   alias: eks
-  excluded_regions:
-    - us-west-1
 - name: ECS
   alias: ecs
 - name: ElasticLoadBalancing
