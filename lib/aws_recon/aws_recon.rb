@@ -44,7 +44,7 @@ module AwsRecon
     #
     def collect(service, region)
       mapper = Object.const_get(service.name)
-      resources = mapper.new(service.name, region, @options)
+      resources = mapper.new(@account_id, service.name, region, @options)
 
       collection = resources.collect.map do |resource|
         if @options.output_format == 'custom'

@@ -22,7 +22,8 @@ class Mapper
   #   S3 (unless the bucket was created in another region)
   SINGLE_REGION_SERVICES = %w[route53domains s3 shield support organizations].freeze
 
-  def initialize(service, region, options)
+  def initialize(account, service, region, options)
+    @account = account
     @service = service
     @region = region
     @options = options
