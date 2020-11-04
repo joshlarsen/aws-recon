@@ -49,6 +49,21 @@ class IAM < Mapper
     end
 
     #
+    # list_policies
+    #
+    @client.list_policies.each do |response|
+      log(response.context.operation_name)
+
+      # managed policies
+      response.policies.each do |policy|
+        struct = OpenStruct.new(policy.to_h)
+        struct.type = 'managed_policy'
+
+        resources.push(struct.to_h)
+      end
+    end
+
+    #
     # get_account_password_policy
     #
     @client.get_account_password_policy.each do |response|
@@ -56,6 +71,7 @@ class IAM < Mapper
 
       struct = OpenStruct.new(response.password_policy.to_h)
       struct.type = 'password_policy'
+      struct.arn = "arn:aws:iam::#{@account}:account_password_policy/global"
 
       resources.push(struct.to_h)
     end
@@ -68,6 +84,7 @@ class IAM < Mapper
 
       struct = OpenStruct.new(response.summary_map)
       struct.type = 'account_summary'
+      struct.arn = "arn:aws:iam::#{@account}:account_summary/global"
 
       resources.push(struct.to_h)
     end
@@ -111,6 +128,7 @@ class IAM < Mapper
 
         struct = OpenStruct.new
         struct.type = 'credential_report'
+        struct.arn = "arn:aws:iam::#{@account}:credential_report/global"
         struct.content = CSV.parse(response.content, headers: :first_row).map(&:to_h)
         struct.report_format = response.report_format
         struct.generated_time = response.generated_time
