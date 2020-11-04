@@ -8,7 +8,7 @@ class Formatter
   def custom(account_id, region, service, resource)
     {
       account: account_id,
-      name: resource[:arn] || "#{account_id}_#{region}_#{service.name}_#{resource[:type]}",
+      name: resource[:arn],
       service: service.name,
       region: region,
       asset_type: resource[:type],
