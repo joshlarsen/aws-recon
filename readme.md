@@ -51,7 +51,7 @@ Resolving dependencies...
 ...
 Using aws-sdk 3.0.1
 Using parallel 1.19.2
-Using aws_recon 0.2.2
+Using aws_recon 0.2.8
 ```
 
 To run via a Docker a container, pass the necessary AWS credentials into the Docker `run` command. For example:
@@ -94,7 +94,7 @@ $ aws-vault exec <vault_profile> -- docker run -t --rm \
   aws_recon -j -s EC2 -r global,us-east-1,us-east-2
 ```
 
-To run from a Docker container using `aws-vault` managed credentials and output to a file, you will need to satisfy a couple of prerequisits. First, Docker needs access to bind mount the path you specify (or a parent path above). Second, you need to create an empty file to save the output into (e.g. `output.json`). This is because we are only mounting that one file into the Docker container at run time. For example:
+To run from a Docker container using `aws-vault` managed credentials and output to a file, you will need to satisfy a couple of requirements. First, Docker needs access to bind mount the path you specify (or a parent path above). Second, you need to create an empty file to save the output into (e.g. `output.json`). This is because we are only mounting that one file into the Docker container at run time. For example:
 
 Create an empty file.
 
