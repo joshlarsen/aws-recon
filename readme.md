@@ -57,14 +57,14 @@ Using aws_recon 0.2.2
 To run via a Docker a container, pass the necessary AWS credentials into the Docker `run` command. For example:
 
 ```
-$ docker run --rm \
+$ docker run -t --rm \
   -e AWS_REGION \
   -e AWS_ACCESS_KEY_ID \
   -e AWS_SECRET_ACCESS_KEY \
   -e AWS_SESSION_TOKEN \
   -v $(pwd)/output.json:/recon/output.json \
   darkbitio/aws_recon:latest \
-  aws_recon -v -s EC2 -r us-east-1,us-east-2
+  aws_recon -v -s EC2 -r global,us-east-1,us-east-2
 ```
 
 
@@ -85,26 +85,26 @@ $ AWS_PROFILE=<profile> aws_recon
 To run from a Docker container using `aws-vault` managed credentials (output to file):
 
 ```
-$ aws-vault exec darkbit -- docker run --rm \
+$ aws-vault exec <vault_profile> -- docker run -t --rm \
   -e AWS_REGION \
   -e AWS_ACCESS_KEY_ID \
   -e AWS_SECRET_ACCESS_KEY \
   -e AWS_SESSION_TOKEN \
   -v $(pwd)/output.json:/recon/output.json \
   darkbitio/aws_recon:latest \
-  aws_recon -s EC2 -v -r us-east-1,us-east-2
+  aws_recon -s EC2 -v -r global,us-east-1,us-east-2
 ```
 
 To run from a Docker container using `aws-vault` managed credentials (output to stdout):
 
 ```
-$ aws-vault exec darkbit -- docker run --rm \
+$ aws-vault exec <vault_profile> -- docker run -t --rm \
   -e AWS_REGION \
   -e AWS_ACCESS_KEY_ID \
   -e AWS_SECRET_ACCESS_KEY \
   -e AWS_SESSION_TOKEN \
   darkbitio/aws_recon:latest \
-  aws_recon -j -s EC2 -r us-east-1,us-east-2
+  aws_recon -j -s EC2 -r global,us-east-1,us-east-2
 ```
 
 You may want to use the `-v` or `--verbose` flag initially to see status and activity while collection is running. 

@@ -11,7 +11,7 @@ ARG BUNDLER_VERSION=2.1.4
 # Install new Bundler version
 RUN rm /usr/local/lib/ruby/gems/*/specifications/default/bundler-*.gemspec && \
     gem uninstall bundler && \
-    gem install bundler -v $BUNDLER_VERSION
+    gem install bundler -v ${BUNDLER_VERSION}
 
 # Install gem
 RUN gem install ${GEM} -v ${VERSION}
