@@ -32,14 +32,14 @@ To run locally, first install the gem:
 
 ```
 $ gem install aws_recon
-Fetching aws_recon-0.2.7.gem
+Fetching aws_recon-0.2.8.gem
 Fetching aws-sdk-resources-3.76.0.gem
 Fetching aws-sdk-3.0.1.gem
 Fetching parallel-1.19.2.gem
 ...
 Successfully installed aws-sdk-3.0.1
 Successfully installed parallel-1.19.2
-Successfully installed aws_recon-0.2.7
+Successfully installed aws_recon-0.2.8
 ```
 
 Or add it to your Gemfile using `bundle`:
@@ -63,7 +63,7 @@ $ docker run --rm \
   -e AWS_SECRET_ACCESS_KEY \
   -e AWS_SESSION_TOKEN \
   -v $(pwd)/output.json:/recon/output.json \
-  aws_recon:latest \
+  darkbitio/aws_recon:latest \
   aws_recon -v -s EC2 -r us-east-1,us-east-2
 ```
 
@@ -91,7 +91,7 @@ $ aws-vault exec darkbit -- docker run --rm \
   -e AWS_SECRET_ACCESS_KEY \
   -e AWS_SESSION_TOKEN \
   -v $(pwd)/output.json:/recon/output.json \
-  aws_recon:latest \
+  darkbitio/aws_recon:latest \
   aws_recon -s EC2 -v -r us-east-1,us-east-2
 ```
 
@@ -103,7 +103,7 @@ $ aws-vault exec darkbit -- docker run --rm \
   -e AWS_ACCESS_KEY_ID \
   -e AWS_SECRET_ACCESS_KEY \
   -e AWS_SESSION_TOKEN \
-  aws_recon:latest \
+  darkbitio/aws_recon:latest \
   aws_recon -j -s EC2 -r us-east-1,us-east-2
 ```
 
@@ -176,7 +176,7 @@ Most users will want to limit collection to relevant services and regions. Runni
 ```
 $ aws_recon -h
 
-AWS Recon - AWS Inventory Collector (0.2.7)
+AWS Recon - AWS Inventory Collector (0.2.8)
 
 Usage: aws_recon [options]
     -r, --regions [REGIONS]          Regions to scan, separated by comma (default: all)
