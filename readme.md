@@ -82,19 +82,6 @@ Plain environment variables will work fine too.
 $ AWS_PROFILE=<profile> aws_recon
 ```
 
-To run from a Docker container using `aws-vault` managed credentials (output to file):
-
-```
-$ aws-vault exec <vault_profile> -- docker run -t --rm \
-  -e AWS_REGION \
-  -e AWS_ACCESS_KEY_ID \
-  -e AWS_SECRET_ACCESS_KEY \
-  -e AWS_SESSION_TOKEN \
-  -v $(pwd)/output.json:/recon/output.json \
-  darkbitio/aws_recon:latest \
-  aws_recon -s EC2 -v -r global,us-east-1,us-east-2
-```
-
 To run from a Docker container using `aws-vault` managed credentials (output to stdout):
 
 ```
@@ -105,6 +92,27 @@ $ aws-vault exec <vault_profile> -- docker run -t --rm \
   -e AWS_SESSION_TOKEN \
   darkbitio/aws_recon:latest \
   aws_recon -j -s EC2 -r global,us-east-1,us-east-2
+```
+
+To run from a Docker container using `aws-vault` managed credentials and output to a file, you will need to satisfy a couple of prerequisits. First, Docker needs access to bind mount the path you specify (or a parent path above). Second, you need to create an empty file to save the output into (e.g. `output.json`). This is because we are only mounting that one file into the Docker container at run time. For example:
+
+Create an empty file.
+
+```
+$ touch output.json
+```
+
+Run the `aws_recon` container, specifying the output file.
+
+```
+$ aws-vault exec <vault_profile> -- docker run -t --rm \
+  -e AWS_REGION \
+  -e AWS_ACCESS_KEY_ID \
+  -e AWS_SECRET_ACCESS_KEY \
+  -e AWS_SESSION_TOKEN \
+  -v $(pwd)/output.json:/recon/output.json \
+  darkbitio/aws_recon:latest \
+  aws_recon -s EC2 -v -r global,us-east-1,us-east-2
 ```
 
 You may want to use the `-v` or `--verbose` flag initially to see status and activity while collection is running. 
