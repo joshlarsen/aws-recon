@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+#
+# Manually generated binstub
+#
+
+require "rubygems"
+require "bundler/setup"
+
+load Gem.bin_path("aws_recon", "aws_recon")

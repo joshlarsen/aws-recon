@@ -26,7 +26,9 @@ Ruby 2.5.x or 2.6.x (developed and tested with 2.6.5)
 
 ### Installation
 
-Install the gem:
+AWS Recon can be run locally by installing the Ruby gem, or via a Docker container.
+
+To run locally, first install the gem:
 
 ```
 $ gem install aws_recon
@@ -52,6 +54,20 @@ Using parallel 1.19.2
 Using aws_recon 0.2.2
 ```
 
+To run via a Docker a container, pass the necessary AWS credentials into the Docker `run` command. For example:
+
+```
+$ docker run --rm \
+  -e AWS_REGION \
+  -e AWS_ACCESS_KEY_ID \
+  -e AWS_SECRET_ACCESS_KEY \
+  -e AWS_SESSION_TOKEN \
+  -v $(pwd)/output.json:/recon/output.json \
+  aws_recon:latest \
+  aws_recon -v -s EC2 -r us-east-1,us-east-2
+```
+
+
 ## Usage
 
 AWS Recon will leverage any AWS credentials currently available to the environment it runs in. If you are collecting from multiple accounts, you may want to leverage something like [aws-vault](https://github.com/99designs/aws-vault) to manage different credentials. 
@@ -64,6 +80,31 @@ Plain environment variables will work fine too.
 
 ```
 $ AWS_PROFILE=<profile> aws_recon
+```
+
+To run from a Docker container using `aws-vault` managed credentials (output to file):
+
+```
+$ aws-vault exec darkbit -- docker run --rm \
+  -e AWS_REGION \
+  -e AWS_ACCESS_KEY_ID \
+  -e AWS_SECRET_ACCESS_KEY \
+  -e AWS_SESSION_TOKEN \
+  -v $(pwd)/output.json:/recon/output.json \
+  aws_recon:latest \
+  aws_recon -s EC2 -v -r us-east-1,us-east-2
+```
+
+To run from a Docker container using `aws-vault` managed credentials (output to stdout):
+
+```
+$ aws-vault exec darkbit -- docker run --rm \
+  -e AWS_REGION \
+  -e AWS_ACCESS_KEY_ID \
+  -e AWS_SECRET_ACCESS_KEY \
+  -e AWS_SESSION_TOKEN \
+  aws_recon:latest \
+  aws_recon -j -s EC2 -r us-east-1,us-east-2
 ```
 
 You may want to use the `-v` or `--verbose` flag initially to see status and activity while collection is running. 
