@@ -10,7 +10,10 @@ class IAM < Mapper
     #   list_mfa_devices
     #   list_ssh_public_keys
     #
-    @client.get_account_authorization_details.each_with_index do |response, page|
+    opts = {
+      filter: %w[User Role Group LocalManagedPolicy AWSManagedPolicy]
+    }
+    @client.get_account_authorization_details(opts).each_with_index do |response, page|
       log(response.context.operation_name, page)
 
       # users
@@ -19,6 +22,14 @@ class IAM < Mapper
         struct.type = 'user'
         struct.mfa_devices = @client.list_mfa_devices({ user_name: user.user_name }).mfa_devices.map(&:to_h)
         struct.ssh_keys = @client.list_ssh_public_keys({ user_name: user.user_name }).ssh_public_keys.map(&:to_h)
+        struct.user_policy_list = if user.user_policy_list
+                                    user.user_policy_list.map do |p|
+                                      {
+                                        policy_name: p.policy_name,
+                                        policy_document: JSON.parse(CGI.unescape(p.policy_document))
+                                      }
+                                    end
+                                  end
 
         resources.push(struct.to_h)
       end
@@ -27,6 +38,14 @@ class IAM < Mapper
       response.group_detail_list.each do |group|
         struct = OpenStruct.new(group.to_h)
         struct.type = 'group'
+        struct.group_policy_list = if group.group_policy_list
+                                     group.group_policy_list.map do |p|
+                                       {
+                                         policy_name: p.policy_name,
+                                         policy_document: JSON.parse(CGI.unescape(p.policy_document))
+                                       }
+                                     end
+                                    end
 
         resources.push(struct.to_h)
       end
@@ -35,6 +54,15 @@ class IAM < Mapper
       response.role_detail_list.each do |role|
         struct = OpenStruct.new(role.to_h)
         struct.type = 'role'
+        struct.assume_role_policy_document = JSON.parse(CGI.unescape(role.assume_role_policy_document))
+        struct.role_policy_list = if role.role_policy_list
+                                    role.role_policy_list.map do |p|
+                                      {
+                                        policy_name: p.policy_name,
+                                        policy_document: JSON.parse(CGI.unescape(p.policy_document))
+                                      }
+                                    end
+                                  end
 
         resources.push(struct.to_h)
       end
@@ -43,21 +71,16 @@ class IAM < Mapper
       response.policies.each do |policy|
         struct = OpenStruct.new(policy.to_h)
         struct.type = 'policy'
-
-        resources.push(struct.to_h)
-      end
-    end
-
-    #
-    # list_policies
-    #
-    @client.list_policies.each do |response|
-      log(response.context.operation_name)
-
-      # managed policies
-      response.policies.each do |policy|
-        struct = OpenStruct.new(policy.to_h)
-        struct.type = 'managed_policy'
+        struct.policy_version_list = if policy.policy_version_list
+                                       policy.policy_version_list.map do |p|
+                                         {
+                                           version_id: p.version_id,
+                                           document: JSON.parse(CGI.unescape(p.document)),
+                                           is_default_version: p.is_default_version,
+                                           create_date: p.create_date
+                                         }
+                                       end
+                                      end
 
         resources.push(struct.to_h)
       end
