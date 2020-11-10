@@ -18,6 +18,7 @@ class SQS < Mapper
         struct = OpenStruct.new(@client.get_queue_attributes({ queue_url: queue, attribute_names: ['All'] }).attributes.to_h)
         struct.type = 'queue'
         struct.arn = struct.QueueArn
+        struct.Policy = JSON.parse(CGI.unescape(struct.Policy))
 
         resources.push(struct.to_h)
       end
