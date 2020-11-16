@@ -5,7 +5,7 @@ LABEL maintainer="Darkbit <info@darkbit.io>"
 
 ARG USER=recon
 ARG GEM=aws_recon
-ARG VERSION=0.2.9
+ARG VERSION=0.2.10
 ARG BUNDLER_VERSION=2.1.4
 
 # Install new Bundler version
