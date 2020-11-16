@@ -31,6 +31,21 @@ class Organizations < Mapper
       end
     end
 
+    #
+    # list_policies
+    #
+    @client.list_policies({ filter: 'SERVICE_CONTROL_POLICY' }).each_with_index do |response, page|
+      log(response.context.operation_name, page)
+
+      response.policies.each do |policy|
+        struct = OpenStruct.new(policy.to_h)
+        struct.type = 'service_control_policy'
+        struct.content = JSON.parse(CGI.unescape(@client.describe_policy({ policy_id: policy.id }).policy.content))
+
+        resources.push(struct.to_h)
+      end
+    end
+
     resources
   end
 end
