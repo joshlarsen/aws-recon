@@ -158,6 +158,12 @@ $ AWS_PROFILE=<profile> aws_recon -s S3,EC2 -r global,us-east-1,us-east-2
 $ AWS_PROFILE=<profile> aws_recon --services S3,EC2 --regions global,us-east-1,us-east-2
 ```
 
+Example [OpenCSPM](https://github.com/OpenCSPM/opencspm) formatted output.
+
+```
+$ AWS_PROFILE=<profile> aws_recon -s S3,EC2 -r global,us-east-1,us-east-2 -f custom > output.json
+```
+
 #### Errors
 
 An exception will be raised on `AccessDeniedException` errors. This typically means your user/role doesn't have the necessary permissions to get/list/describe for that service. These exceptions are raised so troubleshooting access issues is easier.
