@@ -17,6 +17,7 @@ class Parser
     :threads,
     :collect_user_data,
     :skip_slow,
+    :skip_credential_report,
     :stream_output,
     :verbose,
     :debug
@@ -41,6 +42,7 @@ class Parser
       DEFAULT_OUTPUT_FILE,
       DEFAULT_FORMAT,
       DEFAULT_THREADS,
+      false,
       false,
       false,
       false,
@@ -113,6 +115,11 @@ class Parser
       # skip slow operations
       opts.on('-z', '--skip-slow', 'Skip slow operations (default: false)') do
         args.skip_slow = true
+      end
+
+      # skip generating IAM credential report
+      opts.on('-g', '--skip-credential-report', 'Skip generating IAM credential report (default: false)') do
+        args.skip_credential_report = true
       end
 
       # stream output (forces JSON lines, doesn't output handled warnings or errors )

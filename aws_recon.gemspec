@@ -33,4 +33,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'solargraph', '~> 0.39.11'
   spec.add_development_dependency 'rubocop', '~> 0.87.1'
   spec.add_development_dependency 'pry', '~> 0.13.1'
+  spec.add_development_dependency 'byebug', '~> 11.1'
 end
