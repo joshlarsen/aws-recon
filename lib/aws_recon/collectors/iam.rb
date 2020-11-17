@@ -147,15 +147,16 @@ class IAM < Mapper
     #
     unless @options.skip_credential_report
       status = 'STARTED'
-      sleep_interval = 5
+      interval = 5
 
       # wait for report to generate
       while status != 'COMPLETE'
         @client.generate_credential_report.each do |response|
           log(response.context.operation_name)
           status = response.state
-          sleep sleep_interval unless status == 'COMPLETE'
         end
+
+        sleep interval unless status == 'COMPLETE'
       end
     end
 
