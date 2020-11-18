@@ -2,6 +2,8 @@
 - name: Organizations
   global: true
   alias: organizations
+- name: AccessAnalyzer
+  alias: aa
 - name: ConfigService
   alias: config
 - name: CodeBuild
