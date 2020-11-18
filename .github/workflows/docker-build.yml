@@ -6,7 +6,7 @@ on:
 
 jobs:
   main:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -29,6 +29,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
+          build-args: |
+            VERSION=${{ env.VERSION_TAG }}
           tags: |
             darkbitio/aws_recon:${{ env.VERSION_TAG }}
             darkbitio/aws_recon:latest
