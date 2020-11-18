@@ -3,9 +3,10 @@ FROM ruby:${RUBY_VERSION}-alpine
 
 LABEL maintainer="Darkbit <info@darkbit.io>"
 
+# Supply AWS Recon version at build time
+ARG VERSION
 ARG USER=recon
 ARG GEM=aws_recon
-ARG VERSION=0.2.11
 ARG BUNDLER_VERSION=2.1.4
 
 # Install new Bundler version

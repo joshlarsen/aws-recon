@@ -1,3 +1,4 @@
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/darkbitio/aws-recon/smoke-test/main)
 [![Gem Version](https://badge.fury.io/rb/aws_recon.svg)](https://badge.fury.io/rb/aws_recon)
 
 # AWS Recon
@@ -221,6 +222,7 @@ Current "coverage" by service is listed below. The services without coverage wil
 
 AWS Recon aims to collect all resources and metadata that are relevant in determining the security posture of your AWS account(s). However, it does not actually examine the resources for security posture - that is the job of other tools that take the output of AWS Recon as input.
 
+- [x] AccessAnalyzer
 - [x] AdvancedShield
 - [x] Athena
 - [x] GuardDuty

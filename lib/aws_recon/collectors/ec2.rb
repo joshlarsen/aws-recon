@@ -32,6 +32,18 @@ class EC2 < Mapper
     # regional calls
     if @region != 'global'
       #
+      # get_ebs_encryption_by_default
+      #
+      @client.get_ebs_encryption_by_default.each do |response|
+        log(response.context.operation_name)
+
+        struct = OpenStruct.new(response.to_h)
+        struct.type = 'ebs_encryption_settings'
+
+        resources.push(struct.to_h)
+      end
+
+      #
       # describe_instances
       #
       @client.describe_instances.each_with_index do |response, page|
