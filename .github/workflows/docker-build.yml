@@ -4,7 +4,7 @@ on:
   push:
     branches: build
     paths:
-      - 'lib/aws_recon/version.rb '
+      - 'lib/aws_recon/version.rb'
 
 jobs:
   docker-build:
