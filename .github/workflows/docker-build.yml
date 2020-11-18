@@ -5,7 +5,7 @@ on:
     branches: build
 
 jobs:
-  main:
+  docker-build:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
