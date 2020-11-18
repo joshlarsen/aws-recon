@@ -3,6 +3,8 @@ name: docker-build
 on:
   push:
     branches: build
+    paths:
+      - 'lib/aws_recon/version.rb'
 
 jobs:
   docker-build:

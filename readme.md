@@ -1,3 +1,4 @@
+![smoke-test](https://github.com/darkbitio/aws-recon/workflows/smoke-test/badge.svg)
 [![Gem Version](https://badge.fury.io/rb/aws_recon.svg)](https://badge.fury.io/rb/aws_recon)
 
 # AWS Recon
