@@ -1,3 +1,4 @@
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/darkbitio/aws-recon/smoke-test/main)
 [![Gem Version](https://badge.fury.io/rb/aws_recon.svg)](https://badge.fury.io/rb/aws_recon)
 
 # AWS Recon
