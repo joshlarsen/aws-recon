@@ -14,7 +14,7 @@ jobs:
           fetch-depth: 1
       - name: Set version tag
         run: |
-          echo "VERSION_TAG=$(grep VERSION lib/aws_recon/version.rb | awk -F\" '{print $2}')" >> $GITHUB_ENV
+          echo "VERSION_TAG=$(grep VERSION lib/aws_recon/version.rb | awk -F\' '{print $2}')" >> $GITHUB_ENV
       - name: Smoke Test :${{ env.VERSION_TAG }}
         run: |
           docker run -t --rm darkbitio/aws_recon:${{ env.VERSION_TAG }} aws_recon
