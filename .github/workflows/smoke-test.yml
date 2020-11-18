@@ -1,0 +1,23 @@
+name: smoke-test
+
+on:
+  push:
+    branches: main
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Set version tag
+        run: |
+          echo "VERSION_TAG=$(grep VERSION lib/aws_recon/version.rb | awk -F\" '{print $2}')" >> $GITHUB_ENV
+      - name: Smoke Test :${{ env.VERSION_TAG }}
+        run: |
+          docker run -t --rm darkbitio/aws_recon:${{ env.VERSION_TAG }} aws_recon
+      - name: Smoke Test :latest
+        run: |
+          docker run -t --rm darkbitio/aws_recon:latest aws_recon
