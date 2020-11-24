@@ -215,6 +215,10 @@ class EC2 < Mapper
           struct = OpenStruct.new(snapshot.to_h)
           struct.type = 'snapshot'
           struct.arn = snapshot.snapshot_id # no true ARN
+          struct.create_volume_permissions = @client.describe_snapshot_attribute({
+                                                                                   attribute: 'createVolumePermission',
+                                                                                   snapshot_id: snapshot.snapshot_id
+                                                                                 }).create_volume_permissions.map(&:to_h)
 
           resources.push(struct.to_h)
         end
