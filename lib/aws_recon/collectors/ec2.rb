@@ -176,6 +176,21 @@ class EC2 < Mapper
       end
 
       #
+      # describe_internet_gateways
+      #
+      @client.describe_internet_gateways.each_with_index do |response, page|
+        log(response.context.operation_name, page)
+
+        response.internet_gateways.each do |gateway|
+          struct = OpenStruct.new(gateway.to_h)
+          struct.type = 'internet_gateway'
+          struct.arn = gateway.internet_gateway_id # no true ARN
+
+          resources.push(struct.to_h)
+        end
+      end
+
+      #
       # describe_route_tables
       #
       @client.describe_route_tables.each_with_index do |response, page|
