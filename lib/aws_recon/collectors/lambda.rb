@@ -12,7 +12,11 @@ class Lambda < Mapper
         struct = OpenStruct.new(function)
         struct.type = 'function'
         struct.arn = function.function_arn
+        struct.policy = @client.get_policy({ function_name: function.function_name }).policy.parse_policy
 
+      rescue Aws::Lambda::Errors::ResourceNotFoundException => e
+        log_error(e.code)
+      ensure
         resources.push(struct.to_h)
       end
     end

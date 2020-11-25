@@ -18,6 +18,8 @@ class SNS < Mapper
         struct = OpenStruct.new(@client.get_topic_attributes({ topic_arn: topic.topic_arn }).attributes.to_h)
         struct.type = 'topic'
         struct.arn = topic.topic_arn
+        struct.policy = JSON.parse(CGI.unescape(struct.Policy))
+        struct.effective_delivery_policy = JSON.parse(CGI.unescape(struct.EffectiveDeliveryPolicy))
         struct.subscriptions = []
 
         # list_subscriptions_by_topic
