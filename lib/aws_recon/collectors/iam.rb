@@ -26,7 +26,7 @@ class IAM < Mapper
                                     user.user_policy_list.map do |p|
                                       {
                                         policy_name: p.policy_name,
-                                        policy_document: JSON.parse(CGI.unescape(p.policy_document))
+                                        policy_document: p.policy_document.parse_policy
                                       }
                                     end
                                   end
@@ -42,7 +42,7 @@ class IAM < Mapper
                                      group.group_policy_list.map do |p|
                                        {
                                          policy_name: p.policy_name,
-                                         policy_document: JSON.parse(CGI.unescape(p.policy_document))
+                                         policy_document: p.policy_document.parse_policy
                                        }
                                      end
                                     end
@@ -54,12 +54,12 @@ class IAM < Mapper
       response.role_detail_list.each do |role|
         struct = OpenStruct.new(role.to_h)
         struct.type = 'role'
-        struct.assume_role_policy_document = JSON.parse(CGI.unescape(role.assume_role_policy_document))
+        struct.assume_role_policy_document = role.assume_role_policy_document.parse_policy
         struct.role_policy_list = if role.role_policy_list
                                     role.role_policy_list.map do |p|
                                       {
                                         policy_name: p.policy_name,
-                                        policy_document: JSON.parse(CGI.unescape(p.policy_document))
+                                        policy_document: p.policy_document.parse_policy
                                       }
                                     end
                                   end
@@ -75,7 +75,7 @@ class IAM < Mapper
                                        policy.policy_version_list.map do |p|
                                          {
                                            version_id: p.version_id,
-                                           document: JSON.parse(CGI.unescape(p.document)),
+                                           document: p.document.parse_policy,
                                            is_default_version: p.is_default_version,
                                            create_date: p.create_date
                                          }
