@@ -29,14 +29,17 @@ class S3 < Mapper
         # to create a bucket, you must set the location_constraint
         # bucket parameter to the same region. (https://docs.aws.amazon.com/general/latest/gr/s3.html)
         client = if location.empty?
+                   struct.location = 'us-east-1'
                    @client
                  else
+                   struct.location = location
                    Aws::S3::Client.new({ region: location })
                  end
 
         operations = [
           { func: 'get_bucket_acl', key: 'acl', field: nil },
           { func: 'get_bucket_encryption', key: 'encryption', field: 'server_side_encryption_configuration' },
+          { func: 'get_bucket_replication', key: 'replication', field: 'replication_configuration' }
           { func: 'get_bucket_policy', key: 'policy', field: 'policy' },
           { func: 'get_bucket_policy_status', key: 'public', field: 'policy_status' },
           { func: 'get_bucket_tagging', key: 'tagging', field: nil },
@@ -77,6 +80,7 @@ class S3 < Mapper
       NoSuchBucketPolicy
       NoSuchTagSet
       NoSuchWebsiteConfiguration
+      ReplicationConfigurationNotFoundError
     ]
   end
 end
