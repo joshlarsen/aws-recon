@@ -39,7 +39,7 @@ class S3 < Mapper
         operations = [
           { func: 'get_bucket_acl', key: 'acl', field: nil },
           { func: 'get_bucket_encryption', key: 'encryption', field: 'server_side_encryption_configuration' },
-          { func: 'get_bucket_replication', key: 'replication', field: 'replication_configuration' }
+          { func: 'get_bucket_replication', key: 'replication', field: 'replication_configuration' },
           { func: 'get_bucket_policy', key: 'policy', field: 'policy' },
           { func: 'get_bucket_policy_status', key: 'public', field: 'policy_status' },
           { func: 'get_bucket_tagging', key: 'tagging', field: nil },
@@ -54,7 +54,7 @@ class S3 < Mapper
           resp = client.send(op.func, { bucket: bucket.name })
 
           struct[op.key] = if op.key == 'policy'
-                             resp.policy.string
+                             JSON.parse(CGI.unescape(resp.policy.string))
                            else
                              op.field ? resp.send(op.field).to_h : resp.to_h
                            end
