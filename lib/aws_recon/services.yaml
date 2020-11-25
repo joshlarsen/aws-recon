@@ -4,6 +4,8 @@
   alias: organizations
 - name: AccessAnalyzer
   alias: aa
+- name: ApplicationAutoScaling
+  alias: aas
 - name: ConfigService
   alias: config
 - name: CodeBuild
