@@ -3,6 +3,9 @@
 module AwsRecon
 end
 
+require 'aws_recon/lib/patch.rb'
+String.include PolicyStringParser
+
 require 'parallel'
 require 'ostruct'
 require 'optparse'
