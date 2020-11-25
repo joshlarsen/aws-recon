@@ -55,7 +55,7 @@ class S3 < Mapper
           resp = client.send(op.func, { bucket: bucket.name })
 
           struct[op.key] = if op.key == 'policy'
-                             JSON.parse(CGI.unescape(resp.policy.string))
+                             resp.policy.string.parse_policy
                            else
                              op.field ? resp.send(op.field).to_h : resp.to_h
                            end
