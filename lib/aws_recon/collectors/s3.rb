@@ -42,6 +42,7 @@ class S3 < Mapper
           { func: 'get_bucket_replication', key: 'replication', field: 'replication_configuration' },
           { func: 'get_bucket_policy', key: 'policy', field: 'policy' },
           { func: 'get_bucket_policy_status', key: 'public', field: 'policy_status' },
+          { func: 'get_public_access_block', key: 'public_access_block', field: 'public_access_block_configuration' },
           { func: 'get_bucket_tagging', key: 'tagging', field: nil },
           { func: 'get_bucket_logging', key: 'logging', field: 'logging_enabled' },
           { func: 'get_bucket_versioning', key: 'versioning', field: nil },
@@ -81,6 +82,7 @@ class S3 < Mapper
       NoSuchTagSet
       NoSuchWebsiteConfiguration
       ReplicationConfigurationNotFoundError
+      NoSuchPublicAccessBlockConfiguration
     ]
   end
 end
