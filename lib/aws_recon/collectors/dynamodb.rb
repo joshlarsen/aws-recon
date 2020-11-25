@@ -6,6 +6,19 @@ class DynamoDB < Mapper
     resources = []
 
     #
+    # describe_limits
+    #
+    @client.describe_limits.each_with_index do |response, page|
+      log(response.context.operation_name, page)
+
+      struct = OpenStruct.new(response)
+      struct.type = 'limits'
+      struct.arn = "arn:aws:dynamodb:#{@region}:#{@account}:limits"
+
+      resources.push(struct.to_h)
+    end
+
+    #
     # list_tables
     #
     @client.list_tables.each_with_index do |response, page|
