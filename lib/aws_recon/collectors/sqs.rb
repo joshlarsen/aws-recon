@@ -18,7 +18,7 @@ class SQS < Mapper
         struct = OpenStruct.new(@client.get_queue_attributes({ queue_url: queue, attribute_names: ['All'] }).attributes.to_h)
         struct.type = 'queue'
         struct.arn = struct.QueueArn
-        struct.policy = JSON.parse(CGI.unescape(struct.Policy))
+        struct.policy = struct.delete_field('Policy').parse_policy
 
         resources.push(struct.to_h)
       end
