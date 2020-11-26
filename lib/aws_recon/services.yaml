@@ -4,6 +4,8 @@
   alias: organizations
 - name: AccessAnalyzer
   alias: aa
+- name: ApplicationAutoScaling
+  alias: aas
 - name: ConfigService
   alias: config
 - name: CodeBuild
@@ -89,6 +91,10 @@
   alias: cloudwatchlogs
 - name: Kafka
   alias: kafka
+- name: SecretsManager
+  alias: sm
+- name: SecurityHub
+  alias: sh
 - name: Support
   global: true
   alias: support

@@ -40,7 +40,7 @@ class Organizations < Mapper
       response.policies.each do |policy|
         struct = OpenStruct.new(policy.to_h)
         struct.type = 'service_control_policy'
-        struct.content = JSON.parse(CGI.unescape(@client.describe_policy({ policy_id: policy.id }).policy.content))
+        struct.content = @client.describe_policy({ policy_id: policy.id }).policy.content.parse_policy
 
         resources.push(struct.to_h)
       end

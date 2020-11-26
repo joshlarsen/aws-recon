@@ -224,6 +224,7 @@ AWS Recon aims to collect all resources and metadata that are relevant in determ
 
 - [x] AccessAnalyzer
 - [x] AdvancedShield
+- [x] ApplicationAutoScaling
 - [x] Athena
 - [x] GuardDuty
 - [ ] Macie
@@ -269,6 +270,8 @@ AWS Recon aims to collect all resources and metadata that are relevant in determ
 - [x] S3
 - [x] SageMaker
 - [x] SES
+- [x] SecretsManager
+- [x] SecurityHub
 - [x] ServiceQuotas
 - [x] Shield
 - [x] SNS

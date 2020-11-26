@@ -131,6 +131,21 @@ class EC2 < Mapper
       end
 
       #
+      # describe_network_acls
+      #
+      @client.describe_network_acls.each_with_index do |response, page|
+        log(response.context.operation_name, page)
+
+        response.network_acls.each do |network_acl|
+          struct = OpenStruct.new(network_acl.to_h)
+          struct.type = 'network_acl'
+          struct.arn = network_acl.network_acl_id # no true ARN
+
+          resources.push(struct.to_h)
+        end
+      end
+
+      #
       # describe_subnets
       #
       @client.describe_subnets.each_with_index do |response, page|
