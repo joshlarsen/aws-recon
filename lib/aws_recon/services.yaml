@@ -93,6 +93,8 @@
   alias: kafka
 - name: SecretsManager
   alias: sm
+- name: SecurityHub
+  alias: sh
 - name: Support
   global: true
   alias: support
