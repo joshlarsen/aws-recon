@@ -39,6 +39,8 @@
     - ap-southeast-1
 - name: ElastiCache
   alias: elasticache
+- name: EMR
+  alias: emr
 - name: IAM
   global: true
   alias: iam

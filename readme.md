@@ -250,8 +250,9 @@ AWS Recon aims to collect all resources and metadata that are relevant in determ
 - [x] ECR
 - [x] ECS
 - [x] EFS
-- [x] ELB
 - [x] EKS
+- [x] ELB
+- [x] EMR
 - [x] Elasticsearch
 - [x] ElastiCache
 - [x] Firehose

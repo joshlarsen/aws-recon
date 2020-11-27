@@ -29,6 +29,7 @@ class DynamoDB < Mapper
         struct = OpenStruct.new(@client.describe_table({ table_name: table_name }).table.to_h)
         struct.type = 'table'
         struct.arn = struct.table_arn
+        struct.continuous_backups_description = @client.describe_continuous_backups({ table_name: table_name }).continuous_backups_description.to_h
 
         resources.push(struct.to_h)
       end
