@@ -6,6 +6,8 @@
   alias: aa
 - name: ApplicationAutoScaling
   alias: aas
+- name: Backup
+  alias: backup
 - name: ConfigService
   alias: config
 - name: CodeBuild
