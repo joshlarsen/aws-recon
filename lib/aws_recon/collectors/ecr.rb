@@ -16,7 +16,7 @@ class ECR < Mapper
         struct.type = 'repository'
         struct.arn = repo.repository_arn
         struct.policy = @client
-                        .get_repository_policy({ repository_name: repo.repository_name }).to_h
+                        .get_repository_policy({ repository_name: repo.repository_name }).policy_text.parse_policy
 
       rescue Aws::ECR::Errors::ServiceError => e
         raise e unless suppressed_errors.include?(e.code)

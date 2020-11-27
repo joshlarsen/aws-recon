@@ -226,6 +226,7 @@ AWS Recon aims to collect all resources and metadata that are relevant in determ
 - [x] AdvancedShield
 - [x] ApplicationAutoScaling
 - [x] Athena
+- [x] Backup
 - [x] GuardDuty
 - [ ] Macie
 - [x] Systems Manager
