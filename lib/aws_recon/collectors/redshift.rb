@@ -15,6 +15,7 @@ class Redshift < Mapper
         struct = OpenStruct.new(cluster.to_h)
         struct.type = 'cluster'
         struct.arn = cluster.cluster_identifier
+        struct.logging_status = @client.describe_logging_status({ cluster_identifier: cluster.cluster_identifier }).to_h
 
         resources.push(struct.to_h)
       end
