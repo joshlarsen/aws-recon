@@ -89,14 +89,19 @@ class IAM < Mapper
     #
     # get_account_password_policy
     #
-    @client.get_account_password_policy.each do |response|
-      log(response.context.operation_name)
+    begin
+      @client.get_account_password_policy.each do |response|
+        log(response.context.operation_name)
 
-      struct = OpenStruct.new(response.password_policy.to_h)
-      struct.type = 'password_policy'
-      struct.arn = "arn:aws:iam::#{@account}:account_password_policy/global"
+        struct = OpenStruct.new(response.password_policy.to_h)
+        struct.type = 'password_policy'
+        struct.arn = "arn:aws:iam::#{@account}:account_password_policy/global"
 
-      resources.push(struct.to_h)
+        resources.push(struct.to_h)
+      end
+    rescue Aws::IAM::Errors::ServiceError => e
+      log_error(e.code)
+      raise e unless suppressed_errors.include?(e.code)
     end
 
     #
@@ -190,6 +195,7 @@ class IAM < Mapper
   def suppressed_errors
     %w[
       ReportNotPresent
+      NoSuchEntity
     ]
   end
 end
