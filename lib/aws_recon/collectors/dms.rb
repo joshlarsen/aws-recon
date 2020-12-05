@@ -14,7 +14,7 @@ class DatabaseMigrationService < Mapper
       response.replication_instances.each do |instance|
         struct = OpenStruct.new(instance.to_h)
         struct.type = 'replication_instance'
-        struct.arb = "arn:aws:#{@service}:#{@region}::replication_instance/#{instance.replication_instance_identifier}"
+        struct.arn = "arn:aws:#{@service}:#{@region}::replication_instance/#{instance.replication_instance_identifier}"
 
         resources.push(struct.to_h)
       end

@@ -41,6 +41,11 @@
   alias: elasticache
 - name: EMR
   alias: emr
+  excluded_regions:
+    - ap-east-1
+    - af-south-1
+    - eu-south-1
+    - me-south-1
 - name: IAM
   global: true
   alias: iam

@@ -37,6 +37,7 @@ class Support < Mapper
   # not an error
   def suppressed_errors
     %w[
+      AccessDeniedException
       SubscriptionRequiredException
     ]
   end
