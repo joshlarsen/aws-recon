@@ -34,18 +34,32 @@ class Organizations < Mapper
     #
     # list_policies
     #
-    @client.list_policies({ filter: 'SERVICE_CONTROL_POLICY' }).each_with_index do |response, page|
-      log(response.context.operation_name, page)
+    begin
+      @client.list_policies({ filter: 'SERVICE_CONTROL_POLICY' }).each_with_index do |response, page|
+        log(response.context.operation_name, page)
 
-      response.policies.each do |policy|
-        struct = OpenStruct.new(policy.to_h)
-        struct.type = 'service_control_policy'
-        struct.content = @client.describe_policy({ policy_id: policy.id }).policy.content.parse_policy
+        response.policies.each do |policy|
+          struct = OpenStruct.new(policy.to_h)
+          struct.type = 'service_control_policy'
+          struct.content = @client.describe_policy({ policy_id: policy.id }).policy.content.parse_policy
 
-        resources.push(struct.to_h)
+          resources.push(struct.to_h)
+        end
       end
+    rescue Aws::Organizations::Errors::ServiceError => e
+      log_error(e.code)
+      raise e unless suppressed_errors.include?(e.code)
     end
 
     resources
+  end
+
+  private
+
+  # not an error
+  def suppressed_errors
+    %w[
+      AccessDeniedException
+    ]
   end
 end
