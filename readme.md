@@ -23,11 +23,11 @@ Enter AWS Recon, multi-threaded AWS inventory collection tool written in plain R
 
 ### Requirements
 
-AWS Recon needs an AWS account or role with `ReadOnlyAccess`. Full `AdministratorAccess` is over-privileged, but will work as well. The `SecurityAudit` policy is **not** sufficient as it omits access to many services.
+AWS Recon needs AWS account role or credentials with `ReadOnlyAccess`. Full `AdministratorAccess` is over-privileged, but will work as well. The `SecurityAudit` policy is **not** sufficient as it omits access to many services.
 
 #### Running via Docker
 
-Use Docker version 19.x or above to run the pre-build image without having to install anything.
+Use Docker version 19.x or above to run the pre-built image without having to install anything.
 
 #### Running locally via Ruby
 
@@ -55,7 +55,6 @@ To run locally, first install the gem:
 ```
 $ gem install aws_recon
 Fetching aws_recon-0.2.25.gem
-Fetching aws-sdk-resources-3.90.0.gem
 Fetching aws-sdk-3.0.1.gem
 Fetching parallel-1.20.1.gem
 ...
@@ -102,7 +101,7 @@ $ aws-vault exec <vault_profile> -- docker run -t --rm \
   aws_recon -j -s EC2 -r global,us-east-1,us-east-2
 ```
 
-To run from a Docker container using `aws-vault` managed credentials and output to a file, you will need to satisfy a couple of requirements. First, Docker needs access to bind mount the path you specify (or a parent path above). Second, you need to create an empty file to save the output into (e.g. `output.json`). This is because we are only mounting that one file into the Docker container at run time. For example:
+To run from a Docker container using `aws-vault` managed credentials and output to a file, you will need to satisfy a couple of requirements. First, Docker needs access to bind mount the path you specify (or a parent path above). Second, you need to create an empty file to save the output into (e.g. `output.json`). This is because only that one file is mounted into the Docker container at run time. For example:
 
 Create an empty file.
 
@@ -174,7 +173,7 @@ $ AWS_PROFILE=<profile> aws_recon -s S3,EC2 -r global,us-east-1,us-east-2 -f cus
 
 #### Errors
 
-API exceptions related to permissions are silenlty ignored in most cases. These errors are usually due either using a role without sufficient permissions, or trying to query a service that isn't enabled/available in your region/account.
+API exceptions related to permissions are silenlty ignored in most cases. These errors are usually due to either using a role without sufficient permissions, or trying to query a service that isn't enabled/available in your region/account.
 
 ```
 t2.us-east-1.EC2.describe_subnets.0
@@ -189,10 +188,12 @@ Use the `-q` command line option to re-raise these exceptions so troubleshooting
 
 ```
 Traceback (most recent call last):
-arn:aws:sts::1234567890:assumed-role/role/my-audit-role is not authorized to perform: codepipeline:GetPipeline on resource: arn:aws:codepipeline:us-west-2:1234567890:pipeline (Aws::CodePipeline::Errors::AccessDeniedException)
+arn:aws:sts::1234567890:assumed-role/role/my-audit-role is not authorized to perform:
+ codepipeline:GetPipeline on resource: arn:aws:codepipeline:us-west-2:1234567890:pipeline
+ (Aws::CodePipeline::Errors::AccessDeniedException)
 ```
 
-The exact API operation that triggered the exception is indicated on the last line of the stack trace. If you can't resolve the necessary access, you should exclude those services with `-x` or `--not-services` so the collection can continue.
+The exact API operation that triggered the exception is indicated on the last line of the stack trace. If you can't resolve the necessary access, you should exclude those services with `-x` or `--not-services`, or leave off the `-q` option so the collection can continue.
 
 ### Threads
 
@@ -201,6 +202,12 @@ AWS Recon uses multiple threads to try to overcome some of the I/O challenges of
 For global services like IAM, Shield, and Support, requests are not multi-threaded. The S3 module is multi-threaded since each bucket requires several additional calls to collect complete metadata.
 
 For regional services, a thread (up to the thread limit) is spawned for each service in a region. By default, up to 8 threads will be used. If your account has resources spread across many regions, you may see a speed improvement by increasing threads with `-t X`, where `X` is the number of threads.
+
+### Performance
+
+AWS Recon will make a minimum of ~2,000 API calls in a new/empty account, just to query the supported services in all 20 standard (non-GovCloud, non-China) regions. It is very likely to encounter API rate-limiting (throttling) on large accounts if you enable more threads than the default (8).
+
+Recon will automatically backoff and respect the retry limits in the API response. If you observe long pauses during collection, this is likely what is happening. Retry collection with the `-d` or `--debug` option to observe the wire trace and see if you're being throttled. Consider using fewer threads or requested higher rate limits from AWS if you are regularly getting throttled.
 
 ### Options
 
