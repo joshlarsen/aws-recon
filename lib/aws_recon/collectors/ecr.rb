@@ -19,7 +19,11 @@ class ECR < Mapper
                         .get_repository_policy({ repository_name: repo.repository_name }).policy_text.parse_policy
 
       rescue Aws::ECR::Errors::ServiceError => e
-        raise e unless suppressed_errors.include?(e.code)
+        log_error(e.code)
+
+        unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
+          raise e
+        end
       ensure
         resources.push(struct.to_h)
       end

@@ -38,6 +38,8 @@ class RDS < Mapper
         struct.arn = instance.db_instance_arn
         struct.parent_id = instance.db_cluster_identifier
 
+        # TODO: describe_db_snapshots here (with public flag)
+
         resources.push(struct.to_h)
       end
     end
