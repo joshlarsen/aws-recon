@@ -12,8 +12,13 @@
   alias: config
 - name: CodeBuild
   alias: codebuild
+  excluded_regions:
+    - af-south-1
 - name: CodePipeline
   alias: codepipeline
+  excluded_regions:
+    - af-south-1
+    - me-south-1
 - name: AutoScaling
   alias: autoscaling
 - name: CloudTrail
@@ -94,12 +99,17 @@
     - eu-north-1
     - eu-west-3
     - us-west-1
+    - ap-east-1
+    - af-south-1
+    - eu-south-1
 - name: CloudWatch
   alias: cloudwatch
 - name: CloudWatchLogs
   alias: cloudwatchlogs
 - name: Kafka
   alias: kafka
+  excluded_regions:
+    - af-south-1
 - name: SecretsManager
   alias: sm
 - name: SecurityHub
@@ -125,6 +135,10 @@
     - eu-north-1
     - us-west-1
     - sa-east-1
+    - ap-east-1
+    - af-south-1
+    - eu-south-1
+    - me-south-1
 - name: WorkSpaces
   alias: workspaces
   excluded_regions:
@@ -133,12 +147,21 @@
     - eu-west-3
     - us-east-2
     - us-west-1
+    - ap-east-1
+    - af-south-1
+    - eu-south-1
+    - me-south-1
 - name: SageMaker
   alias: sagemaker
 - name: ServiceQuotas
   alias: servicequotas
 - name: Transfer
   alias: transfer
+  excluded_regions:
+    - ap-east-1
+    - af-south-1
+    - eu-south-1
+    - me-south-1
 - name: DirectConnect
   alias: dc
 - name: DirectoryService

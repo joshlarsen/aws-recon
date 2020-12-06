@@ -215,6 +215,20 @@ Usage: aws_recon [options]
 
 Output is always some form of JSON - either JSON lines or plain JSON. The output is either written to a file (the default), or written to stdout (with `-j`).
 
+## Support for Manually Enabled Regions
+
+If you have enabled manually enabled regions:
+
+- me-south-1 - Middle East (Bahrain)
+- af-south-1 - Africa (Cape Town)
+- ap-east-1 - Asia Pacific (Hong Kong)
+- eu-south-1 - Europe (Milan)
+
+and you are using STS to assume a role into an account, you will need to [enable v2 STS tokens](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_enable-regions.html) in the account you are assuming the role **from** to be able to run AWS Recon against those regions.
+
+> Version 1 tokens are valid only in AWS Regions that are available by default. These tokens do not work in manually enabled Regions, such as Asia Pacific (Hong Kong). Version 2 tokens are valid in all Regions. However, version 2 tokens are longer and might affect systems where you temporarily store tokens.
+
+If you are using a static access key/secret, you can collect from these regions with either `v1` or `v2` STS tokens.
 
 ## Supported Services & Resources
 

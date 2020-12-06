@@ -29,7 +29,10 @@ class KMS < Mapper
                                     .key_rotation_enabled
         rescue Aws::KMS::Errors::ServiceError => e
           log_error(e.code)
-          raise e unless suppressed_errors.include?(e.code)
+
+          unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
+            raise e
+          end
         end
 
         # list_grants

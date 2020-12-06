@@ -27,7 +27,10 @@ class ServiceQuotas < Mapper
       end
     rescue Aws::ServiceQuotas::Errors::ServiceError => e
       log_error(e.code, service)
-      raise e unless suppressed_errors.include?(e.code)
+
+      unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
+        raise e
+      end
     end
 
     resources
