@@ -207,7 +207,7 @@ For regional services, a thread (up to the thread limit) is spawned for each ser
 
 AWS Recon will make a minimum of ~2,000 API calls in a new/empty account, just to query the supported services in all 20 standard (non-GovCloud, non-China) regions. It is very likely to encounter API rate-limiting (throttling) on large accounts if you enable more threads than the default (8).
 
-Recon will automatically backoff and respect the retry limits in the API response. If you observe long pauses during collection, this is likely what is happening. Retry collection with the `-d` or `--debug` option to observe the wire trace and see if you're being throttled. Consider using fewer threads or requested higher rate limits from AWS if you are regularly getting throttled.
+Recon will automatically backoff and respect the retry limits in the API response. If you observe long pauses during collection, this is likely what is happening. Retry collection with the `-d` or `--debug` option to observe the wire trace and see if you're being throttled. Consider using fewer threads or requesting higher rate limits from AWS if you are regularly getting rate-limited.
 
 ### Options
 
