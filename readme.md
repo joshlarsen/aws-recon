@@ -23,37 +23,19 @@ Enter AWS Recon, multi-threaded AWS inventory collection tool written in plain R
 
 ### Requirements
 
-Ruby 2.5.x or 2.6.x (developed and tested with 2.6.5)
+AWS Recon needs an AWS account or role with `ReadOnlyAccess`. Full `AdministratorAccess` is over-privileged, but will work as well. The `SecurityAudit` policy is **not** sufficient as it omits access to many services.
+
+#### Running via Docker
+
+Use Docker version 19.x or above to run the pre-build image without having to install anything.
+
+#### Running locally via Ruby
+
+If you already have Ruby installed (2.5.x or 2.6.x), you may want to install the Ruby gem.
 
 ### Installation
 
-AWS Recon can be run locally by installing the Ruby gem, or via a Docker container.
-
-To run locally, first install the gem:
-
-```
-$ gem install aws_recon
-Fetching aws_recon-0.2.8.gem
-Fetching aws-sdk-resources-3.76.0.gem
-Fetching aws-sdk-3.0.1.gem
-Fetching parallel-1.19.2.gem
-...
-Successfully installed aws-sdk-3.0.1
-Successfully installed parallel-1.19.2
-Successfully installed aws_recon-0.2.8
-```
-
-Or add it to your Gemfile using `bundle`:
-
-```
-$ bundle add aws_recon
-Fetching gem metadata from https://rubygems.org/
-Resolving dependencies...
-...
-Using aws-sdk 3.0.1
-Using parallel 1.19.2
-Using aws_recon 0.2.8
-```
+AWS Recon can be run locally via a Docker container or by installing the Ruby gem.
 
 To run via a Docker a container, pass the necessary AWS credentials into the Docker `run` command. For example:
 
@@ -68,10 +50,35 @@ $ docker run -t --rm \
   aws_recon -v -s EC2 -r global,us-east-1,us-east-2
 ```
 
+To run locally, first install the gem:
+
+```
+$ gem install aws_recon
+Fetching aws_recon-0.2.25.gem
+Fetching aws-sdk-resources-3.90.0.gem
+Fetching aws-sdk-3.0.1.gem
+Fetching parallel-1.20.1.gem
+...
+Successfully installed aws-sdk-3.0.1
+Successfully installed parallel-1.20.1
+Successfully installed aws_recon-0.2.25
+```
+
+Or add it to your Gemfile using `bundle`:
+
+```
+$ bundle add aws_recon
+Fetching gem metadata from https://rubygems.org/
+Resolving dependencies...
+...
+Using aws-sdk 3.0.1
+Using parallel-1.20.1
+Using aws_recon 0.2.25
+```
 
 ## Usage
 
-AWS Recon will leverage any AWS credentials currently available to the environment it runs in. If you are collecting from multiple accounts, you may want to leverage something like [aws-vault](https://github.com/99designs/aws-vault) to manage different credentials. 
+AWS Recon will leverage any AWS credentials (see [requirements](/darkbitio/aws-recon#requirements)) currently available to the environment it runs in. If you are collecting from multiple accounts, you may want to leverage something like [aws-vault](https://github.com/99designs/aws-vault) to manage different credentials.
 
 ```
 $ aws-vault exec profile -- aws_recon
@@ -167,11 +174,22 @@ $ AWS_PROFILE=<profile> aws_recon -s S3,EC2 -r global,us-east-1,us-east-2 -f cus
 
 #### Errors
 
-An exception will be raised on `AccessDeniedException` errors. This typically means your user/role doesn't have the necessary permissions to get/list/describe for that service. These exceptions are raised so troubleshooting access issues is easier.
+API exceptions related to permissions are silenlty ignored in most cases. These errors are usually due either using a role without sufficient permissions, or trying to query a service that isn't enabled/available in your region/account.
+
+```
+t2.us-east-1.EC2.describe_subnets.0
+t4.us-east-1.SSM.describe_instance_information.0
+t6.us-east-1.SecurityHub.InvalidAccessException   <-----
+t2.us-east-1.EC2.describe_addresses.0
+t4.us-east-1.SSM.describe_parameters.0
+t1.us-east-1.GuardDuty.list_detectors.0
+```
+
+Use the `-q` command line option to re-raise these exceptions so troubleshooting access issues is easier.
 
 ```
 Traceback (most recent call last):
-arn:aws:sts::1234567890:assumed-role/role/9876543210 is not authorized to perform: codepipeline:GetPipeline on resource: arn:aws:codepipeline:us-west-2:876543210123:pipeline (Aws::CodePipeline::Errors::AccessDeniedException)
+arn:aws:sts::1234567890:assumed-role/role/my-audit-role is not authorized to perform: codepipeline:GetPipeline on resource: arn:aws:codepipeline:us-west-2:1234567890:pipeline (Aws::CodePipeline::Errors::AccessDeniedException)
 ```
 
 The exact API operation that triggered the exception is indicated on the last line of the stack trace. If you can't resolve the necessary access, you should exclude those services with `-x` or `--not-services` so the collection can continue.
@@ -191,7 +209,7 @@ Most users will want to limit collection to relevant services and regions. Runni
 ```
 $ aws_recon -h
 
-AWS Recon - AWS Inventory Collector (0.2.8)
+AWS Recon - AWS Inventory Collector (0.2.25)
 
 Usage: aws_recon [options]
     -r, --regions [REGIONS]          Regions to scan, separated by comma (default: all)
@@ -204,8 +222,10 @@ Usage: aws_recon [options]
     -t, --threads [THREADS]          Specify max threads (default: 8, max: 128)
     -u, --user-data                  Collect EC2 instance user data (default: false)
     -z, --skip-slow                  Skip slow operations (default: false)
+    -g, --skip-credential-report     Skip generating IAM credential report (default: false)
     -j, --stream-output              Stream JSON lines to stdout (default: false)
     -v, --verbose                    Output client progress and current operation
+    -q, --quit-on-exception          Stop collection if an API error is encountered (default: false)
     -d, --debug                      Output debug with wire trace info
     -h, --help                       Print this help information
 
@@ -217,7 +237,7 @@ Output is always some form of JSON - either JSON lines or plain JSON. The output
 
 ## Support for Manually Enabled Regions
 
-If you have enabled manually enabled regions:
+If you have enabled **manually enabled regions**:
 
 - me-south-1 - Middle East (Bahrain)
 - af-south-1 - Africa (Cape Town)
@@ -324,10 +344,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ### TODO
 
-- [ ] Optionally suppress AWS API errors instead of re-raising them
-- [x] Package as a gem
 - [ ] Test coverage with AWS SDK stubbed resources
-
 
 ## Kudos
 
