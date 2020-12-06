@@ -173,7 +173,13 @@ $ AWS_PROFILE=<profile> aws_recon -s S3,EC2 -r global,us-east-1,us-east-2 -f cus
 
 #### Errors
 
-API exceptions related to permissions are silently ignored in most cases. These errors are usually due to either using a role without sufficient permissions, or trying to query a service that isn't enabled/available in your region/account.
+API exceptions related to permissions are silently ignored in most cases. These errors are usually due to one of these cases:
+
+- using a role without sufficient permissions
+- querying an account with SCPs in place that prevent usage of certain services
+- trying to query a service that isn't enabled/available in your region/account
+
+In `verbose` mode, you will see exception logs in the output:
 
 ```
 t2.us-east-1.EC2.describe_subnets.0
@@ -211,7 +217,7 @@ Recon will automatically backoff and respect the retry limits in the API respons
 
 ### Options
 
-Most users will want to limit collection to relevant services and regions. Running without any options will attempt to collect all resources from all 16 regular regions.
+Most users will want to limit collection to relevant services and regions. Running without any exclusions will attempt to collect all resources from all regions enabled for the account.
 
 ```
 $ aws_recon -h
