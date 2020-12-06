@@ -77,7 +77,7 @@ Using aws_recon 0.2.25
 
 ## Usage
 
-AWS Recon will leverage any AWS credentials (see [requirements](/darkbitio/aws-recon#requirements)) currently available to the environment it runs in. If you are collecting from multiple accounts, you may want to leverage something like [aws-vault](https://github.com/99designs/aws-vault) to manage different credentials.
+AWS Recon will leverage any AWS credentials (see [requirements](#requirements)) currently available to the environment it runs in. If you are collecting from multiple accounts, you may want to leverage something like [aws-vault](https://github.com/99designs/aws-vault) to manage different credentials.
 
 ```
 $ aws-vault exec profile -- aws_recon
@@ -173,7 +173,7 @@ $ AWS_PROFILE=<profile> aws_recon -s S3,EC2 -r global,us-east-1,us-east-2 -f cus
 
 #### Errors
 
-API exceptions related to permissions are silenlty ignored in most cases. These errors are usually due to either using a role without sufficient permissions, or trying to query a service that isn't enabled/available in your region/account.
+API exceptions related to permissions are silently ignored in most cases. These errors are usually due to either using a role without sufficient permissions, or trying to query a service that isn't enabled/available in your region/account.
 
 ```
 t2.us-east-1.EC2.describe_subnets.0
