@@ -61,7 +61,11 @@ class S3 < Mapper
                            end
 
         rescue Aws::S3::Errors::ServiceError => e
-          raise e unless suppressed_errors.include?(e.code)
+          log_error(e.code)
+
+          unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
+            raise e
+          end
         end
 
         resources.push(struct.to_h)

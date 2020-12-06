@@ -20,6 +20,7 @@ class Parser
     :skip_credential_report,
     :stream_output,
     :verbose,
+    :quit_on_exception,
     :debug
   )
 
@@ -42,6 +43,7 @@ class Parser
       DEFAULT_OUTPUT_FILE,
       DEFAULT_FORMAT,
       DEFAULT_THREADS,
+      false,
       false,
       false,
       false,
@@ -133,6 +135,11 @@ class Parser
       # verbose
       opts.on('-v', '--verbose', 'Output client progress and current operation') do
         args.verbose = true unless args.stream_output
+      end
+
+      # re-raise exceptions
+      opts.on('-q', '--quit-on-exception', 'Stop collection if an API error is encountered (default: false)') do
+        args.quit_on_exception = true
       end
 
       # debug
