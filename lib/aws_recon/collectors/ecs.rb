@@ -8,24 +8,24 @@ class ECS < Mapper
     resources = []
 
     #
-    # describe_clusters
+    # list_clusters
     #
-    @client.describe_clusters.each_with_index do |response, page|
+    @client.list_clusters.each_with_index do |response, page|
       log(response.context.operation_name, page)
 
-      response.clusters.each do |cluster|
-        struct = OpenStruct.new(cluster.to_h)
+      response.cluster_arns.each do |cluster|
+        struct = OpenStruct.new(@client.describe_clusters({ clusters: [cluster] }).clusters.first.to_h)
         struct.type = 'cluster'
-        struct.arn = cluster.cluster_arn
+        struct.arn = cluster
         struct.tasks = []
 
         # list_tasks
-        @client.list_tasks({ cluster: cluster.cluster_arn }).each_with_index do |response, page|
+        @client.list_tasks({ cluster: cluster }).each_with_index do |response, page|
           log(response.context.operation_name, 'list_tasks', page)
 
           # describe_tasks
           response.task_arns.each do |task_arn|
-            @client.describe_tasks({ cluster: cluster.cluster_arn, tasks: [task_arn] }).tasks.each do |task|
+            @client.describe_tasks({ cluster: cluster, tasks: [task_arn] }).tasks.each do |task|
               struct.tasks.push(task)
             end
           end
