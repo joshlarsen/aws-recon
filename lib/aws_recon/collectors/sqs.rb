@@ -18,7 +18,7 @@ class SQS < Mapper
         struct = OpenStruct.new(@client.get_queue_attributes({ queue_url: queue, attribute_names: ['All'] }).attributes.to_h)
         struct.type = 'queue'
         struct.arn = struct.QueueArn
-        struct.policy = struct.delete_field('Policy').parse_policy
+        struct.policy = struct.Policy ? struct.delete_field('Policy').parse_policy : nil
 
         resources.push(struct.to_h)
       end
