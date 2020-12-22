@@ -9,4 +9,20 @@
 #
 # See https://docs.rubocop.org/rubocop/configuration
 Layout/LineLength:
-  Max: 80
+  Max: 100
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: always_true
+  Safe: true
+  SafeAutoCorrect: true
+Style/ClassAndModuleChildren:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
