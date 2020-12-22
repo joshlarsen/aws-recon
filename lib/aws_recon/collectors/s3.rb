@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect S3 Resources
+#
 class S3 < Mapper
   #
   # Returns an array of resources.
@@ -63,9 +68,7 @@ class S3 < Mapper
         rescue Aws::S3::Errors::ServiceError => e
           log_error(e.code)
 
-          unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
-            raise e
-          end
+          raise e unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
         end
 
         resources.push(struct.to_h)

@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect RDS Resources
+#
 class RDS < Mapper
   #
   # Returns an array of resources.
