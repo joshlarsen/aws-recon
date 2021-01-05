@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect EC2 resources
+#
 class EC2 < Mapper
   #
   # Returns an array of resources.
@@ -71,9 +76,7 @@ class EC2 < Mapper
               if user_data_raw
                 user_data = Base64.decode64(user_data_raw)
 
-                if user_data.force_encoding('UTF-8').ascii_only?
-                  struct.user_data = user_data
-                end
+                struct.user_data = user_data if user_data.force_encoding('UTF-8').ascii_only?
               end
             end
 

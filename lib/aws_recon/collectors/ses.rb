@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect SES resources
+#
 class SES < Mapper
   #
   # Returns an array of resources.

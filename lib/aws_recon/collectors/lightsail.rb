@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect Lightsail resources
+#
 class Lightsail < Mapper
   #
   # Returns an array of resources.

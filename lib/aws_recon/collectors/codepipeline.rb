@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect CodePipeline resources
+#
 class CodePipeline < Mapper
   #
   # Returns an array of resources.
@@ -25,9 +30,7 @@ class CodePipeline < Mapper
     rescue Aws::CodePipeline::Errors::ServiceError => e
       log_error(e.code)
 
-      unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
-        raise e
-      end
+      raise e unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
     end
 
     resources

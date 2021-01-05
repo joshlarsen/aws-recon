@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect EMR resources
+#
 class EMR < Mapper
   #
   # Returns an array of resources.

@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
+#
+# Collect GuardDuty resources
+#
 class GuardDuty < Mapper
   #
   # Returns an array of resources.
-  #
-  # TODO: test live
   #
   def collect
     resources = []

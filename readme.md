@@ -23,7 +23,7 @@ Enter AWS Recon, multi-threaded AWS inventory collection tool written in plain R
 
 ### Requirements
 
-AWS Recon needs AWS account role or credentials with `ReadOnlyAccess`. Full `AdministratorAccess` is over-privileged, but will work as well. The `SecurityAudit` policy is **not** sufficient as it omits access to many services.
+AWS Recon needs an AWS account role or credentials with `ReadOnlyAccess`. Full `AdministratorAccess` is over-privileged, but will work as well. The `SecurityAudit` policy is **not** sufficient as it omits access to many services.
 
 #### Running via Docker
 

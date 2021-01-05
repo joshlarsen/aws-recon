@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+#
+# Command line options parser
+#
 class Parser
   DEFAULT_CONFIG_FILE = nil
   DEFAULT_OUTPUT_FILE = File.expand_path(File.join(Dir.pwd, 'output.json')).freeze
@@ -97,16 +100,12 @@ class Parser
 
       # output format
       opts.on('-f', '--format [FORMAT]', 'Specify output format (default: aws)') do |file|
-        if %w[aws custom].include?(file.downcase)
-          args.output_format = file.downcase
-        end
+        args.output_format = file.downcase if %w[aws custom].include?(file.downcase)
       end
 
       # threads
       opts.on('-t', '--threads [THREADS]', "Specify max threads (default: #{Parser::DEFAULT_THREADS}, max: 128)") do |threads|
-        if (0..Parser::MAX_THREADS).include?(threads.to_i)
-          args.threads = threads.to_i
-        end
+        args.threads = threads.to_i if (0..Parser::MAX_THREADS).include?(threads.to_i)
       end
 
       # collect EC2 instance user data

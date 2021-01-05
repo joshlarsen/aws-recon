@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
+#
+# Collect ECS resources
+#
 class ECS < Mapper
   #
   # Returns an array of resources.
-  #
-  # TODO: test live
   #
   def collect
     resources = []

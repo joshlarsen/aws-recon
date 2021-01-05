@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect Shield resources
+#
 class Shield < Mapper
   #
   # Returns an array of resources.
@@ -52,9 +57,7 @@ class Shield < Mapper
   rescue Aws::Shield::Errors::ServiceError => e
     log_error(e.code)
 
-    unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
-      raise e
-    end
+    raise e unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
 
     [] # no access or service isn't enabled
   end

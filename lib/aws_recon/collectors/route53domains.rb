@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect Route53 Domain resources
+#
 class Route53Domains < Mapper
   #
   # Returns an array of resources.

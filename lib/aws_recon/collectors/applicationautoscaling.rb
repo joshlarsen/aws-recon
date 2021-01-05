@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect ApplicationAutoScaling resources
+#
 class ApplicationAutoScaling < Mapper
   #
   # Returns an array of resources.

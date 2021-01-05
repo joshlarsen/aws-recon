@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect SNS resources
+#
 class SNS < Mapper
   #
   # Returns an array of resources.

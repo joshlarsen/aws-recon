@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect SSM resources
+#
 class SSM < Mapper
   #
   # Returns an array of resources.

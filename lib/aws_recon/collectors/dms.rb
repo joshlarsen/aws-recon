@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect DMS resources
+#
 class DatabaseMigrationService < Mapper
   #
   # Returns an array of resources.

@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect Route53 resources
+#
 class Route53 < Mapper
   #
   # Returns an array of resources.

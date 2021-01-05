@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect Secrets Manager resources
+#
 class SecretsManager < Mapper
   #
   # Returns an array of resources.

@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect Support resources
+#
 class Support < Mapper
   #
   # Returns an array of resources.
@@ -28,9 +33,7 @@ class Support < Mapper
   rescue Aws::Support::Errors::ServiceError => e
     log_error(e.code)
 
-    unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
-      raise e
-    end
+    raise e unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
 
     [] # no Support subscription
   end

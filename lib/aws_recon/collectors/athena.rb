@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect Athena resources
+#
 class Athena < Mapper
   #
   # Returns an array of resources.

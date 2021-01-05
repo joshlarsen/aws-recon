@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect CloudFront resources
+#
 class CloudFront < Mapper
   #
   # Returns an array of resources.

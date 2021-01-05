@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect Redshift resources
+#
 class Redshift < Mapper
   #
   # Returns an array of resources.

@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect ServiceQuota resources
+#
 class ServiceQuotas < Mapper
   #
   # Returns an array of resources.
@@ -28,9 +33,7 @@ class ServiceQuotas < Mapper
     rescue Aws::ServiceQuotas::Errors::ServiceError => e
       log_error(e.code, service)
 
-      unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
-        raise e
-      end
+      raise e unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
     end
 
     resources

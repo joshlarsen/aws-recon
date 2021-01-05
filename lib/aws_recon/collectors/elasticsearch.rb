@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect ElasticSearch resources
+#
 class ElasticsearchService < Mapper
   #
   # Returns an array of resources.

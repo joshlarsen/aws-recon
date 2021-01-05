@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect EFS resources
+#
 class EFS < Mapper
   #
   # Returns an array of resources.

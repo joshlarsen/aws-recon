@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Parse and unescape AWS policy document string
 #
