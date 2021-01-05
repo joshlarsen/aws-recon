@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect Org resources
+#
 class Organizations < Mapper
   #
   # Returns an array of resources.
@@ -49,9 +54,7 @@ class Organizations < Mapper
     rescue Aws::Organizations::Errors::ServiceError => e
       log_error(e.code)
 
-      unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
-        raise e
-      end
+      raise e unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
     end
 
     resources

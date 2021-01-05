@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect WAFv2 resources
+#
 class WAFV2 < Mapper
   #
   # Returns an array of resources.

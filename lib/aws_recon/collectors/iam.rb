@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect IAM resources
+#
 class IAM < Mapper
   #
   # Returns an array of resources.
@@ -102,9 +107,7 @@ class IAM < Mapper
     rescue Aws::IAM::Errors::ServiceError => e
       log_error(e.code)
 
-      unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
-        raise e
-      end
+      raise e unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
     end
 
     #
@@ -187,9 +190,7 @@ class IAM < Mapper
     rescue Aws::IAM::Errors::ServiceError => e
       log_error(e.code)
 
-      unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
-        raise e
-      end
+      raise e unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
     end
 
     resources

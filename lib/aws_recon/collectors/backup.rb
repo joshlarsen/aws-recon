@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect Backup resources
+#
 class Backup < Mapper
   #
   # Returns an array of resources.

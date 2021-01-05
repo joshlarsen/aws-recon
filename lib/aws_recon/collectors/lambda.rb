@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect Lambda resources
+#
 class Lambda < Mapper
   def collect
     resources = []

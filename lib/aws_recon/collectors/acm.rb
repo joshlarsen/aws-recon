@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect ACM resources
+#
 class ACM < Mapper
   #
   # Returns an array of resources.

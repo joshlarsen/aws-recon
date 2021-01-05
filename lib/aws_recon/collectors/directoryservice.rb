@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect DirectoryService resources
+#
 class DirectoryService < Mapper
   #
   # Returns an array of resources.

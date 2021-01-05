@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect Config resources
+#
 class ConfigService < Mapper
   #
   # Returns an array of resources.

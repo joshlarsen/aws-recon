@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect Kafka resources
+#
 class Kafka < Mapper
   #
   # Returns an array of resources.

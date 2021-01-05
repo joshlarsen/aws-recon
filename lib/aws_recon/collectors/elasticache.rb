@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect ElastiCache resources
+#
 class ElastiCache < Mapper
   def collect
     resources = []

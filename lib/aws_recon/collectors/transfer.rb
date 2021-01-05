@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect Transfer resources
+#
 class Transfer < Mapper
   #
   # Returns an array of resources.

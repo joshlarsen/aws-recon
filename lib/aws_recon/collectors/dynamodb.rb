@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect DynamodDB resources
+#
 class DynamoDB < Mapper
   #
   # Returns an array of resources.

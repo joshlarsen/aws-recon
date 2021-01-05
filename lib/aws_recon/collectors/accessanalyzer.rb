@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect AccessAnalyzer resources
+#
 class AccessAnalyzer < Mapper
   #
   # Returns an array of resources.

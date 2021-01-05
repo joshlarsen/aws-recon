@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect CloudWatch resources
+#
 class CloudWatch < Mapper
   #
   # Returns an array of resources.

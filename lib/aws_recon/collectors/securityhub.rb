@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect Security Hub resources
+#
 class SecurityHub < Mapper
   #
   # Returns an array of resources.
@@ -21,9 +26,7 @@ class SecurityHub < Mapper
     rescue Aws::SecurityHub::Errors::ServiceError => e
       log_error(e.code)
 
-      unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
-        raise e
-      end
+      raise e unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
     end
 
     resources

@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect DirectConnect resources
+#
 class DirectConnect < Mapper
   #
   # Returns an array of resources.

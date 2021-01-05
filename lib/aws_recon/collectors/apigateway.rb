@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect API Gateway resources
+#
 class APIGateway < Mapper
   #
   # Returns an array of resources.

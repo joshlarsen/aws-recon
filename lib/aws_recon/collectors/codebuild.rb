@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect CodeBuild resources
+#
 class CodeBuild < Mapper
   #
   # Returns an array of resources.

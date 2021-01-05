@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect ECR resources
+#
 class ECR < Mapper
   #
   # Returns an array of resources.
@@ -21,9 +26,7 @@ class ECR < Mapper
       rescue Aws::ECR::Errors::ServiceError => e
         log_error(e.code)
 
-        unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
-          raise e
-        end
+        raise e unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
       ensure
         resources.push(struct.to_h)
       end

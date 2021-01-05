@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect ELB resources
+#
 class ElasticLoadBalancing < Mapper
   #
   # Returns an array of resources.

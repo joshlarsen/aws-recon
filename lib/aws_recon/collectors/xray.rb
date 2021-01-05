@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+#
+# Collect XRay resources
+#
 class XRay < Mapper
   #
   # Returns an array of resources.
