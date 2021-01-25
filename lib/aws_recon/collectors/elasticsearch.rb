@@ -22,6 +22,7 @@ class ElasticsearchService < Mapper
         # describe_elasticsearch_domains
         struct = OpenStruct.new(@client.describe_elasticsearch_domain({ domain_name: domain.domain_name }).domain_status.to_h)
         struct.type = 'domain'
+        struct.access_policies = struct.access_policies&.parse_policy
 
         resources.push(struct.to_h)
       end

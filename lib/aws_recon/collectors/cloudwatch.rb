@@ -28,6 +28,7 @@ class CloudWatch < Mapper
         struct = OpenStruct.new(alarm.to_h)
         struct.type = 'metric_alarm'
         struct.arn = alarm.alarm_arn
+        struct.state_reason_data = alarm.state_reason_data&.parse_policy
 
         resources.push(struct.to_h)
       end
