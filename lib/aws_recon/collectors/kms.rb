@@ -51,7 +51,7 @@ class KMS < Mapper
         log(response.context.operation_name, 'get_key_policy')
         struct.policy = @client
                         .get_key_policy({ key_id: key.key_id, policy_name: 'default' })
-                        .policy
+                        .policy.parse_policy
 
         # list_aliases
         log(response.context.operation_name, 'list_aliases')
