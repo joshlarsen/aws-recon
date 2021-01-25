@@ -32,7 +32,7 @@ class Shield < Mapper
       struct = OpenStruct.new
       struct.type = 'contact_list'
       struct.arn = "arn:aws:shield:#{@region}:#{@account}:contact_list"
-      struct.contacts = response.emergency_contact_list.map(&:to_h)
+      struct.contacts = response&.emergency_contact_list&.map(&:to_h)
 
       resources.push(struct.to_h)
     end
