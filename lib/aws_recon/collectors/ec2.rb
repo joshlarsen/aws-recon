@@ -55,8 +55,8 @@ class EC2 < Mapper
         log(response.context.operation_name, page)
 
         # reservations
-        response.reservations.each_with_index do |reservation, page|
-          log(response.context.operation_name, 'reservations', page)
+        response.reservations.each_with_index do |reservation, rpage|
+          log(response.context.operation_name, 'reservations', rpage)
 
           # instances
           reservation.instances.each do |instance|

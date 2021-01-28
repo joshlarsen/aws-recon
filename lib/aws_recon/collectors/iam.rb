@@ -85,7 +85,7 @@ class IAM < Mapper
                                            create_date: p.create_date
                                          }
                                        end
-                                      end
+                                     end
 
         resources.push(struct.to_h)
       end

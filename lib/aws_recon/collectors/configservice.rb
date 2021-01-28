@@ -43,7 +43,7 @@ class ConfigService < Mapper
       response.configuration_recorders.each do |recorder|
         struct = OpenStruct.new(recorder.to_h)
         struct.type = 'configuration_recorder'
-        struct.arn = "arn:aws:config:#{@region}:configuration_recorder/#{recorder.name}"
+        struct.arn = "arn:aws:config:#{@region}:#{@account}:configuration_recorder/#{recorder.name}"
 
         # describe_configuration_recorder_status (only accepts one recorder)
         @client.describe_configuration_recorder_status({ configuration_recorder_names: [recorder.name] }).each do |response|
