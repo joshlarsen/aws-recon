@@ -20,6 +20,8 @@ class ElasticLoadBalancingV2 < Mapper
         struct = OpenStruct.new(elb.to_h)
         struct.type = 'load_balancer'
         struct.arn = elb.load_balancer_arn
+        struct.load_balancer_version = 'v2'
+        struct.load_balancer_type = elb.type
         struct.listeners = []
         struct.target_groups = []
 
