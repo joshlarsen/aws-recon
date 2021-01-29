@@ -20,6 +20,7 @@ class ElasticLoadBalancing < Mapper
         struct = OpenStruct.new(elb.to_h)
         struct.type = 'load_balancer'
         struct.arn = elb.dns_name
+        struct.load_balancer_version = 'v1'
 
         # describe_load_balancer_policies
         struct.policies = @client
