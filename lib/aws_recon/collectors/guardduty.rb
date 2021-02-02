@@ -22,7 +22,7 @@ class GuardDuty < Mapper
         # get_detector
         struct = OpenStruct.new(@client.get_detector({ detector_id: detector }).to_h)
         struct.type = 'detector'
-        struct.arn = "arn:aws:guardduty:#{@region}:detector/#{detector}"
+        struct.arn = "arn:aws:guardduty:#{@region}:#{@account}:detector/#{detector}"
 
         # get_findings_statistics (only active findings)
         struct.findings_statistics = @client.get_findings_statistics({
