@@ -35,7 +35,7 @@ class SSM < Mapper
         struct = OpenStruct.new(parameter.to_h)
         struct.string_type = parameter.type
         struct.type = 'parameter'
-        struct.arn = "arn:aws:#{@service}:#{@region}::parameter:#{parameter.name}"
+        struct.arn = "arn:aws:#{@service}:#{@region}:#{@account}:parameter:#{parameter.name}"
 
         resources.push(struct.to_h)
       end
