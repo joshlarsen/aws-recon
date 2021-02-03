@@ -19,7 +19,7 @@ class SES < Mapper
       response.identities.each do |identity|
         struct = OpenStruct.new
         struct.type = 'identity'
-        struct.arn = "aws:ses:#{@region}:#{@account}:identity/#{identity}"
+        struct.arn = "arn:aws:ses:#{@region}:#{@account}:identity/#{identity}"
 
         # get_identity_dkim_attributes
         struct.dkim_attributes = @client.get_identity_dkim_attributes({ identities: [identity] }).dkim_attributes[identity].to_h

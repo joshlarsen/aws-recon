@@ -18,6 +18,7 @@ class EMR < Mapper
 
       struct = OpenStruct.new(response.block_public_access_configuration.to_h)
       struct.type = 'configuration'
+      struct.arn = "arn:aws:emr:#{@region}:#{@account}/block_public_access_configuration"
 
       resources.push(struct.to_h)
     end
