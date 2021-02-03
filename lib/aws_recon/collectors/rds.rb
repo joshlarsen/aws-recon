@@ -88,18 +88,18 @@ class RDS < Mapper
     #
     # describe_db_engine_versions
     #
-    unless @options.skip_slow
-      @client.describe_db_engine_versions.each_with_index do |response, page|
-        log(response.context.operation_name, page)
+    ### unless @options.skip_slow
+    ###   @client.describe_db_engine_versions.each_with_index do |response, page|
+    ###     log(response.context.operation_name, page)
 
-        response.db_engine_versions.each do |version|
-          struct = OpenStruct.new(version.to_h)
-          struct.type = 'db_engine_version'
+    ###     response.db_engine_versions.each do |version|
+    ###       struct = OpenStruct.new(version.to_h)
+    ###       struct.type = 'db_engine_version'
 
-          resources.push(struct.to_h)
-        end
-      end
-    end
+    ###       resources.push(struct.to_h)
+    ###     end
+    ###   end
+    ### end
 
     resources
   end
