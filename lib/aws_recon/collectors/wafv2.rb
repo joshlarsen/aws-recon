@@ -34,14 +34,14 @@ class WAFV2 < Mapper
           }
 
           # get_web_acl
-          @client.get_web_acl(params).each do |response|
-            struct.arn = response.web_acl.arn
-            struct.details = response.web_acl
+          @client.get_web_acl(params).each do |r|
+            struct.arn = r.web_acl.arn
+            struct.details = r.web_acl
           end
 
           # list_resources_for_web_acl
-          @client.list_resources_for_web_acl({ web_acl_arn: 'ResourceArn' }).each do |response|
-            struct.resources = response.resource_arns.map(&:to_h)
+          @client.list_resources_for_web_acl({ web_acl_arn: 'ResourceArn' }).each do |r|
+            struct.resources = r.resource_arns.map(&:to_h)
           end
 
           resources.push(struct.to_h)

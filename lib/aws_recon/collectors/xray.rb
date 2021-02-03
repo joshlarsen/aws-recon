@@ -16,6 +16,7 @@ class XRay < Mapper
     struct = OpenStruct.new
     struct.config = @client.get_encryption_config.encryption_config.to_h
     struct.type = 'config'
+    struct.arn = "arn:aws:xray:#{@region}:#{@account}/config"
 
     resources.push(struct.to_h)
 
