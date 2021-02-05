@@ -29,6 +29,7 @@ class EC2 < Mapper
         struct = OpenStruct.new
         struct.attributes = response.account_attributes.map(&:to_h)
         struct.type = 'account'
+        struct.arn = "arn:aws::#{@account}"
 
         resources.push(struct.to_h)
       end
