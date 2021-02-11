@@ -92,6 +92,28 @@ class IAM < Mapper
     end
 
     #
+    # list_instance_profiles
+    #
+    @client.list_instance_profiles.each_with_index do |response, page|
+      log(response.context.operation_name, page)
+
+      # instance_profiles
+      response.instance_profiles.each do |profile|
+        struct = OpenStruct.new(profile.to_h)
+        struct.type = 'instance_profile'
+        struct.arn = profile.arn
+        struct.roles = []
+
+        profile.roles&.each do |role|
+          role.assume_role_policy_document = role.assume_role_policy_document.parse_policy
+          struct.roles.push(role.to_h)
+        end
+
+        resources.push(struct.to_h)
+      end
+    end
+
+    #
     # get_account_password_policy
     #
     begin
