@@ -13,14 +13,20 @@ class EMR < Mapper
     #
     # get_block_public_access_configuration
     #
-    @client.get_block_public_access_configuration.each do |response|
-      log(response.context.operation_name)
+    begin
+      @client.get_block_public_access_configuration.each do |response|
+        log(response.context.operation_name)
 
-      struct = OpenStruct.new(response.block_public_access_configuration.to_h)
-      struct.type = 'configuration'
-      struct.arn = "arn:aws:emr:#{@region}:#{@account}/block_public_access_configuration"
+        struct = OpenStruct.new(response.block_public_access_configuration.to_h)
+        struct.type = 'configuration'
+        struct.arn = "arn:aws:emr:#{@region}:#{@account}/block_public_access_configuration"
 
-      resources.push(struct.to_h)
+        resources.push(struct.to_h)
+      end
+    rescue Aws::EMR::Errors::ServiceError => e
+      log_error(e.code)
+
+      raise e unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
     end
 
     #
@@ -41,5 +47,13 @@ class EMR < Mapper
     end
 
     resources
+  end
+
+  private
+
+  def suppressed_errors
+    %w[
+      InvalidRequestException
+    ]
   end
 end
