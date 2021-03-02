@@ -6,7 +6,7 @@ module AwsRecon
   class CLI
     def initialize
       # parse options
-      @options = Parser.parse ARGV.length < 1 ? %w[-h] : ARGV
+      @options = Parser.parse ARGV.empty? ? %w[-h] : ARGV
 
       # timing
       @starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
@@ -15,11 +15,11 @@ module AwsRecon
       @account_id = Aws::STS::Client.new.get_caller_identity.account
 
       # AWS services
-      @aws_services = YAML.load(File.read(SERVICES_CONFIG_FILE), symbolize_names: true)
+      @aws_services = YAML.safe_load(File.read(SERVICES_CONFIG_FILE), symbolize_names: true)
 
       # User config services
       if @options.config_file
-        user_config = YAML.load(File.read(@options.config_file), symbolize_names: true)
+        user_config = YAML.safe_load(File.read(@options.config_file), symbolize_names: true)
 
         @services = user_config[:services]
         @regions = user_config[:regions]
@@ -94,7 +94,7 @@ module AwsRecon
           next unless @regions.include?(region) && !skip_region
 
           # user included this service in the args
-          next unless @services.include?(service.name) || @services.include?(service.alias) # rubocop:disable Layout/LineLength
+          next unless @services.include?(service.name) || @services.include?(service.alias)
 
           collect(service, region)
         end

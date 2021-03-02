@@ -14,11 +14,13 @@
   alias: codebuild
   excluded_regions:
     - af-south-1
+    - ap-northeast-3
 - name: CodePipeline
   alias: codepipeline
   excluded_regions:
     - af-south-1
     - me-south-1
+    - ap-northeast-3
 - name: AutoScaling
   alias: autoscaling
 - name: CloudTrail
@@ -51,6 +53,7 @@
     - af-south-1
     - eu-south-1
     - me-south-1
+    - ap-northeast-3
 - name: IAM
   global: true
   alias: iam
@@ -102,6 +105,7 @@
     - ap-east-1
     - af-south-1
     - eu-south-1
+    - ap-northeast-3
 - name: CloudWatch
   alias: cloudwatch
 - name: CloudWatchLogs
@@ -110,10 +114,13 @@
   alias: kafka
   excluded_regions:
     - af-south-1
+    - ap-northeast-3
 - name: SecretsManager
   alias: sm
 - name: SecurityHub
   alias: sh
+  excluded_regions:
+    - ap-northeast-3
 - name: Support
   global: true
   alias: support
@@ -123,10 +130,16 @@
     - ap-southeast-1
 - name: GuardDuty
   alias: guardduty
+  excluded_regions:
+    - ap-northeast-3
 - name: Athena
   alias: athena
+  excluded_regions:
+    - ap-northeast-3
 - name: EFS
   alias: efs
+  excluded_regions:
+    - ap-northeast-3
 - name: Firehose
   alias: firehose
 - name: Lightsail
@@ -139,6 +152,7 @@
     - af-south-1
     - eu-south-1
     - me-south-1
+    - ap-northeast-3
 - name: WorkSpaces
   alias: workspaces
   excluded_regions:
@@ -151,8 +165,11 @@
     - af-south-1
     - eu-south-1
     - me-south-1
+    - ap-northeast-3
 - name: SageMaker
   alias: sagemaker
+  excluded_regions:
+    - ap-northeast-3
 - name: ServiceQuotas
   alias: servicequotas
 - name: Transfer
@@ -162,13 +179,18 @@
     - af-south-1
     - eu-south-1
     - me-south-1
+    - ap-northeast-3
 - name: DirectConnect
   alias: dc
 - name: DirectoryService
   alias: ds
+  excluded_regions:
+    - ap-northeast-3
 - name: DatabaseMigrationService
   alias: dms
 - name: XRay
   alias: xray
 - name: WAFV2
   alias: wafv2
+  excluded_regions:
+    - ap-northeast-3
