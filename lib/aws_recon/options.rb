@@ -6,6 +6,7 @@
 class Parser
   DEFAULT_CONFIG_FILE = nil
   DEFAULT_OUTPUT_FILE = File.expand_path(File.join(Dir.pwd, 'output.json')).freeze
+  DEFAULT_S3_PATH = nil
   SERVICES_CONFIG_FILE = File.join(File.dirname(__FILE__), 'services.yaml').freeze
   DEFAULT_FORMAT = 'aws'
   DEFAULT_THREADS = 8
@@ -15,6 +16,7 @@ class Parser
     :regions,
     :services,
     :config_file,
+    :s3,
     :output_file,
     :output_format,
     :threads,
@@ -43,6 +45,7 @@ class Parser
       aws_regions,
       aws_services.map { |service| service[:name] },
       DEFAULT_CONFIG_FILE,
+      DEFAULT_S3_PATH,
       DEFAULT_OUTPUT_FILE,
       DEFAULT_FORMAT,
       DEFAULT_THREADS,
@@ -91,6 +94,11 @@ class Parser
       # config file
       opts.on('-c', '--config [CONFIG]', 'Specify config file for services & regions (e.g. config.yaml)') do |config|
         args.config_file = config
+      end
+
+      # write output file to S3 bucket
+      opts.on('-b', '--s3-bucket [BUCKET:REGION]', 'Write output file to S3 bucket (default: \'\')') do |bucket_with_region|
+        args.s3 = bucket_with_region
       end
 
       # output file

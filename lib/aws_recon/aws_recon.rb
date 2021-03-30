@@ -34,9 +34,9 @@ module AwsRecon
       # formatter
       @formatter = Formatter.new
 
-      unless @options.stream_output
-        puts "\nStarting collection with #{@options.threads} threads...\n"
-      end
+      return unless @options.stream_output
+
+      puts "\nStarting collection with #{@options.threads} threads...\n"
     end
 
     #
@@ -72,7 +72,7 @@ module AwsRecon
       #
       # global services
       #
-      @aws_services.map { |x| OpenStruct.new(x) }.filter { |s| s.global }.each do |service|
+      @aws_services.map { |x| OpenStruct.new(x) }.filter(&:global).each do |service|
         # user included this service in the args
         next unless @services.include?(service.name)
 
@@ -104,13 +104,44 @@ module AwsRecon
 
       puts "\nStopped early after \x1b[32m#{elapsed.to_i}\x1b[0m seconds.\n"
     ensure
+      elapsed = Process.clock_gettime(Process::CLOCK_MONOTONIC) - @starting
+
+      puts "\nFinished in \x1b[32m#{elapsed.to_i}\x1b[0m seconds.\n\n"
+
       # write output file
       if @options.output_file
-        elapsed = Process.clock_gettime(Process::CLOCK_MONOTONIC) - @starting
-
-        puts "\nFinished in \x1b[32m#{elapsed.to_i}\x1b[0m seconds. Saving resources to \x1b[32m#{@options.output_file}\x1b[0m.\n\n"
+        puts "Saving resources to \x1b[32m#{@options.output_file}\x1b[0m.\n\n"
 
         File.write(@options.output_file, @resources.to_json)
+      end
+
+      # write output file to S3 bucket
+      if @options.s3
+        t = Time.now.utc
+
+        s3_full_object_path = "AWSRecon/#{t.year}/#{t.month}/#{t.day}/#{@account_id}_aws_recon_#{t.to_i}.json.gz"
+
+        begin
+          # get bucket name (and region if not us-east-1)
+          s3_bucket, s3_region = @options.s3.split(':')
+
+          # build IO object and gzip it
+          io = StringIO.new
+          gzip_data = Zlib::GzipWriter.new(io)
+          gzip_data.write(@resources.to_json)
+          gzip_data.close
+
+          # send it to S3
+          s3_client = Aws::S3::Client.new(region: s3_region || 'us-east-1')
+          s3_resource = Aws::S3::Resource.new(client: s3_client)
+          obj = s3_resource.bucket(s3_bucket).object(s3_full_object_path)
+          obj.put(body: io.string)
+
+          puts "Saving resources to S3 \x1b[32ms3://#{s3_bucket}/#{s3_full_object_path}\x1b[0m\n\n"
+        rescue Aws::S3::Errors::ServiceError => e
+          puts "\x1b[35mError!\x1b[0m - could not save output S3 bucket\n\n"
+          puts "#{e.message} - #{e.code}\n"
+        end
       end
     end
   end
