@@ -1,2 +1,4 @@
+# frozen_string_literal: true
+
 # require all collectors
-Dir[File.join(__dir__, 'collectors', '*.rb')].each { |file| require file }
+Dir[File.join(__dir__, 'collectors', '*.rb')].sort.each { |file| require file }

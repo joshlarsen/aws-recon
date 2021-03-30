@@ -12,7 +12,6 @@ Layout/LineLength:
   Max: 100
 Style/FrozenStringLiteralComment:
   EnforcedStyle: always_true
-  Safe: true
   SafeAutoCorrect: true
 Style/ClassAndModuleChildren:
   Enabled: false
