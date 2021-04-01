@@ -109,7 +109,7 @@ module AwsRecon
       puts "\nFinished in \x1b[32m#{elapsed.to_i}\x1b[0m seconds.\n\n"
 
       # write output file
-      if @options.output_file
+      if @options.output_file && !@options.s3
         puts "Saving resources to \x1b[32m#{@options.output_file}\x1b[0m.\n\n"
 
         File.write(@options.output_file, @resources.to_json)
