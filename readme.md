@@ -3,13 +3,13 @@
 
 # AWS Recon
 
-A multi-threaded AWS inventory collection tool.
+A multi-threaded AWS security-focused inventory collection tool written in Ruby.
 
 This tool was created to facilitate efficient collection of a large amount of AWS resource attributes and metadata. It aims to collect nearly everything that is relevant to the security configuration and posture of an AWS environment.
 
-Existing tools (e.g. [AWS Config](https://aws.amazon.com/config)) that do some form of resource collection lack the coverage and specificity to accurately measure security posture (e.g. detailed attribute data and full policy documents).
+Existing tools (e.g. [AWS Config](https://aws.amazon.com/config)) that do some form of resource collection lack the coverage and specificity to accurately measure security posture (e.g. detailed resource attribute data, fully parsed policy documents, and nested resource relationships).
 
-Enter AWS Recon, multi-threaded AWS inventory collection tool written in plain Ruby. Though Python tends to dominate the AWS tooling landscape, the [Ruby SDK](https://aws.amazon.com/sdk-for-ruby/) has a few convenient advantages over the [other](https://aws.amazon.com/sdk-for-node-js/) [AWS](https://aws.amazon.com/sdk-for-python/) [SDKs](https://aws.amazon.com/sdk-for-go/) we tested. Specifically, easy handling of automatic retries, paging of large responses, and - with some help - threading huge numbers of requests.
+AWS Recon handles collection from large accounts by taking advantage of automatic retries (either due to network reliability or API throttling), automatic paging of large responses (> 100 resources per API call), and multi-threading parallel requests to speed up collection.
 
 ## Project Goals
 
@@ -31,7 +31,7 @@ Use Docker version 19.x or above to run the pre-built image without having to in
 
 #### Running locally via Ruby
 
-If you already have Ruby installed (2.5.x or 2.6.x), you may want to install the Ruby gem.
+If you already have Ruby installed (2.6.x or 2.7.x), you may want to install the Ruby gem.
 
 ### Installation
 
@@ -276,6 +276,8 @@ Usage: aws_recon [options]
 
 Output is always some form of JSON - either JSON lines or plain JSON. The output is either written to a file (the default), or written to stdout (with `-j`).
 
+When writing to an S3 bucket, the JSON output is automatically compressed with `gzip`.
+
 ## Support for Manually Enabled Regions
 
 If you have enabled **manually enabled regions**:
@@ -376,7 +378,7 @@ $ cd aws-recon
 Create a sticky gemset if using RVM:
 
 ```
-$ rvm use 2.6.5@aws_recon_dev --create --ruby-version
+$ rvm use 2.7.2@aws_recon_dev --create --ruby-version
 ```
 
 Run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

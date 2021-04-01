@@ -12,3 +12,5 @@ Gemfile.lock
 /pkg/
 /spec/reports/
 /tmp/
+.terraform*
+terraform.tfstate*

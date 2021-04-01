@@ -102,15 +102,15 @@ module AwsRecon
     rescue Interrupt # ctrl-c
       elapsed = Process.clock_gettime(Process::CLOCK_MONOTONIC) - @starting
 
-      puts "\nStopped early after \x1b[32m#{elapsed.to_i}\x1b[0m seconds.\n"
+      puts "\nStopped early after #{elapsed.to_i} seconds.\n"
     ensure
       elapsed = Process.clock_gettime(Process::CLOCK_MONOTONIC) - @starting
 
-      puts "\nFinished in \x1b[32m#{elapsed.to_i}\x1b[0m seconds.\n\n"
+      puts "\nFinished in #{elapsed.to_i} seconds.\n\n"
 
       # write output file
-      if @options.output_file
-        puts "Saving resources to \x1b[32m#{@options.output_file}\x1b[0m.\n\n"
+      if @options.output_file && !@options.s3
+        puts "Saving resources to #{@options.output_file}.\n\n"
 
         File.write(@options.output_file, @resources.to_json)
       end
@@ -137,9 +137,9 @@ module AwsRecon
           obj = s3_resource.bucket(s3_bucket).object(s3_full_object_path)
           obj.put(body: io.string)
 
-          puts "Saving resources to S3 \x1b[32ms3://#{s3_bucket}/#{s3_full_object_path}\x1b[0m\n\n"
+          puts "Saving resources to S3 s3://#{s3_bucket}/#{s3_full_object_path}\n\n"
         rescue Aws::S3::Errors::ServiceError => e
-          puts "\x1b[35mError!\x1b[0m - could not save output S3 bucket\n\n"
+          puts "Error! - could not save output S3 bucket\n\n"
           puts "#{e.message} - #{e.code}\n"
         end
       end
