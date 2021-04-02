@@ -1,6 +1,6 @@
 # https://www.terraform.io/docs/providers/aws/r/cloudwatch_event_rule.html
 resource "aws_cloudwatch_event_rule" "default" {
-  name                = "${var.aws_recon_base_name}-${random_id.rule.hex}"
+  name                = "${var.aws_recon_base_name}-${random_id.aws_recon.hex}"
   description         = "AWS Recon scheduled task"
   schedule_expression = var.schedule_expression
 }
@@ -23,8 +23,4 @@ resource "aws_cloudwatch_event_target" "default" {
       subnets          = [aws_subnet.subnet.id]
     }
   }
-}
-
-resource "random_id" "rule" {
-  byte_length = 4
 }

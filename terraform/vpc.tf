@@ -3,7 +3,7 @@
 resource "aws_vpc" "vpc" {
   cidr_block = local.cidr_block
   tags = {
-    Name = "${var.aws_recon_base_name}-${random_id.vpc.hex}"
+    Name = "${var.aws_recon_base_name}-${random_id.aws_recon.hex}"
   }
 }
 
@@ -15,12 +15,12 @@ resource "aws_subnet" "subnet" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${var.aws_recon_base_name}-${random_id.vpc.hex}-public"
+    Name = "${var.aws_recon_base_name}-${random_id.aws_recon.hex}-public"
   }
 }
 
 resource "aws_security_group" "sg" {
-  name        = "${var.aws_recon_base_name}-${random_id.vpc.hex}"
+  name        = "${var.aws_recon_base_name}-${random_id.aws_recon.hex}"
   description = "Allow AWS Recon collection egress"
   vpc_id      = aws_vpc.vpc.id
 
@@ -32,7 +32,7 @@ resource "aws_security_group" "sg" {
   }
 
   tags = {
-    Name = "${var.aws_recon_base_name}-${random_id.vpc.hex}"
+    Name = "${var.aws_recon_base_name}-${random_id.aws_recon.hex}"
   }
 }
 
@@ -40,7 +40,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "${var.aws_recon_base_name}-${random_id.vpc.hex}"
+    Name = "${var.aws_recon_base_name}-${random_id.aws_recon.hex}"
   }
 }
 
@@ -53,7 +53,7 @@ resource "aws_route_table" "rt" {
   }
 
   tags = {
-    Name = "${var.aws_recon_base_name}-${random_id.vpc.hex}"
+    Name = "${var.aws_recon_base_name}-${random_id.aws_recon.hex}"
   }
 }
 
@@ -65,10 +65,6 @@ resource "aws_route_table_association" "rt_association" {
 locals {
   cidr_block        = var.base_subnet_cidr
   subnet_cidr_block = cidrsubnet(local.cidr_block, 8, 0)
-}
-
-resource "random_id" "vpc" {
-  byte_length = 4
 }
 
 data "aws_region" "current" {}
