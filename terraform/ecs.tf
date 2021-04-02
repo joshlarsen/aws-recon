@@ -1,14 +1,10 @@
 resource "aws_ecs_cluster" "aws_recon" {
-  name               = "${var.aws_recon_base_name}-${random_id.cluster.hex}"
+  name               = "${var.aws_recon_base_name}-${random_id.aws_recon.hex}"
   capacity_providers = [local.ecs_task_provider]
 }
 
-resource "random_id" "cluster" {
-  byte_length = 4
-}
-
 resource "aws_ecs_task_definition" "aws_recon_task" {
-  family                   = "${var.aws_recon_base_name}-${random_id.cluster.hex}"
+  family                   = "${var.aws_recon_base_name}-${random_id.aws_recon.hex}"
   task_role_arn            = aws_iam_role.aws_recon_role.arn
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
   requires_compatibilities = [local.ecs_task_provider]
@@ -18,12 +14,14 @@ resource "aws_ecs_task_definition" "aws_recon_task" {
 
   container_definitions = jsonencode([
     {
-      name             = "${var.aws_recon_base_name}-${random_id.cluster.hex}"
+      name             = "${var.aws_recon_base_name}-${random_id.aws_recon.hex}"
       image            = "${var.aws_recon_container_name}:${var.aws_recon_container_version}"
       assign_public_ip = true
       entryPoint = [
         "aws_recon",
         "--verbose",
+        "--format",
+        "custom",
         "--s3-bucket",
         "${aws_s3_bucket.aws_recon.bucket}:${data.aws_region.current.name}",
         "--regions",
@@ -42,7 +40,7 @@ resource "aws_ecs_task_definition" "aws_recon_task" {
 }
 
 resource "aws_cloudwatch_log_group" "aws_recon" {
-  name              = "/ecs/${var.aws_recon_base_name}-${random_id.cluster.hex}"
+  name              = "/ecs/${var.aws_recon_base_name}-${random_id.aws_recon.hex}"
   retention_in_days = var.retention_period
 }
 

@@ -73,6 +73,9 @@ class S3 < Mapper
         end
 
         resources.push(struct.to_h)
+
+      rescue Aws::S3::Errors::NoSuchBucket
+        # skip missing bucket
       end
     end
 
