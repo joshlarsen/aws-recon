@@ -19,7 +19,7 @@ class Route53 < Mapper
       response.hosted_zones.each do |zone|
         struct = OpenStruct.new(zone.to_h)
         struct.type = 'zone'
-        struct.arn = "aws:route53:#{@region}:#{@account}:zone/#{zone.name}"
+        struct.arn = "arn:aws:route53:#{@region}:#{@account}:zone/#{zone.name}"
         struct.logging_config = @client
                                 .list_query_logging_configs({ hosted_zone_id: zone.id })
                                 .query_logging_configs.first.to_h
