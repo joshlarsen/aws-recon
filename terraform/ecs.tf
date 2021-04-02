@@ -20,6 +20,8 @@ resource "aws_ecs_task_definition" "aws_recon_task" {
       entryPoint = [
         "aws_recon",
         "--verbose",
+        "--format",
+        "custom",
         "--s3-bucket",
         "${aws_s3_bucket.aws_recon.bucket}:${data.aws_region.current.name}",
         "--regions",
