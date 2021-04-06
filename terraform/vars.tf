@@ -41,6 +41,7 @@ variable "aws_regions" {
   ]
 }
 
+# must be one of: 0, 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365
 variable "retention_period" {
   type    = number
   default = 30

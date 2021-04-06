@@ -9,10 +9,9 @@ resource "aws_vpc" "vpc" {
 
 # Create subnet
 resource "aws_subnet" "subnet" {
-  vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = local.subnet_cidr_block
-  availability_zone       = data.aws_availability_zones.available.names[0]
-  map_public_ip_on_launch = true
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = local.subnet_cidr_block
+  availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = {
     Name = "${var.aws_recon_base_name}-${random_id.aws_recon.hex}-public"

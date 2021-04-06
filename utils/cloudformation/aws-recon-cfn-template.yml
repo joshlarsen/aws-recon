@@ -1,0 +1,151 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Deploys AWS Recon inventory collection resources, scheduled ECS task and corresponding IAM roles and policies.'
+Resources:
+  AWSReconVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: '10.75.0.0/27'
+      Tags:
+        - Key: Name
+          Value: aws-recon-CFN
+  AWSReconSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: '10.75.0.0/28'
+      VpcId: !Ref AWSReconVPC
+      Tags:
+        - Key: Name
+          Value: aws-recon-CFN
+    DependsOn: AWSReconVPC
+  AWSReconSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: AWS Recon collection egress
+      VpcId: !Ref AWSReconVPC
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          FromPort: 0
+          ToPort: 0
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: aws-recon-CFN
+  AWSReconInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: aws-recon-CFN
+  AWSReconInternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref AWSReconInternetGateway
+      VpcId: !Ref AWSReconVPC
+  AWSReconEgressRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref AWSReconVPC
+      Tags:
+        - Key: Name
+          Value: aws-recon-CFN
+  AWSReconSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref AWSReconSubnet
+      RouteTableId: !Ref AWSReconEgressRouteTable
+  AWSReconEgressRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: '0.0.0.0/0'
+      GatewayId: !Ref AWSReconInternetGateway
+      RouteTableId: !Ref AWSReconEgressRouteTable
+  AWSReconECSCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: aws-recon-CFN
+      CapacityProviders:
+        - FARGATE
+      Tags:
+        - Key: Name
+          Value: aws-recon-CFN
+    DependsOn: AWSReconSubnet
+  AWSReconECSTask:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: aws-recon-CFN
+      RequiresCompatibilities:
+        - FARGATE
+      NetworkMode: awsvpc
+      Cpu: 1024
+      Memory: 2048
+      TaskRoleArn: !Ref AWSReconECSTaskRole
+      ExecutionRoleArn: !Ref AWSReconECSExecutionRole
+      ContainerDefinitions:
+        - Name: aws-recon-CFN
+          Image: 'darkbitio/aws_recon:latest'
+          EntryPoint:
+            - 'aws_recon'
+            - '--verbose'
+            - '--format'
+            - 'custom'
+  AWSReconECSTaskRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: aws-recon-ecs-task-role
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/ReadOnlyAccess'
+      Policies:
+        - PolicyName: AWSReconECSTaskRole
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: 's3:PutObject'
+                Resource: 'arn:aws:s3:::CHANGEME/*'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs.amazonaws.com
+                - ecs-tasks.amazonaws.com
+            Action: 'sts:AssumeRole'
+  AWSReconECSExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: aws-recon-ecs-execution-role
+      Policies:
+        - PolicyName: AWSReconECSTaskExecutionPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'ecr:GetAuthorizationToken'
+                  - 'ecr:BatchCheckLayerAvailability'
+                  - 'ecr:GetDownloadUrlForLayer'
+                  - 'ecr:BatchGetImage'
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource: '*'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs-tasks.amazonaws.com
+            Action: 'sts:AssumeRole'
+  AWSReconCloudWatchEventsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: aws-recon-events-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - events.amazonaws.com
+            Action: 'sts:AssumeRole'
