@@ -22,6 +22,7 @@ resource "aws_ecs_task_definition" "aws_recon_task" {
         "--verbose",
         "--format",
         "custom",
+        "--json-lines",
         "--s3-bucket",
         "${aws_s3_bucket.aws_recon.bucket}:${data.aws_region.current.name}",
         "--regions",
