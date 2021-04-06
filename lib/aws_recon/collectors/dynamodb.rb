@@ -18,7 +18,7 @@ class DynamoDB < Mapper
 
       struct = OpenStruct.new(response)
       struct.type = 'limits'
-      struct.arn = "arn:aws:dynamodb:#{@region}:#{@account}:limits"
+      struct.arn = "arn:aws:dynamodb:#{@region}:#{@account}/limits"
 
       resources.push(struct.to_h)
     end

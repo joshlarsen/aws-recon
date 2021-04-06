@@ -29,7 +29,7 @@ class EC2 < Mapper
         struct = OpenStruct.new
         struct.attributes = response.account_attributes.map(&:to_h)
         struct.type = 'account'
-        struct.arn = "arn:aws::#{@account}"
+        struct.arn = "arn:aws:ec2::#{@account}/account_attributes"
 
         resources.push(struct.to_h)
       end
@@ -45,6 +45,7 @@ class EC2 < Mapper
 
         struct = OpenStruct.new(response.to_h)
         struct.type = 'ebs_encryption_settings'
+        struct.arn = "arn:aws:ec2:#{@region}:#{@account}/ebs_encryption_settings"
 
         resources.push(struct.to_h)
       end
@@ -95,7 +96,7 @@ class EC2 < Mapper
         response.vpcs.each do |vpc|
           struct = OpenStruct.new(vpc.to_h)
           struct.type = 'vpc'
-          struct.arn = vpc.vpc_id # no true ARN
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}/#{vpc.vpc_id}" # no true ARN
           struct.flow_logs = @client
                              .describe_flow_logs({ filter: [{ name: 'resource-id', values: [vpc.vpc_id] }] })
                              .flow_logs.first.to_h
@@ -113,7 +114,7 @@ class EC2 < Mapper
         response.security_groups.each do |security_group|
           struct = OpenStruct.new(security_group.to_h)
           struct.type = 'security_group'
-          struct.arn = security_group.group_id # no true ARN
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}/#{security_group.group_id}" # no true ARN
 
           resources.push(struct.to_h)
         end
@@ -128,7 +129,7 @@ class EC2 < Mapper
         response.network_interfaces.each do |network_interface|
           struct = OpenStruct.new(network_interface.to_h)
           struct.type = 'network_interface'
-          struct.arn = network_interface.network_interface_id # no true ARN
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}/#{network_interface.network_interface_id}" # no true ARN
 
           resources.push(struct.to_h)
         end
@@ -143,7 +144,7 @@ class EC2 < Mapper
         response.network_acls.each do |network_acl|
           struct = OpenStruct.new(network_acl.to_h)
           struct.type = 'network_acl'
-          struct.arn = network_acl.network_acl_id # no true ARN
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}/#{network_acl.network_acl_id}" # no true ARN
 
           resources.push(struct.to_h)
         end
@@ -158,7 +159,7 @@ class EC2 < Mapper
         response.subnets.each do |subnet|
           struct = OpenStruct.new(subnet.to_h)
           struct.type = 'subnet'
-          struct.arn = subnet.subnet_arn
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}/#{subnet.subnet_arn}" # no true ARN
 
           resources.push(struct.to_h)
         end
@@ -173,7 +174,7 @@ class EC2 < Mapper
         response.addresses.each do |address|
           struct = OpenStruct.new(address.to_h)
           struct.type = 'eip_address'
-          struct.arn = address.allocation_id
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}/#{address.allocation_id}" # no true ARN
 
           resources.push(struct.to_h)
         end
@@ -188,7 +189,7 @@ class EC2 < Mapper
         response.nat_gateways.each do |gateway|
           struct = OpenStruct.new(gateway.to_h)
           struct.type = 'nat_gateway'
-          struct.arn = gateway.nat_gateway_id # no true ARN
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}/#{gateway.nat_gateway_id}" # no true ARN
 
           resources.push(struct.to_h)
         end
@@ -203,7 +204,7 @@ class EC2 < Mapper
         response.internet_gateways.each do |gateway|
           struct = OpenStruct.new(gateway.to_h)
           struct.type = 'internet_gateway'
-          struct.arn = gateway.internet_gateway_id # no true ARN
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}/#{gateway.internet_gateway_id}" # no true ARN
 
           resources.push(struct.to_h)
         end
@@ -218,7 +219,7 @@ class EC2 < Mapper
         response.route_tables.each do |table|
           struct = OpenStruct.new(table.to_h)
           struct.type = 'route_table'
-          struct.arn = table.route_table_id # no true ARN
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}/#{table.route_table_id}" # no true ARN
 
           resources.push(struct.to_h)
         end
@@ -233,7 +234,7 @@ class EC2 < Mapper
         response.images.each do |image|
           struct = OpenStruct.new(image.to_h)
           struct.type = 'image'
-          struct.arn = image.image_id # no true ARN
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}/#{image.image_id}" # no true ARN
 
           resources.push(struct.to_h)
         end
@@ -248,7 +249,7 @@ class EC2 < Mapper
         response.snapshots.each do |snapshot|
           struct = OpenStruct.new(snapshot.to_h)
           struct.type = 'snapshot'
-          struct.arn = snapshot.snapshot_id # no true ARN
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}/#{snapshot.snapshot_id}" # no true ARN
           struct.create_volume_permissions = @client.describe_snapshot_attribute({
                                                                                    attribute: 'createVolumePermission',
                                                                                    snapshot_id: snapshot.snapshot_id
@@ -267,7 +268,7 @@ class EC2 < Mapper
         response.flow_logs.each do |flow_log|
           struct = OpenStruct.new(flow_log.to_h)
           struct.type = 'flow_log'
-          struct.arn = flow_log.flow_log_id # no true ARN
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}/#{flow_log.flow_log_id}" # no true ARN
 
           resources.push(struct.to_h)
         end
@@ -282,7 +283,7 @@ class EC2 < Mapper
         response.volumes.each do |volume|
           struct = OpenStruct.new(volume.to_h)
           struct.type = 'volume'
-          struct.arn = volume.volume_id # no true ARN
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}/#{volume.volume_id}" # no true ARN
 
           resources.push(struct.to_h)
         end
@@ -297,7 +298,7 @@ class EC2 < Mapper
         response.vpn_gateways.each do |gateway|
           struct = OpenStruct.new(gateway.to_h)
           struct.type = 'vpn_gateway'
-          struct.arn = gateway.vpn_gateway_id # no true ARN
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}/#{gateway.vpn_gateway_id}" # no true ARN
 
           resources.push(struct.to_h)
         end
@@ -312,7 +313,7 @@ class EC2 < Mapper
         response.vpc_peering_connections.each do |peer|
           struct = OpenStruct.new(peer.to_h)
           struct.type = 'peering_connection'
-          struct.arn = peer.vpc_peering_connection_id # no true ARN
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}/#{peer.vpc_peering_connection_id}" # no true ARN
 
           resources.push(struct.to_h)
         end
