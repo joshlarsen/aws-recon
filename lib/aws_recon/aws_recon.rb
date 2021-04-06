@@ -66,6 +66,17 @@ module AwsRecon
     end
 
     #
+    # Format @resources as either
+    #
+    def formatted_json
+      if @options.jsonl
+        @resources.map { |r| JSON.generate(r) }.join("\n")
+      else
+        @resources.to_json
+      end
+    end
+
+    #
     # main wrapper
     #
     def start(_args)
@@ -112,7 +123,7 @@ module AwsRecon
       if @options.output_file && !@options.s3
         puts "Saving resources to #{@options.output_file}.\n\n"
 
-        File.write(@options.output_file, @resources.to_json)
+        File.write(@options.output_file, formatted_json)
       end
 
       # write output file to S3 bucket
@@ -128,7 +139,7 @@ module AwsRecon
           # build IO object and gzip it
           io = StringIO.new
           gzip_data = Zlib::GzipWriter.new(io)
-          gzip_data.write(@resources.to_json)
+          gzip_data.write(formatted_json)
           gzip_data.close
 
           # send it to S3
