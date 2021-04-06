@@ -20,6 +20,7 @@ class Parser
     :output_file,
     :output_format,
     :threads,
+    :jsonl,
     :collect_user_data,
     :skip_slow,
     :skip_credential_report,
@@ -49,6 +50,7 @@ class Parser
       DEFAULT_OUTPUT_FILE,
       DEFAULT_FORMAT,
       DEFAULT_THREADS,
+      false,
       false,
       false,
       false,
@@ -114,6 +116,11 @@ class Parser
       # threads
       opts.on('-t', '--threads [THREADS]', "Specify max threads (default: #{Parser::DEFAULT_THREADS}, max: 128)") do |threads|
         args.threads = threads.to_i if (0..Parser::MAX_THREADS).include?(threads.to_i)
+      end
+
+      # output NDJSON/JSONL format
+      opts.on('-l', '--json-lines', 'Output NDJSON/JSONL format (default: false)') do
+        args.jsonl = true
       end
 
       # collect EC2 instance user data
