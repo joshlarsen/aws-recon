@@ -50,7 +50,7 @@ class IAM < Mapper
                                          policy_document: p.policy_document.parse_policy
                                        }
                                      end
-                                    end
+                                   end
 
         resources.push(struct.to_h)
       end

@@ -36,8 +36,8 @@ class Parser
         aws_regions = ['global'].concat(Aws::EC2::Client.new.describe_regions.regions.map(&:region_name))
       end
     rescue Aws::Errors::ServiceError => e
-      puts "\nAWS Error: #{e.code}\n\n"
-      exit
+      warn "\nAWS Error: #{e.code}\n\n"
+      exit(1)
     end
 
     aws_services = YAML.load(File.read(SERVICES_CONFIG_FILE), symbolize_names: true)
