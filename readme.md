@@ -1,6 +1,6 @@
 [![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/darkbitio/aws-recon/smoke-test/main)](https://github.com/darkbitio/aws-recon/actions?query=branch%3Amain)
 [![Gem Version](https://badge.fury.io/rb/aws_recon.svg)](https://rubygems.org/gems/aws_recon)
-
+[![AWS Service Regions](https://github.com/darkbitio/aws-recon/actions/workflows/check-aws-regions.yml/badge.svg?branch=main&event=schedule)](https://github.com/darkbitio/aws-recon/actions/workflows/check-aws-regions.yml)
 # AWS Recon
 
 A multi-threaded AWS security-focused inventory collection tool written in Ruby.
@@ -54,13 +54,13 @@ To run locally, first install the gem:
 
 ```
 $ gem install aws_recon
-Fetching aws_recon-0.4.5.gem
+Fetching aws_recon-0.5.2.gem
 Fetching aws-sdk-3.0.1.gem
 Fetching parallel-1.20.1.gem
 ...
 Successfully installed aws-sdk-3.0.1
 Successfully installed parallel-1.20.1
-Successfully installed aws_recon-0.4.5
+Successfully installed aws_recon-0.5.2
 ```
 
 Or add it to your Gemfile using `bundle`:
@@ -72,7 +72,7 @@ Resolving dependencies...
 ...
 Using aws-sdk 3.0.1
 Using parallel-1.20.1
-Using aws_recon 0.4.5
+Using aws_recon 0.5.2
 ```
 
 ## Usage
@@ -249,7 +249,7 @@ Most users will want to limit collection to relevant services and regions. Runni
 ```
 $ aws_recon -h
 
-AWS Recon - AWS Inventory Collector (0.4.5)
+AWS Recon - AWS Inventory Collector (0.5.2)
 
 Usage: aws_recon [options]
     -r, --regions [REGIONS]          Regions to scan, separated by comma (default: all)
