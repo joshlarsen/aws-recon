@@ -2,7 +2,7 @@ name: check-service-regions
 
 on:
   schedule:
-    - cron: '40 15 * * *'
+    - cron: '0 10 * * *'
 
 jobs:
   region-check:
