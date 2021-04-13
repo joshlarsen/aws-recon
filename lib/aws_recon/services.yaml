@@ -37,8 +37,6 @@
   alias: ecs
 - name: ElasticLoadBalancing
   alias: elb
-  excluded_regions:
-    - ap-southeast-1
 - name: ElasticLoadBalancingV2
   alias: elbv2
 - name: ElastiCache
@@ -85,15 +83,15 @@
 - name: Shield
   global: true
   alias: shield
+  excluded_regions:
+    - ap-northeast-3
 - name: CloudFormation
   alias: cloudformation
 - name: SES
   alias: ses
   excluded_regions:
-    - af-south-1
     - ap-east-1
     - ap-northeast-3
-    - eu-south-1
 - name: CloudWatch
   alias: cloudwatch
 - name: CloudWatchLogs
@@ -107,8 +105,6 @@
   alias: sm
 - name: SecurityHub
   alias: securityhub
-  excluded_regions:
-    - ap-northeast-3
 - name: Support
   global: true
   alias: support
@@ -116,16 +112,12 @@
   alias: ssm
 - name: GuardDuty
   alias: guardduty
-  excluded_regions:
-    - ap-northeast-3
 - name: Athena
   alias: athena
   excluded_regions:
     - ap-northeast-3
 - name: EFS
   alias: efs
-  excluded_regions:
-    - ap-northeast-3
 - name: Firehose
   alias: firehose
 - name: Lightsail
@@ -145,7 +137,6 @@
     - af-south-1
     - ap-east-1
     - ap-northeast-3
-    - ap-south-1
     - eu-north-1
     - eu-south-1
     - eu-west-3

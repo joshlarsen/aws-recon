@@ -10,6 +10,7 @@ require 'yaml'
 TS = Time.now.to_i
 URL = "https://api.regional-table.region-services.aws.a2z.com/index.json?timestamp=#{TS}000"
 
+service_to_query = ARGV[0]
 region_exclusion_mistmatch = nil
 
 #
@@ -40,6 +41,21 @@ map = {}
 #
 data = res.body
 json = JSON.parse(data)
+
+#
+# query regions for a single service
+#
+if service_to_query
+  single_service_regions = []
+
+  json['prices'].each do |p|
+    single_service_regions << p['id'].split(':').last
+  end
+
+  single_service_regions.uniq.sort.each { |r| puts r }
+
+  exit 0
+end
 
 # iterate through AWS provided services & regions
 json['prices'].each do |p|
