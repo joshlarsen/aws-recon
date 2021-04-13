@@ -106,7 +106,7 @@
 - name: SecretsManager
   alias: sm
 - name: SecurityHub
-  alias: sh
+  alias: securityhub
   excluded_regions:
     - ap-northeast-3
 - name: Support
