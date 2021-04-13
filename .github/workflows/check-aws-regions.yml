@@ -12,6 +12,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - name: Set version tag
+      - name: Check AWS service regions
         run: |
           cd utils/aws ; ruby check_region_exclusions.rb
