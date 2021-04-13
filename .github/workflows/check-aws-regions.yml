@@ -1,0 +1,17 @@
+name: check-service-regions
+
+on:
+  schedule:
+    - cron: '40 15 * * *'
+
+jobs:
+  region-check:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Set version tag
+        run: |
+          cd utils/aws ; ruby check_region_exclusions.rb
