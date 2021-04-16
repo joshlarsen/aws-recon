@@ -3,11 +3,21 @@
 #
 # Check regional service availability against services.yaml exclusions.
 #
+# AWS updates the regional service table daily. By checking regional service
+# coverage, we can identify regions that should be excluded from AWS Recon
+# checks. We exclude non-supported regions because service APIs handle non-
+# availability differently. Some will respond with an error that can be handled
+# by the errors defined in the AWS Ruby SDK client. Others will fail at the
+# network level (i.e. there is no API endpoint even available). We could handle
+# those errors and silently fail, but we choose not to so we can identify cases
+# where there is a lack of service availability in a particular region.
+#
 require 'net/http'
 require 'json'
 require 'yaml'
 
 TS = Time.now.to_i
+# AWS Regional services table
 URL = "https://api.regional-table.region-services.aws.a2z.com/index.json?timestamp=#{TS}000"
 
 service_to_query = ARGV[0]

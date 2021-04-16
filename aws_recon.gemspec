@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'aws_recon'
   spec.version       = AwsRecon::VERSION
   spec.authors       = ['Josh Larsen', 'Darkbit']
-  spec.required_ruby_version = '>= 2.5.0'
+  spec.required_ruby_version = '>= 2.6.0'
   spec.summary       = 'A multi-threaded AWS security-focused inventory collection tool.'
   spec.description   = 'AWS Recon is a command line tool to collect resources from an Amazon Web Services (AWS) account. The tool outputs JSON suitable for processing with other tools.'
   spec.homepage      = 'https://github.com/darkbitio/aws-recon'
