@@ -7,9 +7,7 @@ class WAFV2 < Mapper
   #
   # Returns an array of resources.
   #
-  # TODO: test live
   # TODO: resolve scope (e.g. CLOUDFRONT supported?)
-  # TODO: confirm paging behavior
   #
   def collect
     resources = []
@@ -25,7 +23,6 @@ class WAFV2 < Mapper
         response.web_acls.each do |acl|
           struct = OpenStruct.new(acl.to_h)
           struct.type = 'web_acl'
-          # struct.arn = "arn:aws:#{@service}:#{@region}::web_acl/#{acl.id}"
 
           params = {
             name: acl.name,
@@ -40,7 +37,7 @@ class WAFV2 < Mapper
           end
 
           # list_resources_for_web_acl
-          @client.list_resources_for_web_acl({ web_acl_arn: 'ResourceArn' }).each do |r|
+          @client.list_resources_for_web_acl({ web_acl_arn: acl.arn }).each do |r|
             struct.resources = r.resource_arns.map(&:to_h)
           end
 
