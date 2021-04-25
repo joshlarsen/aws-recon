@@ -34,7 +34,7 @@ module AwsRecon
       # formatter
       @formatter = Formatter.new
 
-      return unless @options.stream_output
+      return if @options.stream_output
 
       puts "\nStarting collection with #{@options.threads} threads...\n"
     end
@@ -66,7 +66,7 @@ module AwsRecon
     end
 
     #
-    # Format @resources as either
+    # Format @resources as either JSON or JSONL
     #
     def formatted_json
       if @options.jsonl
@@ -117,7 +117,7 @@ module AwsRecon
     ensure
       elapsed = Process.clock_gettime(Process::CLOCK_MONOTONIC) - @starting
 
-      puts "\nFinished in #{elapsed.to_i} seconds.\n\n"
+      puts "\nFinished in #{elapsed.to_i} seconds.\n\n" unless @options.stream_output
 
       # write output file
       if @options.output_file && !@options.s3
