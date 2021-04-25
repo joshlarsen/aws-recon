@@ -100,6 +100,7 @@ class Parser
 
       # write output file to S3 bucket
       opts.on('-b', '--s3-bucket [BUCKET:REGION]', 'Write output file to S3 bucket (default: \'\')') do |bucket_with_region|
+        args.stream_output = false
         args.s3 = bucket_with_region
       end
 
@@ -109,8 +110,8 @@ class Parser
       end
 
       # output format
-      opts.on('-f', '--format [FORMAT]', 'Specify output format (default: aws)') do |file|
-        args.output_format = file.downcase if %w[aws custom].include?(file.downcase)
+      opts.on('-f', '--format [FORMAT]', 'Specify output format (default: aws)') do |f|
+        args.output_format = f.downcase if %w[aws custom].include?(f.downcase)
       end
 
       # threads
