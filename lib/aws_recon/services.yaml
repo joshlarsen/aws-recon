@@ -153,7 +153,6 @@
   alias: transfer
   excluded_regions:
     - ap-northeast-3
-    - eu-south-1
 - name: DirectConnect
   alias: directconnect
 - name: DirectoryService
