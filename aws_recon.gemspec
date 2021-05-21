@@ -27,11 +27,11 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'parallel', '~> 1.20.1'
 
   spec.add_development_dependency 'bundler', '~> 1.17'
-  spec.add_development_dependency 'gem-release', '~> 2.1'
-  spec.add_development_dependency 'rake', '~> 12.3'
-  spec.add_development_dependency 'minitest', '~> 5.0'
-  spec.add_development_dependency 'solargraph', '~> 0.40.4'
-  spec.add_development_dependency 'rubocop', '~> 1.15'
-  spec.add_development_dependency 'pry', '~> 0.13.1'
   spec.add_development_dependency 'byebug', '~> 11.1'
+  spec.add_development_dependency 'gem-release', '~> 2.1'
+  spec.add_development_dependency 'minitest', '~> 5.0'
+  spec.add_development_dependency 'pry', '~> 0.13.1'
+  spec.add_development_dependency 'rake', '~> 12.3'
+  spec.add_development_dependency 'rubocop', '~> 1.15'
+  spec.add_development_dependency 'solargraph', '~> 0.40.4'
 end
