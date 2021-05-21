@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'aws-sdk', '~> 3.0'
   spec.add_dependency 'parallel', '~> 1.20.1'
 
-  spec.add_development_dependency 'bundler', '~> 1.17'
+  spec.add_development_dependency 'bundler', '~> 2.2.17'
   spec.add_development_dependency 'byebug', '~> 11.1'
   spec.add_development_dependency 'gem-release', '~> 2.1'
   spec.add_development_dependency 'minitest', '~> 5.0'
