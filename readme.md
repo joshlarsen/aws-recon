@@ -1,5 +1,6 @@
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/darkbitio/aws-recon/smoke-test/main)](https://github.com/darkbitio/aws-recon/actions?query=branch%3Amain)
+[![Docker Pulls](https://img.shields.io/docker/pulls/darkbitio/aws_recon?logo=docker)](https://hub.docker.com/r/darkbitio/aws_recon)
 [![Gem Version](https://badge.fury.io/rb/aws_recon.svg)](https://rubygems.org/gems/aws_recon)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/darkbitio/aws-recon/smoke-test/main)](https://github.com/darkbitio/aws-recon/actions?query=branch%3Amain)
 [![AWS Service Regions](https://github.com/darkbitio/aws-recon/actions/workflows/check-aws-regions.yml/badge.svg?branch=main&event=schedule)](https://github.com/darkbitio/aws-recon/actions/workflows/check-aws-regions.yml)
 # AWS Recon
 
