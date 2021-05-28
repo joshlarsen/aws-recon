@@ -193,6 +193,15 @@ $ AWS_PROFILE=<profile> aws_recon \
 Example [OpenCSPM](https://github.com/OpenCSPM/opencspm) formatted (NDJSON) output.
 
 ```
+$ AWS_PROFILE=<profile> aws_recon -l \
+  -s S3,EC2 \
+  -r global,us-east-1,us-east-2 \
+  -f custom
+```
+
+or
+
+```
 $ AWS_PROFILE=<profile> aws_recon -j \
   -s S3,EC2 \
   -r global,us-east-1,us-east-2 \
