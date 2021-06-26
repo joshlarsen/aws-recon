@@ -83,8 +83,6 @@
 - name: Shield
   global: true
   alias: shield
-  excluded_regions:
-    - ap-northeast-3
 - name: CloudFormation
   alias: cloudformation
 - name: SES
