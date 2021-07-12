@@ -37,6 +37,7 @@ class S3 < Mapper
                    struct.location = 'us-east-1'
                    @client
                  else
+                   location = 'eu-west-1' if location == 'EU'
                    struct.location = location
                    Aws::S3::Client.new({ region: location })
                  end
