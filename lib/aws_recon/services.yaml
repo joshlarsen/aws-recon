@@ -154,8 +154,6 @@
   alias: directconnect
 - name: DirectoryService
   alias: ds
-  excluded_regions:
-    - ap-northeast-3
 - name: DatabaseMigrationService
   alias: dms
 - name: XRay
