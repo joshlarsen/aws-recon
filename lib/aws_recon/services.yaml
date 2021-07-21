@@ -12,8 +12,6 @@
   alias: config
 - name: CodeBuild
   alias: codebuild
-  excluded_regions:
-    - ap-northeast-3
 - name: CodePipeline
   alias: codepipeline
   excluded_regions:
