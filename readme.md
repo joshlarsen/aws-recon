@@ -20,6 +20,27 @@ AWS Recon handles collection from large accounts by taking advantage of automati
 - Efficient (multi-threaded, rate limited, automatic retries, and automatic result paging)
 - Easy to maintain and extend
 
+## Awesome companies using AWS Recon**
+
+- [Netflix](https://www.netflix.com/)
+- [Hashicorp](https://www.hashicorp.com/)
+- [Workday](https://www.workday.com/)
+- [Stripe](https://stripe.com/)
+- [PayPal](https://paypal.com/)
+- [Typeform](https://typeform.com/)
+- [Amazon Web Services](https://aws.amazon.com/)
+- [Plaid](https://plaid.com/)
+- [Expel](https://expel.io/)
+- [Mozilla](https://www.mozilla.org/)
+- [Bugcrowd](https://www.bugcrowd.com/)
+- [Dropbox](https://www.dropbox.com/)
+- [Pinterest](https://www.pinterest.com/)
+- [HackerOne](https://www.hackerone.com/)
+- [MuleSoft](https://www.mulesoft.com/)
+- [Drata](https://drata.com/)
+
+> ** usage does not imply endorsement
+
 ## Setup
 
 ### Requirements
@@ -55,13 +76,13 @@ To run locally, first install the gem:
 
 ```
 $ gem install aws_recon
-Fetching aws_recon-0.5.2.gem
+Fetching aws_recon-0.5.16.gem
 Fetching aws-sdk-3.0.1.gem
 Fetching parallel-1.20.1.gem
 ...
 Successfully installed aws-sdk-3.0.1
 Successfully installed parallel-1.20.1
-Successfully installed aws_recon-0.5.2
+Successfully installed aws_recon-0.5.16
 ```
 
 Or add it to your Gemfile using `bundle`:
@@ -73,7 +94,7 @@ Resolving dependencies...
 ...
 Using aws-sdk 3.0.1
 Using parallel-1.20.1
-Using aws_recon 0.5.2
+Using aws_recon 0.5.16
 ```
 
 ## Usage
@@ -259,7 +280,7 @@ Most users will want to limit collection to relevant services and regions. Runni
 ```
 $ aws_recon -h
 
-AWS Recon - AWS Inventory Collector (0.5.2)
+AWS Recon - AWS Inventory Collector (0.5.16)
 
 Usage: aws_recon [options]
     -r, --regions [REGIONS]          Regions to scan, separated by comma (default: all)
