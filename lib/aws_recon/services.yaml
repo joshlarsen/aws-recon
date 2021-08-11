@@ -110,8 +110,6 @@
   alias: guardduty
 - name: Athena
   alias: athena
-  excluded_regions:
-    - ap-northeast-3
 - name: EFS
   alias: efs
 - name: Firehose
