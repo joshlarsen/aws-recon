@@ -20,6 +20,27 @@ AWS Recon handles collection from large accounts by taking advantage of automati
 - Efficient (multi-threaded, rate limited, automatic retries, and automatic result paging)
 - Easy to maintain and extend
 
+## Awesome companies using AWS Recon**
+
+- [Netflix](https://www.netflix.com/)
+- [Hashicorp](https://www.hashicorp.com/)
+- [Workday](https://www.workday.com/)
+- [Stripe](https://stripe.com/)
+- [PayPal](https://paypal.com/)
+- [Typeform](https://typeform.com/)
+- [Amazon Web Services](https://aws.amazon.com/)
+- [Plaid](https://plaid.com/)
+- [Expel](https://expel.io/)
+- [Mozilla](https://www.mozilla.org/)
+- [Bugcrowd](https://www.bugcrowd.com/)
+- [Dropbox](https://www.dropbox.com/)
+- [Pinterest](https://www.pinterest.com/)
+- [HackerOne](https://www.hackerone.com/)
+- [MuleSoft](https://www.mulesoft.com/)
+- [Drata](https://drata.com/)
+
+> ** usage does not imply endorsement
+
 ## Setup
 
 ### Requirements
