@@ -138,8 +138,6 @@
     - us-west-1
 - name: SageMaker
   alias: sagemaker
-  excluded_regions:
-    - ap-northeast-3
 - name: ServiceQuotas
   alias: servicequotas
 - name: Transfer

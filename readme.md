@@ -76,13 +76,13 @@ To run locally, first install the gem:
 
 ```
 $ gem install aws_recon
-Fetching aws_recon-0.5.16.gem
+Fetching aws_recon-0.5.17.gem
 Fetching aws-sdk-3.0.1.gem
 Fetching parallel-1.20.1.gem
 ...
 Successfully installed aws-sdk-3.0.1
 Successfully installed parallel-1.20.1
-Successfully installed aws_recon-0.5.16
+Successfully installed aws_recon-0.5.17
 ```
 
 Or add it to your Gemfile using `bundle`:
@@ -94,7 +94,7 @@ Resolving dependencies...
 ...
 Using aws-sdk 3.0.1
 Using parallel-1.20.1
-Using aws_recon 0.5.16
+Using aws_recon 0.5.17
 ```
 
 ## Usage
@@ -280,7 +280,7 @@ Most users will want to limit collection to relevant services and regions. Runni
 ```
 $ aws_recon -h
 
-AWS Recon - AWS Inventory Collector (0.5.16)
+AWS Recon - AWS Inventory Collector (0.5.17)
 
 Usage: aws_recon [options]
     -r, --regions [REGIONS]          Regions to scan, separated by comma (default: all)
