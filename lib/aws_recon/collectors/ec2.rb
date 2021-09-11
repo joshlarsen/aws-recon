@@ -318,6 +318,36 @@ class EC2 < Mapper
           resources.push(struct.to_h)
         end
       end
+
+      #
+      # describe_vpc_endpoints
+      #
+      @client.describe_vpc_endpoints.each_with_index do |response, page|
+        log(response.context.operation_name, page)
+
+        response.vpc_endpoints.each do |point|
+          struct = OpenStruct.new(point.to_h)
+          struct.type = 'vpc_endpoint'
+          struct.arn = "arn:aws:ec2:#{@region}:#{@account}:vpc_endpoint/#{point.vpc_endpoint_id}" # no true ARN
+
+          resources.push(struct.to_h)
+        end
+      end
+
+      #
+      # describe_managed_prefix_lists
+      #
+      @client.describe_managed_prefix_lists.each_with_index do |response, page|
+        log(response.context.operation_name, page)
+
+        response.prefix_lists.each do |list|
+          struct = OpenStruct.new(list.to_h)
+          struct.type = 'prefix_list'
+          struct.arn = list.prefix_list_arn
+
+          resources.push(struct.to_h)
+        end
+      end
     end
 
     resources
