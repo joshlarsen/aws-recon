@@ -87,7 +87,6 @@
   alias: ses
   excluded_regions:
     - ap-east-1
-    - ap-northeast-3
 - name: CloudWatch
   alias: cloudwatch
 - name: CloudWatchLogs
