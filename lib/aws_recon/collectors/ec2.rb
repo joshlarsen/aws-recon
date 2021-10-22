@@ -98,7 +98,10 @@ class EC2 < Mapper
           struct.type = 'vpc'
           struct.arn = "arn:aws:ec2:#{@region}:#{@account}:vpc/#{vpc.vpc_id}" # no true ARN
           struct.flow_logs = @client
-                             .describe_flow_logs({ filter: [{ name: 'resource-id', values: [vpc.vpc_id] }] })
+                             .describe_flow_logs({ filter: [{
+                                                   name: 'resource-id',
+                                                   values: [vpc.vpc_id]
+                                                 }] })
                              .flow_logs.first.to_h
 
           resources.push(struct.to_h)
@@ -337,19 +340,33 @@ class EC2 < Mapper
       #
       # describe_managed_prefix_lists
       #
-      @client.describe_managed_prefix_lists.each_with_index do |response, page|
-        log(response.context.operation_name, page)
+      begin
+        @client.describe_managed_prefix_lists.each_with_index do |response, page|
+          log(response.context.operation_name, page)
 
-        response.prefix_lists.each do |list|
-          struct = OpenStruct.new(list.to_h)
-          struct.type = 'prefix_list'
-          struct.arn = list.prefix_list_arn
+          response.prefix_lists.each do |list|
+            struct = OpenStruct.new(list.to_h)
+            struct.type = 'prefix_list'
+            struct.arn = list.prefix_list_arn
 
-          resources.push(struct.to_h)
+            resources.push(struct.to_h)
+          end
         end
+      rescue Aws::EC2::Errors::ServiceError => e
+        log_error(e.code)
+
+        raise e unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
       end
     end
 
     resources
+  end
+
+  private
+
+  def suppressed_errors
+    %w[
+      InvalidAction
+    ]
   end
 end
