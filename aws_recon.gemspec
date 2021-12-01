@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'aws-sdk', '~> 3.0'
+  spec.add_dependency 'aws-sdk', '~> 3.1'
   spec.add_dependency 'parallel', '~> 1.20.1'
 
   spec.add_development_dependency 'bundler', '~> 2.2.17'
