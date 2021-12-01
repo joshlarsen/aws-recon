@@ -53,7 +53,8 @@ class S3 < Mapper
           { func: 'get_bucket_tagging', key: 'tagging', field: nil },
           { func: 'get_bucket_logging', key: 'logging', field: 'logging_enabled' },
           { func: 'get_bucket_versioning', key: 'versioning', field: nil },
-          { func: 'get_bucket_website', key: 'website', field: nil }
+          { func: 'get_bucket_website', key: 'website', field: nil },
+          { func: 'get_bucket_ownership_controls', key: 'ownership_controls', field: 'ownership_controls' }
         ]
 
         operations.each do |operation|
@@ -96,6 +97,7 @@ class S3 < Mapper
       ReplicationConfigurationNotFoundError
       NoSuchPublicAccessBlockConfiguration
       ObjectLockConfigurationNotFoundError
+      OwnershipControlsNotFoundError
     ]
   end
 end

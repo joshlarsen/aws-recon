@@ -37,6 +37,7 @@ AWS Recon handles collection from large accounts by taking advantage of automati
 - [Pinterest](https://www.pinterest.com/)
 - [HackerOne](https://www.hackerone.com/)
 - [MuleSoft](https://www.mulesoft.com/)
+- [Slack](https://slack.com/)
 - [Drata](https://drata.com/)
 
 > ** usage does not imply endorsement
