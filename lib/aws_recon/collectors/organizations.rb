@@ -13,13 +13,18 @@ class Organizations < Mapper
     #
     # describe_organization
     #
-    @client.describe_organization.each do |response|
-      log(response.context.operation_name)
+    begin
+      @client.describe_organization.each do |response|
+        log(response.context.operation_name)
 
-      struct = OpenStruct.new(response.organization.to_h)
-      struct.type = 'organization'
+        struct = OpenStruct.new(response.organization.to_h)
+        struct.type = 'organization'
 
-      resources.push(struct.to_h)
+        resources.push(struct.to_h)
+      end
+    rescue Aws::Organizations::Errors::AWSOrganizationsNotInUseException => e
+      log_error(e.code)
+      return resources
     end
 
     #
