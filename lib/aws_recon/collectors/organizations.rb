@@ -22,9 +22,10 @@ class Organizations < Mapper
 
         resources.push(struct.to_h)
       end
-    rescue Aws::Organizations::Errors::AWSOrganizationsNotInUseException => e
+    rescue Aws::Organizations::Errors::ServiceError => e
       log_error(e.code)
-      return resources
+
+      raise e unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
     end
 
     #
@@ -70,7 +71,8 @@ class Organizations < Mapper
   # not an error
   def suppressed_errors
     %w[
-      AccessDeniedException
+      AccessDeniedException,
+      AWSOrganizationsNotInUseException
     ]
   end
 end
