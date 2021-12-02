@@ -71,7 +71,7 @@ class Organizations < Mapper
   # not an error
   def suppressed_errors
     %w[
-      AccessDeniedException,
+      AccessDeniedException
       AWSOrganizationsNotInUseException
     ]
   end
