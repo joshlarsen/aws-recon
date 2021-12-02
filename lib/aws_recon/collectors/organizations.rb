@@ -13,13 +13,19 @@ class Organizations < Mapper
     #
     # describe_organization
     #
-    @client.describe_organization.each do |response|
-      log(response.context.operation_name)
+    begin
+      @client.describe_organization.each do |response|
+        log(response.context.operation_name)
 
-      struct = OpenStruct.new(response.organization.to_h)
-      struct.type = 'organization'
+        struct = OpenStruct.new(response.organization.to_h)
+        struct.type = 'organization'
 
-      resources.push(struct.to_h)
+        resources.push(struct.to_h)
+      end
+    rescue Aws::Organizations::Errors::ServiceError => e
+      log_error(e.code)
+
+      raise e unless suppressed_errors.include?(e.code) && !@options.quit_on_exception
     end
 
     #
@@ -66,6 +72,7 @@ class Organizations < Mapper
   def suppressed_errors
     %w[
       AccessDeniedException
+      AWSOrganizationsNotInUseException
     ]
   end
 end
