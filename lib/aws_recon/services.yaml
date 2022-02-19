@@ -93,9 +93,6 @@
   alias: cloudwatchlogs
 - name: Kafka
   alias: kafka
-  excluded_regions:
-    - af-south-1
-    - ap-northeast-3
 - name: SecretsManager
   alias: secretsmanager
 - name: SecurityHub
@@ -141,8 +138,6 @@
   alias: servicequotas
 - name: Transfer
   alias: transfer
-  excluded_regions:
-    - ap-northeast-3
 - name: DirectConnect
   alias: directconnect
 - name: DirectoryService
