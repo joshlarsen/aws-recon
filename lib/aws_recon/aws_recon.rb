@@ -63,6 +63,10 @@ module AwsRecon
 
       # add resources to resources array for output to file
       @resources.concat(collection) if @options.output_file
+    rescue Aws::Errors::ServiceError => e
+      raise if @options.quit_on_exception
+
+      puts "Ignoring exception: '#{e.message}'\n"
     end
 
     #
