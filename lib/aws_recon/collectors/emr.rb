@@ -49,8 +49,8 @@ class EMR < Mapper
     #
     # list_security_configurations
     #
-    @client.list_security_configurations.each_with_index do |response|
-      log(response.context.operation_name)
+    @client.list_security_configurations.each_with_index do |response, page|
+      log(response.context.operation_name, page)
 
       response.security_configurations.each do |security_configuration|
         log(response.context.operation_name, security_configuration.name)
