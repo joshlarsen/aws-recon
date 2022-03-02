@@ -46,6 +46,22 @@ class EMR < Mapper
       end
     end
 
+    #
+    # list_security_configurations
+    #
+    @client.list_security_configurations.each_with_index do |response, page|
+      log(response.context.operation_name, page)
+
+      response.security_configurations.each do |security_configuration|
+        log(response.context.operation_name, security_configuration.name)
+
+        struct = OpenStruct.new(@client.describe_security_configuration({ name: security_configuration.name }).security_configuration.parse_policy)
+        struct.type = 'security_configuration'
+        struct.arn = "arn:aws:emr:#{@region}:#{@account}:security-configuration/#{security_configuration.name}" # no true ARN
+        resources.push(struct.to_h)
+      end
+    end
+
     resources
   end
 
