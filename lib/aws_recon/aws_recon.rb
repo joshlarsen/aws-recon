@@ -134,18 +134,26 @@ module AwsRecon
       if @options.s3
         t = Time.now.utc
 
-        s3_full_object_path = "AWSRecon/#{t.year}/#{t.month}/#{t.day}/#{@account_id}_aws_recon_#{t.to_i}.json.gz"
-
+        if @options.compress
+          s3_full_object_path = "AWSRecon/#{t.year}/#{t.month}/#{t.day}/#{@account_id}_aws_recon_#{t.to_i}.json.gz"
+        else
+          s3_full_object_path = "AWSRecon/#{t.year}/#{t.month}/#{t.day}/#{@account_id}_aws_recon_#{t.to_i}.json"
+        end
         begin
           # get bucket name (and region if not us-east-1)
           s3_bucket, s3_region = @options.s3.split(':')
 
           # build IO object and gzip it
           io = StringIO.new
-          gzip_data = Zlib::GzipWriter.new(io)
-          gzip_data.write(formatted_json)
-          gzip_data.close
+          if @options.compress
+            output_data = Zlib::GzipWriter.new(io)
+          else
+            output_data = io
+          end
 
+          output_data.write(formatted_json)
+          output_data.close
+          
           # send it to S3
           s3_client = Aws::S3::Client.new(region: s3_region || 'us-east-1')
           s3_resource = Aws::S3::Resource.new(client: s3_client)

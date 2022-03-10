@@ -17,6 +17,7 @@ class Parser
     :services,
     :config_file,
     :s3,
+    :compress,
     :output_file,
     :output_format,
     :threads,
@@ -47,6 +48,7 @@ class Parser
       aws_services.map { |service| service[:name] },
       DEFAULT_CONFIG_FILE,
       DEFAULT_S3_PATH,
+      true,
       DEFAULT_OUTPUT_FILE,
       DEFAULT_FORMAT,
       DEFAULT_THREADS,
@@ -102,6 +104,11 @@ class Parser
       opts.on('-b', '--s3-bucket [BUCKET:REGION]', 'Write output file to S3 bucket (default: \'\')') do |bucket_with_region|
         args.stream_output = false
         args.s3 = bucket_with_region
+      end
+
+       # not compress s3 output
+       opts.on('-n', '--no-compress', 'Disable compression on s3 bucket upload (default: true)') do
+        args.compress = false
       end
 
       # output file

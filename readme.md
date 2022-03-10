@@ -309,7 +309,7 @@ Usage: aws_recon [options]
 
 Output is always some form of JSON - either JSON lines or plain JSON. The output is either written to a file (the default), or written to stdout (with `-j`).
 
-When writing to an S3 bucket, the JSON output is automatically compressed with `gzip`.
+When writing to an S3 bucket, the JSON output is automatically compressed with `gzip`. You can change this behaviour with the `-n` ( `--no-compress` ) flag so that the json file is uploaded as-is.
 
 ## Support for Manually Enabled Regions
 
