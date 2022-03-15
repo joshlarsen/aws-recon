@@ -23,6 +23,25 @@ class ECR < Mapper
         struct.policy = @client
                         .get_repository_policy({ repository_name: repo.repository_name }).policy_text.parse_policy
 
+        struct.images = []
+        #
+        # describe images
+        #
+        @client.list_images( {repository_name: repo.repository_name}).image_ids.each_with_index do | image, page |
+          log(response.context.operation_name, 'list_images', page)
+          image_hash = image.to_h
+          # 
+          # describe image scan results
+          #
+          result = @client.describe_image_scan_findings({ repository_name: repo.repository_name, image_id: { image_digest: image.image_digest, image_tag: image.image_tag } })
+          image_hash["image_scan_status"] = result.image_scan_status.to_h
+          image_hash["image_scan_findings"] = result.image_scan_findings.to_h
+
+          rescue Aws::ECR::Errors::ScanNotFoundException => e
+            # No scan result for this image. No action needed
+          ensure
+            struct.images << image_hash
+        end
       rescue Aws::ECR::Errors::ServiceError => e
         log_error(e.code)
 
@@ -40,7 +59,8 @@ class ECR < Mapper
   # not an error
   def suppressed_errors
     %w[
-      RepositoryPolicyNotFoundException
-    ]
+      RepositoryPolicyNotFoundException,
+      ScanNotFoundException
+      ]
   end
 end
