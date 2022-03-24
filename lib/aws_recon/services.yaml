@@ -41,6 +41,8 @@
   alias: elasticache
 - name: EMR
   alias: emr
+- name: Glue
+  alias: glue
 - name: IAM
   global: true
   alias: iam

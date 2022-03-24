@@ -368,6 +368,7 @@ AWS Recon aims to collect all resources and metadata that are relevant in determ
 - [x] Firehose
 - [ ] FMS
 - [ ] Glacier
+- [x] Glue
 - [x] IAM
 - [x] KMS
 - [x] Kafka
