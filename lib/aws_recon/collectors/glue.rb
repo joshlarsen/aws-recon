@@ -16,7 +16,7 @@ class Glue < Mapper
       log(response.context.operation_name, page)
 
       struct = OpenStruct.new(response.to_h)
-      struct.type = "catalog_encryption_settings"
+      struct.type = 'catalog_encryption_settings'
       struct.arn = "arn:aws:glue:#{@region}:#{@account}:data-catalog-encryption-settings" # no true ARN
       resources.push(struct.to_h)
     end
@@ -29,7 +29,7 @@ class Glue < Mapper
 
       response.security_configurations.each do |security_configuration|
         struct = OpenStruct.new(security_configuration.to_h)
-        struct.type = "security_configuration"
+        struct.type = 'security_configuration'
         struct.arn = "arn:aws:glue:#{@region}:#{@account}:security-configuration/#{security_configuration.name}" # no true ARN
         resources.push(struct.to_h)
       end
@@ -43,7 +43,7 @@ class Glue < Mapper
 
       response.database_list.each do |database|
         struct = OpenStruct.new(database.to_h)
-        struct.type = "database"
+        struct.type = 'database'
         struct.arn = "arn:aws:glue:#{@region}:#{@account}:database/#{database.name}"
 
         #
@@ -64,7 +64,7 @@ class Glue < Mapper
 
       response.jobs.each do |job|
         struct = OpenStruct.new(job.to_h)
-        struct.type = "job"
+        struct.type = 'job'
         struct.arn = "arn:aws:glue:#{@region}:#{@account}:job/#{job.name}"
         resources.push(struct.to_h)
       end
@@ -78,7 +78,7 @@ class Glue < Mapper
 
       response.dev_endpoints.each do |dev_endpoint|
         struct = OpenStruct.new(dev_endpoint.to_h)
-        struct.type = "dev_endpoint"
+        struct.type = 'dev_endpoint'
         struct.arn = "arn:aws:glue:#{@region}:#{@account}:devEndpoint/#{dev_endpoint.endpoint_name}"
         resources.push(struct.to_h)
       end
@@ -92,7 +92,7 @@ class Glue < Mapper
 
       response.crawlers.each do |crawler|
         struct = OpenStruct.new(crawler.to_h)
-        struct.type = "crawler"
+        struct.type = 'crawler'
         struct.arn = "arn:aws:glue:#{@region}:#{@account}:crawler/#{crawler.name}"
         resources.push(struct.to_h)
       end
@@ -106,7 +106,7 @@ class Glue < Mapper
 
       response.connection_list.each do |connection|
         struct = OpenStruct.new(connection.to_h)
-        struct.type = "connection"
+        struct.type = 'connection'
         struct.arn = "arn:aws:glue:#{@region}:#{@account}:connection/#{connection.name}"
         resources.push(struct.to_h)
       end
