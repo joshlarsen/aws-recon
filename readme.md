@@ -358,6 +358,7 @@ AWS Recon aims to collect all resources and metadata that are relevant in determ
 - [x] DynamoDB
 - [x] EC2
 - [x] ECR
+- [x] ECRPublic
 - [x] ECS
 - [x] EFS
 - [x] EKS
