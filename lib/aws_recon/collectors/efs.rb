@@ -24,7 +24,6 @@ class EFS < Mapper
         #
         # Describe Backup Policy
         #
-        puts(filesystem.file_system_id)
         policy = @client.describe_backup_policy({file_system_id: filesystem.file_system_id})
         struct["backup_policy"] = policy.backup_policy.to_h
         rescue Aws::EFS::Errors::PolicyNotFound => e
