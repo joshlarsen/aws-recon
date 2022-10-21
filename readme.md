@@ -2,6 +2,7 @@
 [![Gem Version](https://badge.fury.io/rb/aws_recon.svg)](https://rubygems.org/gems/aws_recon)
 [![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/darkbitio/aws-recon/smoke-test/main)](https://github.com/darkbitio/aws-recon/actions?query=branch%3Amain)
 [![AWS Service Regions](https://github.com/darkbitio/aws-recon/actions/workflows/check-aws-regions.yml/badge.svg?branch=main&event=schedule)](https://github.com/darkbitio/aws-recon/actions/workflows/check-aws-regions.yml)
+
 # AWS Recon
 
 A multi-threaded AWS security-focused inventory collection tool written in Ruby.
@@ -20,10 +21,10 @@ AWS Recon handles collection from large accounts by taking advantage of automati
 - Efficient (multi-threaded, rate limited, automatic retries, and automatic result paging)
 - Easy to maintain and extend
 
-## Awesome companies using AWS Recon**
+## Awesome companies using AWS Recon\*\*
 
 - [Netflix](https://www.netflix.com/)
-- [Hashicorp](https://www.hashicorp.com/)
+- [HashiCorp](https://www.hashicorp.com/)
 - [Workday](https://www.workday.com/)
 - [Stripe](https://stripe.com/)
 - [PayPal](https://paypal.com/)
@@ -39,8 +40,13 @@ AWS Recon handles collection from large accounts by taking advantage of automati
 - [MuleSoft](https://www.mulesoft.com/)
 - [Slack](https://slack.com/)
 - [Drata](https://drata.com/)
+- [Google](https://www.google.com/)
+- [Sophos](https://www.sophos.com/)
+- [Sumo Logic](https://www.sumologic.com/)
+- [Coalfile](https://www.coalfire.com/)
+- [Xero](https://www.xero.com/)
 
-> ** usage does not imply endorsement
+> \*\* usage does not imply endorsement
 
 ## Setup
 
@@ -145,7 +151,7 @@ $ aws-vault exec <vault_profile> -- docker run -t --rm \
   aws_recon -s EC2 -v -r global,us-east-1,us-east-2
 ```
 
-You may want to use the `-v` or `--verbose` flag initially to see status and activity while collection is running. 
+You may want to use the `-v` or `--verbose` flag initially to see status and activity while collection is running.
 
 In verbose mode, the console output will show:
 
