@@ -14,8 +14,6 @@
   alias: codebuild
 - name: CodePipeline
   alias: codepipeline
-  excluded_regions:
-    - ap-northeast-3
 - name: AutoScaling
   alias: autoscaling
 - name: CloudTrail
