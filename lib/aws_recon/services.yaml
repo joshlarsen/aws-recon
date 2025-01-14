@@ -125,8 +125,6 @@
 - name: Support
   global: true
   alias: support
-  excluded_regions:
-    - af-south-1
 - name: SSM
   alias: ssm
 - name: GuardDuty
